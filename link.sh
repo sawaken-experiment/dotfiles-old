@@ -1,16 +1,9 @@
 #!/bin/bash
 
-echo_and_do () {
-    echo "$1"
-    eval "$1"
-}
+# ./.hogeなる
+# 全てのファイルについて、シンボリックリンク　~/.hoge -> ./.hogeを張る。
 
 curdir=`pwd`
-
-# TODO: 以下の挙動にしたい。
-# リンクを張ろうとするファイルが既に存在する場合、
-# * それがシンボリックリンクである => 付け替える
-# * それが実態である=> 何もしない
 
 for f in .??*
 do
@@ -19,5 +12,16 @@ do
     [[ "$f" == ?*~ ]] && continue
     [[ "$f" == ?*# ]] && continue
 
-    echo_and_do "ln -s $curdir/$f $HOME/$f"
+    src="$curdir/$f"
+    dest="$HOME/$f"
+    if [ -e "$dest" ]; then
+      curlink=`readlink $dest`
+      if [ "$curlink" == "$src" ]; then
+        :
+      else
+        echo "There is already something at: $dest"
+      fi
+    else
+      eval "ln -s $src $dest"
+    fi
  done

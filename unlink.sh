@@ -1,9 +1,7 @@
 #!/bin/bash
 
-echo_and_do () {
-    echo "$1"
-    eval "$1"
-}
+# ~/.hoge -> ./.hogeなる
+# 全てのシンボリックリンクを外す。
 
 curdir=`pwd`
 
@@ -16,8 +14,12 @@ do
 
     src="$curdir/$f"
     dest="$HOME/$f"
-    curlink=`readlink $dest`
-    if [ $curlink == $src ]; then
-      echo_and_do "rm $dest"
+    if [ -e "$dest" ]; then
+      curlink=`readlink $dest`
+      if [ "$curlink" == "$src" ]; then
+        eval "rm $dest"
+      else
+        echo "Not my link: $dest"
+      fi
     fi
  done
