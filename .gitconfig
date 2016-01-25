@@ -1,0 +1,7 @@
+[user]
+    email = sasasawada@gmail.com
+    name = "Kensuke Sawada"
+[core]
+    excludesfile = ~/.gitignore
+[color]
+    ui = auto
