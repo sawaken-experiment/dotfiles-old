@@ -6,3 +6,4 @@ test3.*
 debug.*
 *.out
 *.o
+*.local

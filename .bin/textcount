@@ -1,0 +1,50 @@
+#!/usr/bin/env ruby
+
+# マルチバイト文字列の文字数を数えるスクリプト
+
+require 'optparse'
+
+$black_list = []
+$is_verbose = false
+OptionParser.new do |opt|
+  opt.on("--blist=CHARS", "カウントしない文字の列") do |v|
+    $black_list += v.chars.uniq
+  end
+  opt.on("--verbose", "色々表示する") do
+    $is_verbose = true
+  end
+  opt.parse!(ARGV)
+end
+
+def show(message)
+  return unless $is_verbose
+  puts message
+end
+
+def linecode(line)
+  case line
+  when /\r\n/
+    "CRLF"
+  when /\n/
+    "LF"
+  when /\r/
+    "CR"
+  end
+end
+
+if ARGV[0]
+  if File.exist?(ARGV[0])
+    text = File.open(ARGV[0], "r") { |x| x.read }
+  else
+    STDERR.puts "cannot open #{ARGV[0]}"
+    exit(1)
+  end
+else
+  text = STDIN.read
+end
+
+show "BlackList = #{$black_list}"
+show "Encoding = #{text.encoding.name}"
+show "NewLineCode = #{text.each_line.map{|x| linecode(x)}.uniq}"
+show "Lines = #{text.each_line.count}"
+puts text.chars.reject{|x| $black_list.include? x}.size

@@ -1,0 +1,150 @@
+#!/usr/bin/env ruby
+# メモの全文検索
+
+require 'tempfile'
+
+class MemoSearch
+  Section = Struct.new(:fpath, :lines)
+
+  ShellCol = {
+    :red => 1,
+    :green => 2,
+    :yellow => 3,
+    :blue => 4,
+    :magenta => 5,
+    :cyan => 6,
+  }
+
+  def initialize(argv)
+    @words = argv.reject{|x| x =~ /^-[a-z]+$/}
+    @opts = argv.select{|x| x =~ /^-[a-z]+$/}.map{|x| x[1..-1].chars}.flatten
+    @files = Dir.glob("#{ENV["HOME"]}/.memorandum/**/*.md")
+    if @opts.include? "e"
+      @editor = "emacs"
+    elsif @opts.include? "v"
+      @editor = "vim"
+    elsif @opts.include? "l"
+      @editor = "less"
+    end
+    if @words == []
+      puts "usage: m [option] <検索ワード>+"
+      puts "  -e 検索結果をemacsで開く"
+      puts "  -v 検索結果をvimで開く"
+      puts "  -l 検索結果をlessで開く"
+      puts "  -t 見出し文字列のみを検索対象とする"
+      puts "  -r 検索ワードを正規表現として扱う"
+      puts "  -m 検索ワードにヒットする文字列を強調表示する(-e,-v,-lを付けない場合のみ有効)"
+      puts "  -f ファイル名のみを表示する"
+      exit(1)
+    end
+  end
+
+  def search
+    sections = []
+    @files.each do |fpath|
+      File.open(fpath, "r") do |f|
+        buf = []
+        ws = @words.clone
+        f.each_line do |line|
+          if line =~ /^#.*/
+            if ws == []
+              sections << Section.new(fpath, buf.clone)
+            end
+            buf.clear
+            ws = @words.clone
+          end
+          buf << line
+          if !(@opts.include? "t") || line =~ /^#/
+            ws.reject!{|w| line.index(to_pattern w)}
+          end
+        end
+        sections << Section.new(fpath, buf.clone) if ws == []
+      end
+    end
+    return sections
+  end
+
+  def show_on_editor(sections, editor)
+    Tempfile.open(["memo_search_result", ".md"]) do |f|
+      sections.each_with_index do |section, i|
+        f.puts "[#{words_str()}:#{i}] #{section.fpath}"
+        f.print section.lines.map{|l| "  #{l}"}.join
+      end
+      f.flush
+      system("#{@editor} #{f.path}")
+    end
+  end
+
+  def show_on_terminal(sections)
+    sections.each_with_index do |section, i|
+      puts decorate("[#{words_str()}:#{i}] #{section.fpath}", :cyan)
+      quoting = false
+      section.lines.each do |line|
+        if line =~ /^```/
+          quoting = !quoting
+        else
+          if quoting
+            print "    #{decorate(line, :green)}"
+          elsif line =~ /^#/
+            print "  #{decorate(line, :yellow)}"
+          else
+            print "  #{decorate(line)}"
+          end
+        end
+      end
+    end
+  end
+
+  def show_file(sections)
+    fpaths = sections.map{|x| x.fpath}.uniq
+    fpaths.each_with_index do |fpath, i|
+      puts decorate("[#{words_str()}:#{i}] #{fpath}", :cyan)
+    end
+    if @editor
+      system("#{@editor} #{fpaths.join(" ")}")
+    end
+  end
+
+  def words_str
+    @words.map{|x| "'#{x}'"}.join(",")
+  end
+
+  def to_pattern(str)
+    (@opts.include? "r") ? Regexp.new(str) : str
+  end
+
+  def decorate(str, col_name=nil)
+    default = "\e[m"
+    if col_name
+      colorize = "\e[3#{ShellCol[col_name]}m"
+      linecolorize = "\e[3#{ShellCol[col_name]};4m"
+    else
+      colorize = "\e[m"
+      linecolorize = "\e[4m"
+    end
+    s = str.clone
+    if @opts.include? "m"
+      @words.each do |w|
+        s.gsub!(to_pattern(w), "#{linecolorize}\\&#{default}#{colorize}")
+      end
+    end
+    return colorize + s + default
+  end
+
+  def do
+    sections = search()
+    if sections == []
+      puts words_str() + "にヒットするメモはありませんでした。"
+      exit(0)
+    end
+    if @opts.include? "f"
+      show_file(sections)
+    elsif @editor
+      show_on_editor(sections, @editor)
+    else
+      show_on_terminal(sections)
+    end
+  end
+end
+
+MemoSearch.new(ARGV).do()

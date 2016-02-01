@@ -24,4 +24,4 @@
 
 参考:[Go言語がダメな理由](http://postd.cc/why-go-is-not-good/)
 
-## 
+##
