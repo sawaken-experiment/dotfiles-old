@@ -1,0 +1,9 @@
+*
+!/.gitignore
+!/config.cson
+!/init.coffee
+!/keymap.cson
+!/snippets.coffee
+!/snippets.cson
+!/styles.less
+!/README.md

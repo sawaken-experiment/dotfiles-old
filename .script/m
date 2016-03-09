@@ -1,30 +1,31 @@
 #!/usr/bin/env ruby
+# -*- mode: ruby -*-
 # メモの全文検索
-
 require 'tempfile'
 
+# Full-text search for .memorandum
 class MemoSearch
   Section = Struct.new(:fpath, :lines)
 
-  ShellCol = {
-    :red => 1,
-    :green => 2,
-    :yellow => 3,
-    :blue => 4,
-    :magenta => 5,
-    :cyan => 6,
-  }
+  SHELL_COL = {
+    red: 1,
+    green: 2,
+    yellow: 3,
+    blue: 4,
+    magenta: 5,
+    cyan: 6
+  }.freeze
 
   def initialize(argv)
-    @words = argv.reject{|x| x =~ /^-[a-z]+$/}
-    @opts = argv.select{|x| x =~ /^-[a-z]+$/}.map{|x| x[1..-1].chars}.flatten
-    @files = Dir.glob("#{ENV["HOME"]}/.memorandum/**/*.md")
-    if @opts.include? "e"
-      @editor = "emacs"
-    elsif @opts.include? "v"
-      @editor = "vim"
-    elsif @opts.include? "l"
-      @editor = "less"
+    @words = argv.reject { |x| x =~ /^-[a-z]+$/ }
+    @opts = argv.select { |x| x =~ /^-[a-z]+$/ }.map { |x| x[1..-1].chars }.flatten
+    @files = Dir.glob("#{ENV['HOME']}/.memorandum/**/*.md")
+    if @opts.include? 'e'
+      @editor = 'emacs'
+    elsif @opts.include? 'v'
+      @editor = 'vim'
+    elsif @opts.include? 'l'
+      @editor = 'less'
     end
     if @words == []
       puts "usage: m [option] <検索ワード>+"
@@ -55,7 +56,7 @@ class MemoSearch
           end
           buf << line
           if !(@opts.include? "t") || line =~ /^#/
-            ws.reject!{|w| line.index(to_pattern w)}
+            ws.reject!{|w| line.index(to_pattern(w))}
           end
         end
         sections << Section.new(fpath, buf.clone) if ws == []
@@ -71,59 +72,55 @@ class MemoSearch
         f.print section.lines.map{|l| "  #{l}"}.join
       end
       f.flush
-      system("#{@editor} #{f.path}")
+      system("#{editor} #{f.path}")
     end
   end
 
   def show_on_terminal(sections)
     sections.each_with_index do |section, i|
-      puts decorate("[#{words_str()}:#{i}] #{section.fpath}", :cyan)
+      puts decorate("[#{words_str}:#{i}] #{section.fpath}", :cyan)
       quoting = false
       section.lines.each do |line|
         if line =~ /^```/
           quoting = !quoting
+        elsif quoting
+          print "    #{decorate(line, :green)}"
+        elsif line =~ /^#/
+          print "  #{decorate(line, :yellow)}"
         else
-          if quoting
-            print "    #{decorate(line, :green)}"
-          elsif line =~ /^#/
-            print "  #{decorate(line, :yellow)}"
-          else
-            print "  #{decorate(line)}"
-          end
+          print "  #{decorate(line)}"
         end
       end
     end
   end
 
   def show_file(sections)
-    fpaths = sections.map{|x| x.fpath}.uniq
+    fpaths = sections.map(&:fpath).uniq
     fpaths.each_with_index do |fpath, i|
-      puts decorate("[#{words_str()}:#{i}] #{fpath}", :cyan)
+      puts decorate("[#{words_str}:#{i}] #{fpath}", :cyan)
     end
-    if @editor
-      system("#{@editor} #{fpaths.join(" ")}")
-    end
+    system("#{@editor} #{fpaths.join(' ')}") if @editor
   end
 
   def words_str
-    @words.map{|x| "'#{x}'"}.join(",")
+    @words.map { |x| "'#{x}'" }.join(',')
   end
 
   def to_pattern(str)
-    (@opts.include? "r") ? Regexp.new(str) : str
+    (@opts.include? 'r') ? Regexp.new(str) : str
   end
 
-  def decorate(str, col_name=nil)
+  def decorate(str, col_name = nil)
     default = "\e[m"
     if col_name
-      colorize = "\e[3#{ShellCol[col_name]}m"
-      linecolorize = "\e[3#{ShellCol[col_name]};4m"
+      colorize = "\e[3#{SHELL_COL[col_name]}m"
+      linecolorize = "\e[3#{SHELL_COL[col_name]};4m"
     else
       colorize = "\e[m"
       linecolorize = "\e[4m"
     end
     s = str.clone
-    if @opts.include? "m"
+    if @opts.include? 'm'
       @words.each do |w|
         s.gsub!(to_pattern(w), "#{linecolorize}\\&#{default}#{colorize}")
       end
@@ -132,12 +129,12 @@ class MemoSearch
   end
 
   def do
-    sections = search()
+    sections = search
     if sections == []
-      puts words_str() + "にヒットするメモはありませんでした。"
+      puts words_str + "にヒットするメモはありませんでした。"
       exit(0)
     end
-    if @opts.include? "f"
+    if @opts.include? 'f'
       show_file(sections)
     elsif @editor
       show_on_editor(sections, @editor)
@@ -147,4 +144,4 @@ class MemoSearch
   end
 end
 
-MemoSearch.new(ARGV).do()
+MemoSearch.new(ARGV).do

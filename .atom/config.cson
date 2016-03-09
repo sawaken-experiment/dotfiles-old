@@ -1,0 +1,36 @@
+"*":
+  "autocomplete-plus":
+    confirmCompletion: "tab"
+  core:
+    disabledPackages: [
+      "symbols-view"
+    ]
+    excludeVcsIgnoredPaths: false
+    themes: [
+      "atom-dark-ui"
+      "one-dark-syntax"
+    ]
+  editor:
+    fontSize: 17
+    invisibles: {}
+    softWrap: true
+  "emacs-mode":
+    hideSidebar: false
+    hideTabs: false
+    useEmacsCursor: true
+    useFuzzyBufferFinder: false
+    useFuzzyFileFinder: false
+  "exception-reporting":
+    userId: "9437e86a-0252-ab2d-dbf9-ca15cf8a20e4"
+  "haskell-ghc-mod": {}
+  linter: {}
+  "linter-rubocop": {}
+  "ruby-test": {}
+  "spell-check": {}
+  "sync-settings":
+    gistId: "7b08d0a87d39e761edfa"
+    personalAccessToken: "0a53a7af75d33340cc962ca16fb535c315285f6c"
+  "tree-view":
+    hideVcsIgnoredFiles: true
+  welcome:
+    showOnStartup: false
