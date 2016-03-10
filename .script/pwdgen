@@ -4,4 +4,4 @@ raise "usage: pwdgen length" if ARGV[0] == nil
 len = ARGV[0].to_i
 
 a = ("0".."9").to_a + ("a".."z").to_a + ("A".."Z").to_a
-puts len.times.map{ a.sample }.join
+puts Array.new(len){ a.sample }.join

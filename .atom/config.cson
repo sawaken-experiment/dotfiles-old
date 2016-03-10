@@ -4,6 +4,7 @@
   core:
     disabledPackages: [
       "symbols-view"
+      "haskell-ghc-mod"
     ]
     excludeVcsIgnoredPaths: false
     themes: [
@@ -30,6 +31,13 @@
   "sync-settings":
     gistId: "7b08d0a87d39e761edfa"
     personalAccessToken: "0a53a7af75d33340cc962ca16fb535c315285f6c"
+  term3:
+    colors:
+      background:
+        red: 41
+        green: 41
+        blue: 41
+        alpha: 1
   "tree-view":
     hideVcsIgnoredFiles: true
   welcome:

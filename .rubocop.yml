@@ -319,7 +319,7 @@ Style/SingleLineBlockParams:
 Style/SingleLineMethods:
   Enabled: false
 
-Style/SingleSpaceBeforeFirstArg:
+Style/SpaceBeforeFirstArg:
   Enabled: false
 
 Style/SpaceAfterColon:
@@ -328,7 +328,7 @@ Style/SpaceAfterColon:
 Style/SpaceAfterComma:
   Enabled: false
 
-Style/SpaceAfterControlKeyword:
+Style/SpaceAroundKeyword:
   Enabled: false
 
 Style/SpaceAfterMethodName:
@@ -364,7 +364,7 @@ Style/SpaceAroundEqualsInParameterDefault:
 Style/SpaceAroundOperators:
   Enabled: false
 
-Style/SpaceBeforeModifierKeyword:
+Style/SpaceAroundKeyword:
   Enabled: false
 
 Style/SpaceInsideBrackets:
