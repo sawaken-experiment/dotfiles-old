@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# ~/.hoge -> ./.hogeなる
+# ~/.hoge (シンボル) -> ./.hoge (実体)なる
 # 全てのシンボリックリンクを外す。
 
 curdir=`pwd`

@@ -34,4 +34,7 @@
   'ctrl-f': 'core:move-right'
   'ctrl-b': 'core:move-left'
   'ctrl-d': 'core:delete'
-  #TODO ctrl-k
+
+# Escape by ctrl-w on autocomplete-plus
+'atom-text-editor.autocomplete-active':
+  'ctrl-w': 'autocomplete-plus:cancel'

@@ -3,39 +3,74 @@
 # メモの全文検索
 require 'tempfile'
 
+# TODO
+# optparse使う
+# テストコードをファイル内に用意する
+
 # Full-text search for .memorandum
 class MemoSearch
-  Section = Struct.new(:fpath, :lines)
+  module Util
+    extend self
 
-  SHELL_COL = {
-    red: 1,
-    green: 2,
-    yellow: 3,
-    blue: 4,
-    magenta: 5,
-    cyan: 6
-  }.freeze
+    module COL
+      RED     = 1
+      GREEN   = 2
+      YELLOW  = 3
+      BLUE    = 4
+      MAGENTA = 5
+      CYAN    = 6
+    end
+
+    def ansi_colorize(str, color_code = nil, emph_words = [])
+      default = "\e[m"
+      if color_code
+        colorize = "\e[3#{color_code}m"
+        linecolorize = "\e[3#{color_code};4m"
+      else
+        colorize = "\e[m"
+        linecolorize = "\e[4m"
+      end
+      s = str.clone
+      emph_words.each do |w|
+        s.gsub!(w, "#{linecolorize}\\&#{default}#{colorize}")
+      end
+      return colorize + s + default
+    end
+  end
+
+  Section = Struct.new(:fpath, :lines) do
+    def to_printing_lines(ws = [])
+      printing_lines = []
+      printing_lines << Util.ansi_colorize(fpath, Util::COL::CYAN, ws) + "\n"
+      quoting = false
+      lines.each do |line|
+        if line =~ /^```/
+          quoting = !quoting
+        elsif quoting
+          printing_lines << '    ' + Util.ansi_colorize(line, Util::COL::GREEN, ws)
+        elsif line =~ /^#/
+          printing_lines << '  ' + Util.ansi_colorize(line, Util::COL::GREEN, ws)
+        else
+          printing_lines << '  ' + Util.ansi_colorize(line, nil, ws)
+        end
+      end
+      return printing_lines
+    end
+  end
 
   def initialize(argv)
-    @words = argv.reject { |x| x =~ /^-[a-z]+$/ }
-    @opts = argv.select { |x| x =~ /^-[a-z]+$/ }.map { |x| x[1..-1].chars }.flatten
+    @words = argv.reject{|x| x =~ /^-[a-z]+$/}
+    @opts = argv.select{|x| x =~ /^-[a-z]+$/}.map { |x| x[1..-1].chars }.flatten
     @files = Dir.glob("#{ENV['HOME']}/.memorandum/**/*.md")
-    if @opts.include? 'e'
-      @editor = 'emacs'
-    elsif @opts.include? 'v'
-      @editor = 'vim'
-    elsif @opts.include? 'l'
-      @editor = 'less'
+    @words.map! do |w|
+      (@opts.include? 'r') ? Regexp.new(w) : w
     end
     if @words == []
       puts "usage: m [option] <検索ワード>+"
-      puts "  -e 検索結果をemacsで開く"
-      puts "  -v 検索結果をvimで開く"
-      puts "  -l 検索結果をlessで開く"
+      puts "  -s 検索結果を標準出力に表示(デフォルトはlessで表示)"
       puts "  -t 見出し文字列のみを検索対象とする"
       puts "  -r 検索ワードを正規表現として扱う"
-      puts "  -m 検索ワードにヒットする文字列を強調表示する(-e,-v,-lを付けない場合のみ有効)"
-      puts "  -f ファイル名のみを表示する"
+      puts "  -f 検索ワードにヒットする項目を含むファイル名のみを標準出力に表示する"
       exit(1)
     end
   end
@@ -56,7 +91,7 @@ class MemoSearch
           end
           buf << line
           if !(@opts.include? "t") || line =~ /^#/
-            ws.reject!{|w| line.index(to_pattern(w))}
+            ws.reject!{|w| line.index(w)}
           end
         end
         sections << Section.new(fpath, buf.clone) if ws == []
@@ -65,83 +100,39 @@ class MemoSearch
     return sections
   end
 
-  def show_on_editor(sections, editor)
-    Tempfile.open(["memo_search_result", ".md"]) do |f|
-      sections.each_with_index do |section, i|
-        f.puts "[#{words_str()}:#{i}] #{section.fpath}"
-        f.print section.lines.map{|l| "  #{l}"}.join
-      end
-      f.flush
-      system("#{editor} #{f.path}")
-    end
-  end
-
-  def show_on_terminal(sections)
+  def print_result(sections, output)
     sections.each_with_index do |section, i|
-      puts decorate("[#{words_str}:#{i}] #{section.fpath}", :cyan)
-      quoting = false
-      section.lines.each do |line|
-        if line =~ /^```/
-          quoting = !quoting
-        elsif quoting
-          print "    #{decorate(line, :green)}"
-        elsif line =~ /^#/
-          print "  #{decorate(line, :yellow)}"
-        else
-          print "  #{decorate(line)}"
-        end
+      output.print "[#{words_str()}:#{i}]"
+      section.to_printing_lines(@words).each do |line|
+        output.print line
       end
     end
-  end
-
-  def show_file(sections)
-    fpaths = sections.map(&:fpath).uniq
-    fpaths.each_with_index do |fpath, i|
-      puts decorate("[#{words_str}:#{i}] #{fpath}", :cyan)
-    end
-    system("#{@editor} #{fpaths.join(' ')}") if @editor
   end
 
   def words_str
-    @words.map { |x| "'#{x}'" }.join(',')
+    @words.map{|x| x.inspect}.join(',')
   end
 
-  def to_pattern(str)
-    (@opts.include? 'r') ? Regexp.new(str) : str
-  end
-
-  def decorate(str, col_name = nil)
-    default = "\e[m"
-    if col_name
-      colorize = "\e[3#{SHELL_COL[col_name]}m"
-      linecolorize = "\e[3#{SHELL_COL[col_name]};4m"
-    else
-      colorize = "\e[m"
-      linecolorize = "\e[4m"
-    end
-    s = str.clone
-    if @opts.include? 'm'
-      @words.each do |w|
-        s.gsub!(to_pattern(w), "#{linecolorize}\\&#{default}#{colorize}")
-      end
-    end
-    return colorize + s + default
-  end
-
-  def do
-    sections = search
+  def process
+    sections = search()
     if sections == []
-      puts words_str + "にヒットするメモはありませんでした。"
+      puts words_str() + "にヒットするメモはありませんでした。"
       exit(0)
     end
     if @opts.include? 'f'
-      show_file(sections)
-    elsif @editor
-      show_on_editor(sections, @editor)
+      sections.map(&:fpath).uniq.each do |fpath|
+        puts fpath
+      end
+    elsif @opts.include? 's'
+      print_result(sections, STDOUT)
     else
-      show_on_terminal(sections)
+      Tempfile.open(["memo_search_result", ".md"]) do |f|
+        print_result(sections, f)
+        f.flush
+        system("less -fr #{f.path}")
+      end
     end
   end
 end
 
-MemoSearch.new(ARGV).do
+MemoSearch.new(ARGV).process()

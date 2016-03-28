@@ -1,6 +1,12 @@
 SCALAVER="2.11.7"
 SBTVER="0.13.9"
 
+dotfiles:
+	git clone
+
+ssh-key:
+	hoge
+
 zsh:
 	sudo apt-get install -y zsh
 	which zsh
@@ -12,8 +18,6 @@ rbenv:
 	sudo apt-get install -y git
 	git clone https://github.com/sstephenson/rbenv.git $(HOME)/.rbenv
 	git clone https://github.com/sstephenson/ruby-build.git $(HOME)/.rbenv/plugins/ruby-build
-	echo 'export PATH="$HOME/.rbenv/bin:$PATH"' >> $(HOME)/.zshrc
-	echo 'eval "$(rbenv init -)"' >> $(HOME)/.zshrc
 	rbenv install 2.1.2
 	rbenv install 2.0.0-p576
 	rbenv install 1.9.3-p547
