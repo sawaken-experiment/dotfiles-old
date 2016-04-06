@@ -15,22 +15,17 @@
     fontSize: 17
     invisibles: {}
     softWrap: true
-  "emacs-mode":
-    hideSidebar: false
-    hideTabs: false
-    useEmacsCursor: true
-    useFuzzyBufferFinder: false
-    useFuzzyFileFinder: false
   "exception-reporting":
     userId: "9437e86a-0252-ab2d-dbf9-ca15cf8a20e4"
   "haskell-ghc-mod": {}
   linter: {}
   "linter-rubocop": {}
+  minimap:
+    plugins:
+      "minimap-autohide": true
+      "minimap-autohideDecorationsZIndex": 0
   "ruby-test": {}
   "spell-check": {}
-  "sync-settings":
-    gistId: "7b08d0a87d39e761edfa"
-    personalAccessToken: "0a53a7af75d33340cc962ca16fb535c315285f6c"
   term3:
     colors:
       background:

@@ -6,6 +6,7 @@ require 'tempfile'
 # TODO
 # optparse使う
 # テストコードをファイル内に用意する
+# -fを廃止。-fで見出しのみを表示する。（リッチなツリー表示）
 
 # Full-text search for .memorandum
 class MemoSearch
@@ -49,7 +50,7 @@ class MemoSearch
         elsif quoting
           printing_lines << '    ' + Util.ansi_colorize(line, Util::COL::GREEN, ws)
         elsif line =~ /^#/
-          printing_lines << '  ' + Util.ansi_colorize(line, Util::COL::GREEN, ws)
+          printing_lines << '  ' + Util.ansi_colorize(line, Util::COL::YELLOW, ws)
         else
           printing_lines << '  ' + Util.ansi_colorize(line, nil, ws)
         end
@@ -66,19 +67,21 @@ class MemoSearch
       (@opts.include? 'r') ? Regexp.new(w) : w
     end
     if @words == []
-      puts "usage: m [option] <検索ワード>+"
-      puts "  -s 検索結果を標準出力に表示(デフォルトはlessで表示)"
-      puts "  -t 見出し文字列のみを検索対象とする"
-      puts "  -r 検索ワードを正規表現として扱う"
-      puts "  -f 検索ワードにヒットする項目を含むファイル名のみを標準出力に表示する"
+      puts 'usage: m [option] <検索ワード>+'
+      puts '  -s 検索結果を標準出力に表示(デフォルトはlessで表示)'
+      puts '  -t 見出し文字列のみを検索対象とする'
+      puts '  -r 検索ワードを正規表現として扱う'
+      puts '  -f 検索ワードにヒットする項目を含むファイル名のみを標準出力に表示する'
       exit(1)
     end
   end
 
+  # TODO
+  # ファイル名、上位ブロックテキストも検索のターゲットに含める
   def search
     sections = []
     @files.each do |fpath|
-      File.open(fpath, "r") do |f|
+      File.open(fpath, 'r') do |f|
         buf = []
         ws = @words.clone
         f.each_line do |line|
@@ -90,7 +93,7 @@ class MemoSearch
             ws = @words.clone
           end
           buf << line
-          if !(@opts.include? "t") || line =~ /^#/
+          if !(@opts.include? 't') || line =~ /^#/
             ws.reject!{|w| line.index(w)}
           end
         end
@@ -116,7 +119,7 @@ class MemoSearch
   def process
     sections = search()
     if sections == []
-      puts words_str() + "にヒットするメモはありませんでした。"
+      puts words_str() + 'にヒットするメモはありませんでした'
       exit(0)
     end
     if @opts.include? 'f'
@@ -126,7 +129,7 @@ class MemoSearch
     elsif @opts.include? 's'
       print_result(sections, STDOUT)
     else
-      Tempfile.open(["memo_search_result", ".md"]) do |f|
+      Tempfile.open(['result', '.md']) do |f|
         print_result(sections, f)
         f.flush
         system("less -fr #{f.path}")
