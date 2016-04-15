@@ -10,7 +10,10 @@
 $ cd ~/.ssh
 $ ssh-keygen -t rsa # 適当な名前hogeを入力。パスは空欄でもよい。
 $ chmod 600 hoge
-$ emacs config # ホストgithubに対してhogeを使う旨を設定する。bitbucketの場合はHostとHostNameをbitbucket.orgにする。
+# ホストgithubに対してhogeを使う旨を設定する。
+# bitbucketの場合はHostとHostNameをbitbucket.orgにする。
+$ emacs config
+
 Host github
   HostName github.com
   IdentityFile ~/.ssh/hoge
@@ -21,6 +24,24 @@ remote-repositoryのURIは
 ```
 git@github.com:username/repositoryname.git
 git@bitbucket.org:username/repositoryname.git
+```
+
+# ssh-serverの公開鍵を確認
+RSA暗号の原理上、クライアントはサーバ(IP)の公開鍵を事前に正しく知っておく必要が有る。
+たとえばHTTPSではroot鍵をあらかじめブラウザ等に組み込んでおくことで、
+世界中のサーバ(IP)の正しい公開鍵をクライアントに伝達する。
+SSHでは、接続先のサーバ(IP)の公開鍵をあらかじめクライアントに設定しておくという手法をとる。
+デフォルトでは、最初に接続した先の公開鍵が正しい鍵として自動で設定される。その場合には当然、
+自動設定されたその公開鍵が正しいかどうかはユーザが目で見て確認してやる必要が有る。
+
+具体的には、クライアントから初回接続した際に以下のように表示される公開鍵と、
+```
+RSA key fingerprint is 6c:74:fd:ea:70:b2:d2:b4:b0:c9:67:4e:58:cb:31:60.
+```
+sshを介さずに直接サーバにアクセスし、
+以下のコマンドを実行することによって表示できる公開鍵が一致するか確認する。
+```
+$ ssh-keygen -lf /etc/ssh/ssh_host_rsa_key.pub
 ```
 
 ## cd - command

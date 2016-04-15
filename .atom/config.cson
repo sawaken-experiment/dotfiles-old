@@ -7,6 +7,9 @@
       "haskell-ghc-mod"
     ]
     excludeVcsIgnoredPaths: false
+    packagesWithKeymapsDisabled: [
+      "term3"
+    ]
     themes: [
       "atom-dark-ui"
       "one-dark-syntax"
