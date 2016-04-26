@@ -103,7 +103,7 @@ crwxr-xr-x. 1 root root 248, 3  4月 13 10:16 2016 /dev/asv52203
 定番のNTTのあれ。LEDが点滅したら多分OK。
 debianで構築したときはアイドル時点灯でアクセス時に点滅したので、
 バージョンか何かによって異なる？
-ドライバさえCCIDに用意されていれば他の製品でも問題なし(?)
+ドライバさえCCIDに用意されていれば他の製品でも問題なし。
 ```
 $ sudo yum -y install pcsc-lite pcsc-lite-devel pcsc-lite-libs ccid
 $ wget http://pkgs.repoforge.org/rpmforge-release/rpmforge-release-0.5.3-1.el6.rf.x86_64.rpm
@@ -157,7 +157,7 @@ KEYBOARDTYPE="pc"
 ```
 
 データ受け渡しの仲介役としてgithubなどのリモートリポジトリを使う。
-WinSCPとかでもいいけどインストールするのが面倒なので。
+WinSCPとかでも問題ない。
 ```
 # mkdir /home/foltia/binary
 # cp $(which recpt1) $(which recpt1ctl) $(which checksignal) /home/foltia/binary/

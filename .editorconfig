@@ -1,3 +1,4 @@
+# これより継承関係を辿りたくない場合はtrueにする
 root = true
 
 [*]
@@ -5,5 +6,9 @@ end_of_line = lf
 charset = utf-8
 indent_style = space
 indent_size = 2
-trim_trailing_whitespace = true
+trim_trailing_whitespace = true # 行末のwhitespaceを削除する
 insert_final_newline = true
+
+# ファイル種別ごとの設定
+[*.{hoge,fuga}]
+indent_size = 10
