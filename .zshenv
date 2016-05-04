@@ -1,6 +1,6 @@
 # 雑用スクリプトのパスを通す
 export PATH="$HOME/.script:$PATH"
 
-# rbenvのパスを通す
-export PATH="$HOME/.rbenv/bin:$PATH"
-eval "$(rbenv init -)"
+# anyenvのパスを通す
+export PATH="$HOME/.anyenv/bin:$PATH"
+eval "$(anyenv init -)"

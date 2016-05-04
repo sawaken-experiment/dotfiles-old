@@ -20,7 +20,7 @@ do
       if [ "$curlink" == "$src" ]; then
         :
       else
-        echo "There is already something at: $dest"
+        echo "warning: There is already something at: $dest"
       fi
     else
       eval "ln -s $src $dest"

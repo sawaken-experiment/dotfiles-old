@@ -19,7 +19,7 @@ do
       if [ "$curlink" == "$src" ]; then
         eval "rm $dest"
       else
-        echo "Not my link: $dest"
+        echo "warning: $dest is not my link"
       fi
     fi
  done
