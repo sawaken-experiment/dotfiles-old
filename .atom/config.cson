@@ -5,6 +5,7 @@
     disabledPackages: [
       "symbols-view"
       "haskell-ghc-mod"
+      "highlight-selected"
     ]
     excludeVcsIgnoredPaths: false
     packagesWithKeymapsDisabled: [

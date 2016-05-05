@@ -2,5 +2,7 @@
 export PATH="$HOME/.script:$PATH"
 
 # anyenvのパスを通す
-export PATH="$HOME/.anyenv/bin:$PATH"
-eval "$(anyenv init -)"
+if [ -d $HOME/.anyenv ]; then
+  export PATH="$HOME/.anyenv/bin:$PATH"
+  eval "$(anyenv init -)"
+fi
