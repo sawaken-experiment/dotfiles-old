@@ -23,7 +23,6 @@ namespace :osx do
   task 'install-cask' do
     next if which 'cask'
     sh 'brew tap caskroom/cask'
-    sh 'brew install brew-cask'
   end
 
   # TeX
