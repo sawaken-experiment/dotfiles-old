@@ -38,7 +38,9 @@ def dotfile_status_colorized(dotfile_name)
 end
 
 def shift_path(path)
-  ENV['PATH'] = "#{path}:#{ENV['PATH']}"
+  paths = ENV['PATH'].split(':')
+  paths.push(path)
+  ENV['PATH'] = paths.uniq.join(':')
 end
 
 def red(txt)
@@ -57,7 +59,12 @@ end
 # 注意) anyenvを利用するためには、SHELLが以下の条件を満たす必要が有る
 #        * anyenvのパスが通っていること
 #        * anyenv initが実行されていること
-def ash(command)
+def ash(command, &proc)
   shift_path("#{ENV['HOME']}/.anyenv/bin")
-  sh 'eval "$(anyenv init -)"; ' + command
+  sh('eval "$(anyenv init -)"; ' + command, &proc)
+end
+
+def asho(command)
+  shift_path("#{ENV['HOME']}/.anyenv/bin")
+  `eval "$(anyenv init -)"; #{command}`
 end

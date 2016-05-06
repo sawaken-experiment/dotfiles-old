@@ -43,11 +43,7 @@ namespace :osx do
     sh 'brew cask install java7'
     sh 'brew cask install java'
     Dir.glob('/Library/Java/JavaVirtualMachines/jdk*') do |d|
-      begin
-        ash "echo n | jenv add #{d}/Contents/Home"
-      rescue
-        nil
-      end
+      ash "echo \"y\ny\ny\n\" | jenv add #{d}/Contents/Home"
     end
     ash 'jenv global 1.8'
     ash 'jenv rehash'

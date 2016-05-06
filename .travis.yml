@@ -1,6 +1,5 @@
 # TravisCIの設定ファイル.
 language:
   - objective-c
-  - ruby
 script:
   - 'rake test-osx:install-java'
