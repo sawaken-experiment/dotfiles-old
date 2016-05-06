@@ -9,8 +9,11 @@ if [ "$(uname)" == 'Darwin' ]; then
     xcode-select --install
   fi
 elif [ which apt-get ]; then
+  sudo apt-get update
   sudo apt-get install -y build-essential git ruby
+  sudo apt-get install -y libssl-dev libreadline-dev zlib1g-dev
 elif [ which yum ]; then
+  sudo yum update
   sudo yum groupinstall -y "Development Tools"
   sudo yum install -y kernel-devel kernel-headers ruby
 else
