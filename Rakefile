@@ -25,12 +25,12 @@ task 'setup-osx' do
   puts green("setup succeeded!")
 end
 
-desc 'OSXの環境を解体する'
-task 'drop-osx' do
+desc 'OSXの環境をリセットする'
+task 'clear-osx' do
   tasks = namespace('common:remove'){}.tasks + namespace('osx:remove'){}.tasks
   tasks.each do |t|
     t.invoke
   end
   print "\n"
-  puts green("drop succeeded!")
+  puts green("clear succeeded!")
 end

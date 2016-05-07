@@ -41,7 +41,7 @@ namespace :common do
     desc "anyenvから#{xxenv_name}を削除する"
     task "remove:#{xxenv_name}" do
       next unless File.exist?(xxenv)
-      ash "anyenv uninstall #{xxenv_name}" if File.exist?(xxenv)
+      ash "echo y | anyenv uninstall #{xxenv_name}" if File.exist?(xxenv)
       fail 'assert' unless asho("which #{xxenv_name}") == ''
     end
   end
@@ -64,7 +64,7 @@ namespace :common do
   desc 'goenvを用いてGoをインストールする'
   task 'install:go' => 'install:goenv' do
     v = '1.6'
-    ash "goenv install #{v}" unless asho('goenv versions').index(v)
+    ash "goenv install #{v} 2>/dev/null" unless asho('goenv versions').index(v)
     ash "goenv global #{v}"
     ash 'goenv rehash'
     fail 'assert' unless asho('go version').index(v)
@@ -105,9 +105,11 @@ namespace :common do
   desc 'plenvを用いてPerl5とCPANをインストールする'
   task 'install:perl' => 'install:plenv' do
     v = '5.22.2'
-    ash "plenv install #{v}" unless asho('plenv versions').index(v)
+    unless asho('plenv versions').index(v)
+      ash "plenv install #{v} 2>/dev/null 1>/dev/null"
+    end
     ash "plenv global #{v}"
-    ash 'plenv install-cpanm'
+    ash 'plenv install-cpanm 2>/dev/null 1>/dev/null'
     fail 'assert' unless asho('perl -v').index(v)
   end
 
