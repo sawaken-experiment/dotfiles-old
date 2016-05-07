@@ -9,7 +9,6 @@ namespace :osx do
     next if which 'brew'
     url = 'https://raw.githubusercontent.com/Homebrew/install/master/install'
     sh "ruby -e \"$(curl -fsSL #{url})\""
-    sh 'brew tap caskroom/cask'
     fail 'assert' unless which 'brew'
   end
 
@@ -34,6 +33,7 @@ namespace :osx do
 
   desc 'jenvとbrewを用いてJavaをインストールする'
   task 'install:java' => ['common:install:jenv', 'install:homebrew'] do
+    sh 'brew tap caskroom/cask'
     sh 'brew tap caskroom/versions'
     sh 'brew cask install java6'
     sh 'brew cask install java7'
