@@ -72,7 +72,7 @@ namespace :common do
     ash "goenv install #{v}" unless asho('goenv versions').index(v)
     ash "goenv global #{v}"
     ash 'goenv rehash'
-    fail 'assert' unless asho('go -v').index(v)
+    fail 'assert' unless asho('go version').index(v)
   end
 
   # Python
@@ -84,12 +84,12 @@ namespace :common do
     ash "pyenv install #{v2}" unless asho('pyenv versions').index(v2)
     ash "pyenv global #{v2}"
     ash 'pyenv rehash'
-    fail 'assert' unless asho('python -v').index(v2)
+    fail 'assert' unless asho('python2 -V').index(v2)
     v3 = '3.5.1'
     ash "pyenv install #{v3}" unless asho('pyenv versions').index(v3)
     ash "pyenv global #{v3}"
     ash 'pyenv rehash'
-    fail 'assert' unless asho('python -v').index(v3)
+    fail 'assert' unless asho('python -V').index(v3)
   end
 
   # Node.js
@@ -138,7 +138,7 @@ namespace :common do
     end
     ash "sbtenv global sbt-#{v}"
     ash 'sbtenv rehash'
-    fail 'assert' unless asho('sbt -v').index(v)
+    fail 'assert' unless asho('sbt sbt-version').index(v)
   end
 
   # dotfiles
