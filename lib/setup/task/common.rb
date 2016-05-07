@@ -8,23 +8,23 @@ namespace :common do
   ANY_ENV = home('.anyenv')
 
   desc 'anyenvをインストールする'
-  task 'install-anyenv' => ANY_ENV
-  file ANY_ENV do
+  task 'install-anyenv' do
+    next if File.exist?(ANY_ENV)
     sh 'git clone https://github.com/riywo/anyenv $HOME/.anyenv'
+    fail 'assert' unless File.exist?(ANY_ENV)
   end
 
   desc 'anyenvを削除する'
   task 'remove-anyenv' do
-    if File.exist?(ANY_ENV)
-      print 'remove ~/.anyenv?'
-      if STDIN.gets.chomp == 'y'
-        sh "rm -fr #{ANY_ENV}"
-      else
-        fail 'removing anyenv is canceled'
-      end
+    next unless File.exist?(ANY_ENV)
+    print 'remove ~/.anyenv?'
+    if STDIN.gets.chomp == 'y'
+      sh "rm -fr #{ANY_ENV}"
+    else
+      fail 'removing anyenv is canceled'
     end
+    fail 'assert' if File.exist?(ANY_ENV)
   end
-
 
   # **env
   # ----------
@@ -35,15 +35,19 @@ namespace :common do
 
   XX_ENV_NAMES.each do |xxenv_name|
     xxenv = home('.anyenv/envs/' + xxenv_name)
+
     desc "anyenvを用いて#{xxenv_name}をインストールする"
-    task "install-#{xxenv_name}" => xxenv
-    file xxenv => ANY_ENV do
+    task "install-#{xxenv_name}" => 'install-anyenv' do
+      next if File.exist?(xxenv)
       ash "anyenv install #{xxenv_name}"
+      fail 'assert' if asho("which #{xxenv_name}") == ''
     end
 
     desc "anyenvから#{xxenv_name}を削除する"
     task "remove-#{xxenv_name}" do
+      next unless File.exist?(xxenv)
       ash "anyenv uninstall #{xxenv_name}" if File.exist?(xxenv)
+      fail 'assert' unless asho("which #{xxenv_name}") == ''
     end
   end
 
@@ -52,9 +56,11 @@ namespace :common do
 
   desc 'rbenvを用いてRuby環境を構築'
   task 'install-ruby' => 'install-rbenv' do
-    ash 'rbenv install 2.3.1' unless asho('rbenv versions').index('2.3.1')
-    ash 'rbenv global 2.3.1'
+    v = '2.3.1'
+    ash "rbenv install #{v}" unless asho('rbenv versions').index(v)
+    ash "rbenv global #{v}"
     ash 'rbenv rehash'
+    fail 'assert' unless asho('ruby -v').index(v)
   end
 
   # Golang
@@ -62,9 +68,11 @@ namespace :common do
 
   desc 'goenvを用いてGo環境を構築'
   task 'install-go' => 'install-goenv' do
-    ash 'goenv install 1.6' unless asho('goenv versions').index('1.6')
-    ash 'goenv global 1.6'
+    v = '1.6'
+    ash "goenv install #{v}" unless asho('goenv versions').index(v)
+    ash "goenv global #{v}"
     ash 'goenv rehash'
+    fail 'assert' unless asho('go -v').index(v)
   end
 
   # Python
@@ -72,47 +80,65 @@ namespace :common do
 
   desc 'pyenvを用いてPython環境を構築'
   task 'install-python' => 'install-pyenv' do
-    ash 'pyenv install 3.5.1' unless asho('pyenv versions').index('3.5.1')
-    ash 'pyenv install 2.7.11' unless asho('pyenv versions').index('2.7.11')
-    ash 'pyenv global 3.5.1 2.7.11'
+    v2 = '2.7.11'
+    ash "pyenv install #{v2}" unless asho('pyenv versions').index(v2)
+    ash "pyenv global #{v2}"
     ash 'pyenv rehash'
+    fail 'assert' unless asho('python -v').index(v2)
+    v3 = '3.5.1'
+    ash "pyenv install #{v3}" unless asho('pyenv versions').index(v3)
+    ash "pyenv global #{v3}"
+    ash 'pyenv rehash'
+    fail 'assert' unless asho('python -v').index(v3)
   end
 
   # Node.js
   # ----------
 
-  desc 'ndenvを用いてNode.js環境を構築'
+  desc 'ndenvを用いてNode.jsをインストールする'
   task 'install-nodejs' => 'install-ndenv' do
-    ash 'ndenv install v4.4.3' unless asho('ndenv versions').index('4.4.3')
-    ash 'ndenv global v4.4.3'
+    v = '4.4.3'
+    ash "ndenv install v#{v}" unless asho('ndenv versions').index(v)
+    ash "ndenv global v#{v}"
     ash 'ndenv rehash'
+    fail 'assert' unless asho('node -v').index(v)
   end
 
   # Perl
   # ----------
 
-  desc 'plenvを用いてPerl環境を構築'
+  desc 'plenvを用いてPerlとCPANをインストールする'
   task 'install-perl' => 'install-plenv' do
-    ash 'plenv install 5.22.2' unless asho('plenv versions').index('5.22.2')
-    ash 'plenv global 5.22.2'
+    v = '5.22.2'
+    ash "plenv install #{v}" unless asho('plenv versions').index(v)
+    ash "plenv global #{v}"
     ash 'plenv install-cpanm'
+    fail 'assert' unless asho('perl -v').index(v)
   end
 
   # Scala
   # ----------
 
-  desc 'scalaenvを用いてScala/SBT環境を構築'
-  task 'install-scala' => ['install-scalaenv', 'install-sbtenv'] do
-    unless asho('scalaenv versions').index('scala-2.11.8')
-      ash 'scalaenv install scala-2.11.8'
+  desc 'scalaenvを用いてScalaをインストールする'
+  task 'install-scala' => 'install-scalaenv' do
+    v = '2.11.8'
+    unless asho('scalaenv versions').index(v)
+      ash "scalaenv install scala-#{v}"
     end
-    ash 'scalaenv global scala-2.11.8'
+    ash "scalaenv global scala-#{v}"
     ash 'scalaenv rehash'
-    unless asho('sbtenv versions').index('sbt-0.13.11')
-      ash 'sbtenv install sbt-0.13.11'
+    fail 'assert' unless asho('scala -version').index(v)
+  end
+
+  desc 'sbtenvを用いてSBTをインストールする'
+  task 'install-sbt' => 'install-sbtenv' do
+    v = '0.13.11'
+    unless asho('sbtenv versions').index(v)
+      ash "sbtenv install sbt-#{v}"
     end
-    ash 'sbtenv global sbt-0.13.11'
+    ash "sbtenv global sbt-#{v}"
     ash 'sbtenv rehash'
+    fail 'assert' unless asho('sbt -v').index(v)
   end
 
   # dotfiles
@@ -121,12 +147,14 @@ namespace :common do
   DOTFILES = Dir.glob('.*[^~#.]') - ['.git', '.DS_Store', '.travis.yml']
 
   desc 'dotfilesが管理する全dotfileのリンクを張る'
-  task 'install-dotfiles' => DOTFILES.map{|dotfile| home(dotfile)}
-  DOTFILES.each do |dotfile|
-    dotfile_path_home = home(dotfile)
-    dotfile_path_here = File.expand_path(dotfile)
-    rule dotfile_path_home do
-      symlink(dotfile_path_here, dotfile_path_home)
+  task 'install-dotfiles' do
+    DOTFILES.each do |dotfile|
+      dotfile_path_home = home(dotfile)
+      dotfile_path_here = File.expand_path(dotfile)
+      unless File.exist?(dotfile_path_home)
+        symlink(dotfile_path_here, dotfile_path_home)
+      end
+      fail 'assert' unless File.exist?(dotfile_path_home)
     end
   end
 
@@ -147,6 +175,9 @@ namespace :common do
       if File.exist?(dotfile_path_home)
         link_dest = `readlink #{dotfile_path_home}`.chomp
         rm dotfile_path_home if link_dest == dotfile_path_here
+      end
+      if `readlink #{dotfile_path_home}`.chomp == dotfile_path_here
+        fail 'assert'
       end
     end
   end
