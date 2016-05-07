@@ -15,10 +15,22 @@ require 'setup/util'
 require 'setup/task/common'
 require 'setup/task/osx'
 
-desc 'OSXの環境を構築'
+desc 'OSXの環境を構築する'
 task 'setup-osx' do
-  tasks = namespace(:common){}.tasks + namespace(:osx){}.tasks
+  tasks = namespace('common:install'){}.tasks + namespace('osx:install'){}.tasks
   tasks.each do |t|
     t.invoke
   end
+  print "\n"
+  puts green("setup succeeded!")
+end
+
+desc 'OSXの環境を解体する'
+task 'drop-osx' do
+  tasks = namespace('common:remove'){}.tasks + namespace('osx:remove'){}.tasks
+  tasks.each do |t|
+    t.invoke
+  end
+  print "\n"
+  puts green("drop succeeded!")
 end

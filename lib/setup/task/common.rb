@@ -8,21 +8,16 @@ namespace :common do
   ANY_ENV = home('.anyenv')
 
   desc 'anyenvをインストールする'
-  task 'install-anyenv' do
+  task 'install:anyenv' do
     next if File.exist?(ANY_ENV)
     sh 'git clone https://github.com/riywo/anyenv $HOME/.anyenv'
     fail 'assert' unless File.exist?(ANY_ENV)
   end
 
   desc 'anyenvを削除する'
-  task 'remove-anyenv' do
+  task 'remove:anyenv' do
     next unless File.exist?(ANY_ENV)
-    print 'remove ~/.anyenv?'
-    if STDIN.gets.chomp == 'y'
-      sh "rm -fr #{ANY_ENV}"
-    else
-      fail 'removing anyenv is canceled'
-    end
+    sh "rm -fr #{ANY_ENV}"
     fail 'assert' if File.exist?(ANY_ENV)
   end
 
@@ -37,14 +32,14 @@ namespace :common do
     xxenv = home('.anyenv/envs/' + xxenv_name)
 
     desc "anyenvを用いて#{xxenv_name}をインストールする"
-    task "install-#{xxenv_name}" => 'install-anyenv' do
+    task "install:#{xxenv_name}" => 'install:anyenv' do
       next if File.exist?(xxenv)
       ash "anyenv install #{xxenv_name}"
       fail 'assert' if asho("which #{xxenv_name}") == ''
     end
 
     desc "anyenvから#{xxenv_name}を削除する"
-    task "remove-#{xxenv_name}" do
+    task "remove:#{xxenv_name}" do
       next unless File.exist?(xxenv)
       ash "anyenv uninstall #{xxenv_name}" if File.exist?(xxenv)
       fail 'assert' unless asho("which #{xxenv_name}") == ''
@@ -55,7 +50,7 @@ namespace :common do
   # ----------
 
   desc 'rbenvを用いてRuby環境を構築'
-  task 'install-ruby' => 'install-rbenv' do
+  task 'install:ruby' => 'install:rbenv' do
     v = '2.3.1'
     ash "rbenv install #{v}" unless asho('rbenv versions').index(v)
     ash "rbenv global #{v}"
@@ -66,8 +61,8 @@ namespace :common do
   # Golang
   # ----------
 
-  desc 'goenvを用いてGo環境を構築'
-  task 'install-go' => 'install-goenv' do
+  desc 'goenvを用いてGoをインストールする'
+  task 'install:go' => 'install:goenv' do
     v = '1.6'
     ash "goenv install #{v}" unless asho('goenv versions').index(v)
     ash "goenv global #{v}"
@@ -78,25 +73,25 @@ namespace :common do
   # Python
   # ----------
 
-  desc 'pyenvを用いてPython環境を構築'
-  task 'install-python' => 'install-pyenv' do
+  desc 'pyenvを用いてPython2/Python3をインストールする'
+  task 'install:python' => 'install:pyenv' do
     v2 = '2.7.11'
     ash "pyenv install #{v2}" unless asho('pyenv versions').index(v2)
     ash "pyenv global #{v2}"
     ash 'pyenv rehash'
-    fail 'assert' unless asho('python2 -V').index(v2)
+    fail 'assert' unless asho('python2 -V 2>&1').index(v2)
     v3 = '3.5.1'
     ash "pyenv install #{v3}" unless asho('pyenv versions').index(v3)
     ash "pyenv global #{v3}"
     ash 'pyenv rehash'
-    fail 'assert' unless asho('python -V').index(v3)
+    fail 'assert' unless asho('python -V 2>&1').index(v3)
   end
 
   # Node.js
   # ----------
 
   desc 'ndenvを用いてNode.jsをインストールする'
-  task 'install-nodejs' => 'install-ndenv' do
+  task 'install:nodejs' => 'install:ndenv' do
     v = '4.4.3'
     ash "ndenv install v#{v}" unless asho('ndenv versions').index(v)
     ash "ndenv global v#{v}"
@@ -107,8 +102,8 @@ namespace :common do
   # Perl
   # ----------
 
-  desc 'plenvを用いてPerlとCPANをインストールする'
-  task 'install-perl' => 'install-plenv' do
+  desc 'plenvを用いてPerl5とCPANをインストールする'
+  task 'install:perl' => 'install:plenv' do
     v = '5.22.2'
     ash "plenv install #{v}" unless asho('plenv versions').index(v)
     ash "plenv global #{v}"
@@ -120,18 +115,18 @@ namespace :common do
   # ----------
 
   desc 'scalaenvを用いてScalaをインストールする'
-  task 'install-scala' => 'install-scalaenv' do
+  task 'install:scala' => 'install:scalaenv' do
     v = '2.11.8'
     unless asho('scalaenv versions').index(v)
       ash "scalaenv install scala-#{v}"
     end
     ash "scalaenv global scala-#{v}"
     ash 'scalaenv rehash'
-    fail 'assert' unless asho('scala -version').index(v)
+    fail 'assert' unless asho('scala -version 2>&1').index(v)
   end
 
   desc 'sbtenvを用いてSBTをインストールする'
-  task 'install-sbt' => 'install-sbtenv' do
+  task 'install:sbt' => 'install:sbtenv' do
     v = '0.13.11'
     unless asho('sbtenv versions').index(v)
       ash "sbtenv install sbt-#{v}"
@@ -147,7 +142,7 @@ namespace :common do
   DOTFILES = Dir.glob('.*[^~#.]') - ['.git', '.DS_Store', '.travis.yml']
 
   desc 'dotfilesが管理する全dotfileのリンクを張る'
-  task 'install-dotfiles' do
+  task 'install:dotfiles' do
     DOTFILES.each do |dotfile|
       dotfile_path_home = home(dotfile)
       dotfile_path_here = File.expand_path(dotfile)
@@ -159,7 +154,7 @@ namespace :common do
   end
 
   desc 'dotfilesが管理する全dotfileのリンク状態を表示する'
-  task 'show-dotfiles' do
+  task 'show:dotfiles' do
     width = DOTFILES.map(&:size).max
     DOTFILES.each do |dotfile|
       status = dotfile_status_colorized(dotfile)
@@ -168,7 +163,7 @@ namespace :common do
   end
 
   desc 'dotfilesが管理する全dotfileのリンクを外す'
-  task 'remove-dotfiles' do
+  task 'remove:dotfiles' do
     DOTFILES.each do |dotfile|
       dotfile_path_home = home(dotfile)
       dotfile_path_here = File.expand_path(dotfile)

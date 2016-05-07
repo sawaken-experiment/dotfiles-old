@@ -5,7 +5,7 @@ namespace :osx do
   # ----------
 
   desc 'Homebrewをインストールする'
-  task 'install-homebrew' do
+  task 'install:homebrew' do
     next if which 'brew'
     url = 'https://raw.githubusercontent.com/Homebrew/install/master/install'
     sh "ruby -e \"$(curl -fsSL #{url})\""
@@ -14,7 +14,7 @@ namespace :osx do
   end
 
   desc 'Homebrewをアンインストールする'
-  task 'remove-homebrew' do
+  task 'remove:homebrew' do
     next unless which 'brew'
     script = 'https://gist.githubusercontent.com/mxcl/1173223/raw/afa922fc4ea5851578f4680c6ac11a54a84ff20c/uninstall_homebrew.sh'
     sh "curl -sf #{script} | sh -s"
@@ -25,7 +25,7 @@ namespace :osx do
   # ----------
 
   #desc 'brew-caskからMacTeXをインストールする'
-  task 'install-latex' => 'install-homebrew' do
+  task 'install:latex' => 'install:homebrew' do
 
   end
 
@@ -33,7 +33,7 @@ namespace :osx do
   # ----------
 
   desc 'jenvとbrewを用いてJavaをインストールする'
-  task 'install-java' => ['common:install-jenv', 'install-homebrew'] do
+  task 'install:java' => ['common:install:jenv', 'install:homebrew'] do
     sh 'brew tap caskroom/versions'
     sh 'brew cask install java6'
     sh 'brew cask install java7'
@@ -43,6 +43,6 @@ namespace :osx do
     end
     ash 'jenv global 1.8'
     ash 'jenv rehash'
-    fail 'assert' unless asho("java -version").index('1.8')
+    fail 'assert' unless asho("java -version 2>&1").index('1.8')
   end
 end
