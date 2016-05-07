@@ -1,5 +1,4 @@
 require 'setup/util'
-require 'setup/task/common'
 
 namespace :osx do
   # Homebrew

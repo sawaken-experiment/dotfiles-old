@@ -2,4 +2,8 @@
 language:
   - objective-c
 script:
+  - 'rake test-common:install-ruby'
+  - 'rake test-common:install-perl'
+  - 'rake test-common:install-python'
   - 'rake test-osx:install-java'
+  - 'rake test-common:install-dotfiles'
