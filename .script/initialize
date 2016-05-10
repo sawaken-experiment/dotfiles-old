@@ -1,3 +1,5 @@
+#!/bin/sh
+
 # --------------------
 # 初期設定スクリプト
 #   - ビルドツール(cc, git等)とRakeをインストールし,
@@ -7,6 +9,7 @@
 if [ "$(uname)" == 'Darwin' ]; then
   if [ ! which cc ]; then
     xcode-select --install
+    brew install git
   fi
 elif [ which apt-get ]; then
   sudo apt-get update

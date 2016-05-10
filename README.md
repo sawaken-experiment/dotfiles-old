@@ -10,7 +10,7 @@ OSX, Linux(apt-getかyumが利用出来る環境).
 
 実行例:
 ```sh
-$ curl -sf https://raw.githubusercontent.com/sawaken/dotfiles/master/init.sh | sh -s
+$ curl -sf https://raw.githubusercontent.com/sawaken/dotfiles/master/.script/initialize | sh -s
 $ cd ~/dotfiles
 $ rake osx:setting # rake -Tで項目の一覧を表示
 ```

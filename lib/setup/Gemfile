@@ -1,0 +1,4 @@
+# gemを取得するリポジトリの設定
+source "https://rubygems.org"
+
+gem 'pry'

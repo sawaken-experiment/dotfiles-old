@@ -1,6 +1,14 @@
 require 'setup/util'
 
 namespace :osx do
+
+  desc '(Homebrew-caskを用いない)OSX項目を全てインストールする'
+  task 'install' do
+    namespace('osx:install'){}.tasks.each do |t|
+      t.invoke
+    end
+  end
+
   # Homebrew
   # ----------
 
@@ -20,18 +28,82 @@ namespace :osx do
     fail 'assert' if which 'brew'
   end
 
-  # TeX
+  # CUI-Tools
   # ----------
 
-  #desc 'brew-caskからMacTeXをインストールする'
-  task 'install:latex' => 'install:homebrew' do
+  desc '各種コマンドラインツールをインストールする'
+  task 'install:cui-tools' => 'install:homebrew' do
+    # tmux
+    sh 'brew install tmux reattach-to-user-namespace'
+  end
 
+
+  # Terminal Theme
+  # ----------
+
+  desc 'Terminal.appのテーマSolarized-Darkをインストールする'
+  task 'install:terminal-theme' do
+    url = 'https://github.com/tomislav/osx-terminal.app-colors-solarized'
+    begin
+      sh "git clone #{url} ./solarized"
+      sh "open -a Terminal.app \"./solarized/Solarized Dark.terminal\""
+    ensure
+      sh 'rm -fr ./solarized'
+    end
+  end
+
+  # Keynote Theme
+  # ----------
+
+  desc 'KeynoteのテーマAzusa-Colorsをインストールする'
+  task 'install:keynote-theme' do
+    begin
+      sh "git clone https://github.com/sanographix/azusa-colors/ ./azusa-colors"
+      cd './azusa-colors' do
+        sh 'unzip theme-azusa-colors.kth.zip'
+        sh 'open theme-azusa-colors.kth'
+      end
+      sh "rm -rf ./azusa-colors"
+    end
+  end
+end
+
+# Cask
+# ----------
+namespace 'osx-cask' do
+
+  desc 'Homebrew-caskを用いるOSX項目を全てインストールする'
+  task 'install' do
+    namespace('osx:cask:install'){}.tasks.each do |t|
+      t.invoke
+    end
+  end
+
+  # GUI-Tools
+  # ----------
+
+  desc 'homebrew-caskを用いて各種APPをインストールする'
+  task 'install:gui-tools' => 'install:homebrew' do
+    sh 'brew tap caskroom/cask'
+    # Atom
+    sh 'brew cask install atom'
+    sh 'apm install --packages-file .atom/pkg-list'
+    # IntelliJ
+    sh 'brew cask install intellij-ide'
+    # ブラウザ
+    sh 'brew cask install firefox'
+    sh 'brew cask install google-chrome'
+    # TeX
+    # キーボード設定util(リピート速度, リピート認識開始速度)
+    sh 'brew cask install karabiner'
+    # ターミナル
+    sh 'brew cask install iterm2'
   end
 
   # Java
   # ----------
 
-  desc 'jenvとbrewを用いてJavaをインストールする'
+  desc 'jenvとbrewを用いてJava6,7,8をインストールする'
   task 'install:java' => ['common:install:jenv', 'install:homebrew'] do
     sh 'brew tap caskroom/cask'
     sh 'brew tap caskroom/versions'

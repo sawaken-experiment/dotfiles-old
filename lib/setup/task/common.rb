@@ -2,6 +2,13 @@ require 'setup/util'
 
 namespace :common do
 
+  desc '共通項目を全てインストールする'
+  task 'install' do
+    namespace('common:install'){}.tasks.each do |t|
+      t.invoke
+    end
+  end
+
   # anyenv
   # ----------
 
@@ -49,12 +56,21 @@ namespace :common do
   # Ruby
   # ----------
 
-  desc 'rbenvを用いてRuby環境を構築'
+  desc 'rbenvを用いてRubyをインストール'
   task 'install:ruby' => 'install:rbenv' do
+    # rbenvのプラグインをインストール
+    path = ENV['HOME'] + '/.anyenv/envs/rbenv/plugins/rbenv-binstubs'
+    unless File.exist?(path)
+      sh "git clone https://github.com/ianheggie/rbenv-binstubs.git #{path}"
+    end
     v = '2.3.1'
     ash "rbenv install #{v}" unless asho('rbenv versions').index(v)
     ash "rbenv global #{v}"
+    # GemのGlobalインストール
+    ash 'rbenv exec gem install bundle pry travis --no-rdoc --no-ri'
     ash 'rbenv rehash'
+    ash 'bundle -v; pry -v'
+    ash 'echo y | travis -v'
     fail 'assert' unless asho('ruby -v').index(v)
   end
 
@@ -76,14 +92,12 @@ namespace :common do
   desc 'pyenvを用いてPython2/Python3をインストールする'
   task 'install:python' => 'install:pyenv' do
     v2 = '2.7.11'
+    v3 = '3.5.1'
     ash "pyenv install #{v2}" unless asho('pyenv versions').index(v2)
-    ash "pyenv global #{v2}"
+    ash "pyenv install #{v3}" unless asho('pyenv versions').index(v3)
+    ash "pyenv global #{v3} #{v2}"
     ash 'pyenv rehash'
     fail 'assert' unless asho('python2 -V 2>&1').index(v2)
-    v3 = '3.5.1'
-    ash "pyenv install #{v3}" unless asho('pyenv versions').index(v3)
-    ash "pyenv global #{v3}"
-    ash 'pyenv rehash'
     fail 'assert' unless asho('python -V 2>&1').index(v3)
   end
 

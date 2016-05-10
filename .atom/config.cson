@@ -28,7 +28,12 @@
       "minimap-autohide": true
       "minimap-autohideDecorationsZIndex": 0
   "ruby-test": {}
-  "spell-check": {}
+  "spell-check":
+    grammars: [
+      "source.asciidoc"
+      "text.git-commit"
+      "text.plain.null-grammar"
+    ]
   term3:
     colors:
       background:

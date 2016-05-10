@@ -162,3 +162,6 @@ case ${OSTYPE} in
         alias ls='ls -F --color=auto'
         ;;
 esac
+
+# added by travis gem
+[ -f /Users/sawada/.travis/travis.sh ] && source /Users/sawada/.travis/travis.sh
