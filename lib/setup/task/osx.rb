@@ -109,23 +109,23 @@ namespace 'osx-cask' do
 
   desc 'homebrew-caskを用いて各種APPをインストールする'
   task 'install:gui-tools' => 'osx:install:homebrew' do
-    sh 'brew tap caskroom/cask'
+    shq 'brew tap caskroom/cask'
     # Atom
-    sh 'brew cask install atom'
-    sh 'apm install --packages-file .atom/pkg-list'
+    shq 'brew cask install atom'
+    shq 'apm install --packages-file .atom/pkg-list'
     # IntelliJ
-    sh 'brew cask install intellij-idea'
+    shq 'brew cask install intellij-idea'
     # ブラウザ
-    sh 'brew cask install firefox'
-    sh 'brew cask install google-chrome'
+    shq 'brew cask install firefox'
+    shq 'brew cask install google-chrome'
     # TeX
     # キーボード設定util(リピート速度, リピート認識開始速度)
-    sh 'brew cask install karabiner'
+    shq 'brew cask install karabiner'
     # ターミナル
-    sh 'brew cask install iterm2'
+    shq 'brew cask install iterm2'
     # オンラインストレージ
-    sh 'brew cask install google-drive'
-    sh 'brew cask install dropbox'
+    shq 'brew cask install google-drive'
+    shq 'brew cask install dropbox'
   end
 
   # Java

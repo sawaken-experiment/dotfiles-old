@@ -68,3 +68,7 @@ def asho(command)
   shift_path("#{ENV['HOME']}/.anyenv/bin")
   `eval "$(anyenv init -)"; #{command}`
 end
+
+def shq(command)
+  sh command + ' | cat'
+end
