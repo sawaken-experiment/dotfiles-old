@@ -114,7 +114,7 @@ namespace 'osx-cask' do
     sh 'brew cask install atom'
     sh 'apm install --packages-file .atom/pkg-list'
     # IntelliJ
-    sh 'brew cask install intellij-ide'
+    sh 'brew cask install intellij-idea'
     # ブラウザ
     sh 'brew cask install firefox'
     sh 'brew cask install google-chrome'
