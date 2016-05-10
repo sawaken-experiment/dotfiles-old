@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.com/sawaken/dotfiles.svg?token=46Mp6xrHukCWQqyh951J&branch=master)](https://travis-ci.com/sawaken/dotfiles)
+
 # dotfiles
 クライアント環境のレシピ.
 

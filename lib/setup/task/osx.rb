@@ -68,6 +68,15 @@ namespace :osx do
   end
 end
 
+# Haskell
+# ----------
+
+desc 'homebrewとhaskell-stackを用いてHaskell開発環境をインストール'
+task 'install:haskell-stack' => 'install:homebrew' do
+  sh 'brew install haskell-stack'
+  sh 'stack setup'
+end
+
 # Cask
 # ----------
 namespace 'osx-cask' do
