@@ -2,4 +2,5 @@
 language:
   - objective-c
 script:
-  - 'rake setup-osx && rake setup-osx && rake clear-osx'
+  - 'rake setup-osx'
+  - 'rake clear-osx'

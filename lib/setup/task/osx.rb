@@ -23,15 +23,15 @@ namespace :osx do
   task 'install:homebrew' do
     next if which 'brew'
     url = 'https://raw.githubusercontent.com/Homebrew/install/master/install'
-    sh "ruby -e \"$(curl -fsSL #{url})\""
+    sh "echo \"\n\" | ruby -e \"$(curl -fsSL #{url})\""
     fail 'assert' unless which 'brew'
   end
 
   desc 'Homebrewをアンインストールする'
   task 'remove:homebrew' do
     next unless which 'brew'
-    script = 'https://gist.githubusercontent.com/mxcl/1173223/raw/afa922fc4ea5851578f4680c6ac11a54a84ff20c/uninstall_homebrew.sh'
-    sh "curl -sf #{script} | sh -s"
+    url = 'https://raw.githubusercontent.com/Homebrew/install/master/uninstall'
+    sh "echo y | ruby -e \"$(curl -fsSL #{url})\""
     fail 'assert' if which 'brew'
   end
 
@@ -41,7 +41,7 @@ namespace :osx do
   desc '各種コマンドラインツールをインストールする'
   task 'install:cui-tools' => 'install:homebrew' do
     # tmux
-    sh 'brew install tmux reattach-to-user-namespace'
+    shq 'brew install tmux reattach-to-user-namespace'
   end
 
   # Terminal Theme
@@ -133,11 +133,11 @@ namespace 'osx-cask' do
 
   desc 'jenvとbrewを用いてJava6,7,8をインストールする'
   task 'install:java' => ['common:install:jenv', 'osx:install:homebrew'] do
-    sh 'brew tap caskroom/cask'
-    sh 'brew tap caskroom/versions'
-    sh 'brew cask install java6'
-    sh 'brew cask install java7'
-    sh 'brew cask install java'
+    shq 'brew tap caskroom/cask'
+    shq 'brew tap caskroom/versions'
+    shq 'brew cask install java6'
+    shq 'brew cask install java7'
+    shq 'brew cask install java'
     Dir.glob('/Library/Java/JavaVirtualMachines/jdk*') do |d|
       ash "echo \"y\ny\ny\n\" | jenv add #{d}/Contents/Home"
     end
