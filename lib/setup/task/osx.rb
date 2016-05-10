@@ -83,7 +83,7 @@ namespace 'osx-cask' do
 
   desc 'Homebrew-caskを用いるOSX項目を全てインストールする'
   task 'install' do
-    namespace('osx:cask:install'){}.tasks.each do |t|
+    namespace('osx-cask:install'){}.tasks.each do |t|
       t.invoke
     end
   end
