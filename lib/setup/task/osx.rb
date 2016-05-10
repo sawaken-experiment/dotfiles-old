@@ -9,6 +9,13 @@ namespace :osx do
     end
   end
 
+  desc '(Homebrew-caskを用いない)OSX項目を全てアンインストールする'
+  task 'remove' do
+    namespace('osx:remove'){}.tasks.each do |t|
+      t.invoke
+    end
+  end
+
   # Homebrew
   # ----------
 
@@ -37,7 +44,6 @@ namespace :osx do
     sh 'brew install tmux reattach-to-user-namespace'
   end
 
-
   # Terminal Theme
   # ----------
 
@@ -56,13 +62,15 @@ namespace :osx do
   # ----------
 
   desc 'KeynoteのテーマAzusa-Colorsをインストールする'
-  task 'install:keynote-theme' do
+  task 'install:keynote-theme' => 'common:install:dotfiles' do
     begin
       sh "git clone https://github.com/sanographix/azusa-colors/ ./azusa-colors"
       cd './azusa-colors' do
         sh 'unzip theme-azusa-colors.kth.zip'
-        sh 'open theme-azusa-colors.kth'
+        sh 'mv -f theme-azusa-colors.kth $HOME/.dotfiles-target/'
       end
+      sh 'open $HOME/.dotfiles-target/theme-azusa-colors.kth'
+    ensure
       sh "rm -rf ./azusa-colors"
     end
   end
@@ -88,6 +96,13 @@ namespace 'osx-cask' do
     end
   end
 
+  desc 'Homebrew-caskを用いるOSX項目を全てアンインストールする'
+  task 'remove' do
+    namespace('osx-cask:remove'){}.tasks.each do |t|
+      t.invoke
+    end
+  end
+
   # GUI-Tools
   # ----------
 
@@ -107,6 +122,9 @@ namespace 'osx-cask' do
     sh 'brew cask install karabiner'
     # ターミナル
     sh 'brew cask install iterm2'
+    # オンラインストレージ
+    sh 'brew cask install google-drive'
+    sh 'brew cask install dropbox'
   end
 
   # Java

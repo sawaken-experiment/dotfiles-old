@@ -9,6 +9,13 @@ namespace :common do
     end
   end
 
+  desc '共通項目を全てアンインストールする'
+  task 'remove' do
+    namespace('common:remove'){}.tasks.each do |t|
+      t.invoke
+    end
+  end
+
   # anyenv
   # ----------
 
