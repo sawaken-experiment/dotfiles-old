@@ -86,6 +86,7 @@ task 'install:haskell-stack' => 'install:homebrew' do
 end
 
 # Cask
+#   - brew-cask-installはパスワードを尋ねられるので, 別namespaceに分けている.
 # ----------
 namespace 'osx-cask' do
 
@@ -107,7 +108,7 @@ namespace 'osx-cask' do
   # ----------
 
   desc 'homebrew-caskを用いて各種APPをインストールする'
-  task 'install:gui-tools' => 'install:homebrew' do
+  task 'install:gui-tools' => 'osx:install:homebrew' do
     sh 'brew tap caskroom/cask'
     # Atom
     sh 'brew cask install atom'
@@ -131,7 +132,7 @@ namespace 'osx-cask' do
   # ----------
 
   desc 'jenvとbrewを用いてJava6,7,8をインストールする'
-  task 'install:java' => ['common:install:jenv', 'install:homebrew'] do
+  task 'install:java' => ['common:install:jenv', 'osx:install:homebrew'] do
     sh 'brew tap caskroom/cask'
     sh 'brew tap caskroom/versions'
     sh 'brew cask install java6'
