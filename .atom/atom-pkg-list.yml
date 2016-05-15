@@ -1,0 +1,53 @@
+# Alt押しながらドラッグで矩形選択
+- 'Sublime-Style-Column-Selection'
+
+# パスの補完
+- 'autocomplete-paths'
+
+# 色選択パレットの表示
+- 'color-picker'
+
+# editorconfigのサポート
+- 'editorconfig'
+
+# ファイル名表示にクールなアイコンをつける
+- 'file-icons'
+
+# Atomからgitを使う
+- 'git-plus'
+
+# shift-enterで画面内を飛ぶ
+- 'jumpy'
+
+# Atom内でターミナルを開く
+- 'term3'
+
+# PDF観覧
+- 'pdf-view'
+
+# ソースコード中のカラーコードを色付け表示
+- 'pigments'
+
+# ディレクトリ
+- 'project-manager'
+
+# スクリプトファイルをAtom内で実行する
+- 'script'
+
+# shift-cmd-returnでpane最大化
+# バグるので使用中止
+#- 'maximize-panes'
+
+# 言語サポート
+- 'language-latex'
+- 'language-lisp'
+- 'latex'
+
+# 文法チェッカ
+- 'linter'
+- 'linter-rubocop'
+- 'rubocop-auto-correct'
+
+# minimap関連
+- 'minimap'
+- 'minimap-autohide'

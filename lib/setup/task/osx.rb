@@ -42,6 +42,8 @@ namespace :osx do
   task 'install:cui-tools' => 'install:homebrew' do
     # tmux
     shq 'brew install tmux reattach-to-user-namespace'
+    # Emacs
+    shq 'brew install emacs --with-cocoa --with-gnutls'
   end
 
   # Terminal Theme
@@ -112,7 +114,7 @@ namespace 'osx-cask' do
     shq 'brew tap caskroom/cask'
     # Atom
     shq 'brew cask install atom'
-    shq 'apm install --packages-file .atom/pkg-list'
+    task('internal:install-atom-package').invoke
     # IntelliJ
     shq 'brew cask install intellij-idea'
     # ブラウザ
