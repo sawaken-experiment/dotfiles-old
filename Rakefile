@@ -14,14 +14,12 @@ $LOAD_PATH.unshift File.expand_path('../lib', __FILE__)
 require 'setup/util'
 require 'setup/task/common'
 require 'setup/task/osx'
-require 'setup/task/internal'
 
-desc 'OSXの環境を構築する'
-task 'setup-osx' => ['common:install', 'osx:install', 'osx-cask:install'] do
-  puts green("setup succeeded!")
-end
-
-desc 'OSXの環境をリセットする'
-task 'clear-osx' => ['osx:remove', 'common:remove'] do
-  puts green("clear succeeded!")
+case RbConfig::CONFIG["target_os"].downcase
+when /darwin/
+  activate(:osx)
+when /linux/
+  activate(:linux)
+else
+  raise 'unsupported system'
 end

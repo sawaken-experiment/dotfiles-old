@@ -72,3 +72,132 @@ end
 def shq(command)
   sh command + ' | cat'
 end
+
+class Layer
+  attr_reader :name, :desc, :tasks
+
+  def initialize(name, parent_layers)
+    @name = name
+    @desc = nil
+    @tasks = {}
+    parent_layers.each do |layer|
+      tasks.merge!(layer.tasks){ raise 'task name duplicated' }
+    end
+  end
+
+  def set_desc(desc)
+    @desc = desc
+  end
+
+  def define_task(name, body, prereqs)
+    raise 'task name duplicate' if @tasks.has_key?(name)
+    @tasks[name] = LayerTask.new(name, body, @desc, prereqs)
+  end
+
+  def override_task(name, body, prereqs)
+    raise 'override target unexists' unless @tasks.has_key?(name)
+    desc = @desc || @tasks[name].desc
+    @tasks[name] = LayerTask.new(name, body, desc, prereqs)
+  end
+
+  def activate
+    namespace @name do
+      @tasks.vals.each do |t|
+        desc(t.desc) if t.desc
+        task(t.name => t.prereqs, &t.body)
+      end
+    end
+  end
+end
+
+class LayerTask
+  attr_reader :name, :body, :desc, :prereqs
+  def initialize(name, body, desc, prereqs)
+    @name = name
+    @body = body
+    @desc = desc
+    @prereqs = prereqs
+  end
+end
+
+class LayerManager
+  attr_reader :current_layer, :layers
+
+  def initialize
+    @current_layer = nil
+    @layers = {}
+  end
+
+  def begin_layer(layer)
+    @current_layer = layer
+  end
+
+  def end_layer
+    @layers[@current_layer.name] = @current_layer
+    @current_layer = nil
+  end
+end
+
+class Param
+  attr_reader :name, :list
+  def initialize(obj)
+    case obj
+    when Hash
+      case obj.size
+      when 1
+        @name = obj.keys.first.to_s
+        @list = [obj.values.first].flatten.map(&:to_s)
+      else
+        raise
+      end
+    else
+      @name = obj.to_s
+      @list = []
+    end
+  end
+end
+
+def layer(param, &block)
+  @layer_manager ||= LayerManager.new
+  param = Param.new(param)
+  if @layer_manager.layers.has_key?(param.name)
+    layer = @layer_manager.layers[param.name]
+  else
+    parent_layers = param.list.map do |lname|
+      unless @layer_manager.layers.has_key?(lname)
+        raise "undefined layer: #{lname}"
+      end
+      @layer_manager.layers[lname]
+    end
+    layer = Layer.new(param.name, parent_layers)
+  end
+  @layer_manager.begin_layer(layer)
+  block.call if block
+  @layer_manager.end_layer
+  return layer
+end
+
+def ldesc(desc)
+  layer = @layer_manager.current_layer
+  layer.set_desc(desc)
+end
+
+def ltask(param, &body)
+  param = Param.new(param)
+  layer = @layer_manager.current_layer
+  layer.define_task(param.name, body, param.list)
+end
+
+def override_task(param, &body)
+  param = Param.new(param)
+  layer = @layer_manager.current_layer
+  layer.override_task(param.name, body, param.list)
+end
+
+def activate(layer_name)
+  layer = @layer_manager.layers[layer_name.to_s]
+  layer.tasks.values.each do |t|
+    desc(t.desc) if t.desc
+    task(t.name => t.prereqs, &t.body)
+  end
+end

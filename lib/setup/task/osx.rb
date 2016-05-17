@@ -1,120 +1,62 @@
 require 'setup/util'
 
-namespace :osx do
+layer :osx => :common do
 
-  desc '(Homebrew-caskを用いない)OSX項目を全てインストールする'
-  task 'install' do
-    namespace('osx:install'){}.tasks.each do |t|
-      t.invoke
+  ldesc '全てをアンインストール'
+  ltask 'remove:all' => [
+    'remove:homebrew', 'remove:anyenv', 'remove'
+  ]
+
+  # ----------------------------------------------------------------------
+  # Java
+  # ----------------------------------------------------------------------
+
+  ldesc 'jenvとbrewを用いてJava6,7,8をインストールする'
+  ltask 'java' => ['jenv', 'homebrew'] do
+    shq 'brew tap caskroom/cask'
+    shq 'brew tap caskroom/versions'
+    shq 'brew cask install java6'
+    shq 'brew cask install java7'
+    shq 'brew cask install java'
+    Dir.glob('/Library/Java/JavaVirtualMachines/jdk*') do |d|
+      ash "echo \"y\ny\ny\n\" | jenv add #{d}/Contents/Home"
     end
+    ash 'jenv global 1.8'
+    ash 'jenv rehash'
+    fail 'assert' unless asho("java -version 2>&1").index('1.8')
   end
 
-  desc '(Homebrew-caskを用いない)OSX項目を全てアンインストールする'
-  task 'remove' do
-    namespace('osx:remove'){}.tasks.each do |t|
-      t.invoke
-    end
+  # ----------------------------------------------------------------------
+  # Haskell
+  # ----------------------------------------------------------------------
+
+  ldesc 'haskell-stackを用いてHaskell開発環境をインストール'
+  ltask 'haskell' => 'homebrew' do
+    sh 'brew install haskell-stack'
+    sh 'stack setup'
   end
 
-  # Homebrew
-  # ----------
+  # ----------------------------------------------------------------------
+  # アプリケーション
+  # ----------------------------------------------------------------------
 
-  desc 'Homebrewをインストールする'
-  task 'install:homebrew' do
-    next if which 'brew'
-    url = 'https://raw.githubusercontent.com/Homebrew/install/master/install'
-    sh "echo \"\n\" | ruby -e \"$(curl -fsSL #{url})\""
-    fail 'assert' unless which 'brew'
-  end
+  ldesc 'アプリケーションを全てインストールする'
+  ltask 'applications' => [
+    'cui-tools', 'gui-tools', 'atom', 'atom-packages',
+    'keynote-theme', 'terminal-theme'
+  ]
 
-  desc 'Homebrewをアンインストールする'
-  task 'remove:homebrew' do
-    next unless which 'brew'
-    url = 'https://raw.githubusercontent.com/Homebrew/install/master/uninstall'
-    sh "echo y | ruby -e \"$(curl -fsSL #{url})\""
-    fail 'assert' if which 'brew'
-  end
-
-  # CUI-Tools
-  # ----------
-
-  desc '各種コマンドラインツールをインストールする'
-  task 'install:cui-tools' => 'install:homebrew' do
+  ldesc '各種コマンドラインツールをインストールする'
+  ltask 'cui-tools' => 'homebrew' do
     # tmux
     shq 'brew install tmux reattach-to-user-namespace'
     # Emacs
     shq 'brew install emacs --with-cocoa --with-gnutls'
   end
 
-  # Terminal Theme
-  # ----------
-
-  desc 'Terminal.appのテーマSolarized-Darkをインストールする'
-  task 'install:terminal-theme' do
-    url = 'https://github.com/tomislav/osx-terminal.app-colors-solarized'
-    begin
-      sh "git clone #{url} ./solarized"
-      sh "open -a Terminal.app \"./solarized/Solarized Dark.terminal\""
-    ensure
-      sh 'rm -fr ./solarized'
-    end
-  end
-
-  # Keynote Theme
-  # ----------
-
-  desc 'KeynoteのテーマAzusa-Colorsをインストールする'
-  task 'install:keynote-theme' => 'common:install:dotfiles' do
-    begin
-      sh "git clone https://github.com/sanographix/azusa-colors/ ./azusa-colors"
-      cd './azusa-colors' do
-        sh 'unzip theme-azusa-colors.kth.zip'
-        sh 'mv -f theme-azusa-colors.kth $HOME/.dotfiles-target/'
-      end
-      sh 'open $HOME/.dotfiles-target/theme-azusa-colors.kth'
-    ensure
-      sh "rm -rf ./azusa-colors"
-    end
-  end
-end
-
-# Haskell
-# ----------
-
-desc 'homebrewとhaskell-stackを用いてHaskell開発環境をインストール'
-task 'install:haskell-stack' => 'install:homebrew' do
-  sh 'brew install haskell-stack'
-  sh 'stack setup'
-end
-
-# Cask
-#   - brew-cask-installはパスワードを尋ねられるので, 別namespaceに分けている.
-# ----------
-namespace 'osx-cask' do
-
-  desc 'Homebrew-caskを用いるOSX項目を全てインストールする'
-  task 'install' do
-    namespace('osx-cask:install'){}.tasks.each do |t|
-      t.invoke
-    end
-  end
-
-  desc 'Homebrew-caskを用いるOSX項目を全てアンインストールする'
-  task 'remove' do
-    namespace('osx-cask:remove'){}.tasks.each do |t|
-      t.invoke
-    end
-  end
-
-  # GUI-Tools
-  # ----------
-
-  desc 'homebrew-caskを用いて各種APPをインストールする'
-  task 'install:gui-tools' => 'osx:install:homebrew' do
+  ldesc 'homebrew-caskを用いて各種APPをインストールする'
+  ltask 'gui-tools' => 'homebrew' do
     shq 'brew tap caskroom/cask'
-    # Atom
-    shq 'brew cask install atom'
-    task('internal:install-atom-package').invoke
     # IntelliJ
     shq 'brew cask install intellij-idea'
     # ブラウザ
@@ -130,21 +72,58 @@ namespace 'osx-cask' do
     shq 'brew cask install dropbox'
   end
 
-  # Java
-  # ----------
+  ldesc 'Atomをインストールする'
+  ltask 'atom' => 'homebrew' do
+    shq 'brew cask install atom'
+  end
 
-  desc 'jenvとbrewを用いてJava6,7,8をインストールする'
-  task 'install:java' => ['common:install:jenv', 'osx:install:homebrew'] do
-    shq 'brew tap caskroom/cask'
-    shq 'brew tap caskroom/versions'
-    shq 'brew cask install java6'
-    shq 'brew cask install java7'
-    shq 'brew cask install java'
-    Dir.glob('/Library/Java/JavaVirtualMachines/jdk*') do |d|
-      ash "echo \"y\ny\ny\n\" | jenv add #{d}/Contents/Home"
+  ldesc 'KeynoteのテーマAzusa-Colorsをインストールする'
+  ltask 'keynote-theme' => 'dotfiles' do
+    begin
+      sh "git clone https://github.com/sanographix/azusa-colors/ ./azusa-colors"
+      cd './azusa-colors' do
+        sh 'unzip theme-azusa-colors.kth.zip'
+        sh 'mv -f theme-azusa-colors.kth $HOME/.dotfiles-target/'
+      end
+      sh 'open $HOME/.dotfiles-target/theme-azusa-colors.kth'
+    ensure
+      sh "rm -rf ./azusa-colors"
     end
-    ash 'jenv global 1.8'
-    ash 'jenv rehash'
-    fail 'assert' unless asho("java -version 2>&1").index('1.8')
+  end
+
+  ldesc 'Terminal.appのテーマSolarized-Darkをインストールする'
+  ltask 'terminal-theme' do
+    url = 'https://github.com/tomislav/osx-terminal.app-colors-solarized'
+    begin
+      sh "git clone #{url} ./solarized"
+      sh "open -a Terminal.app \"./solarized/Solarized Dark.terminal\""
+    ensure
+      sh 'rm -fr ./solarized'
+    end
+  end
+
+  # ----------------------------------------------------------------------
+  # ビルドツール
+  # ----------------------------------------------------------------------
+
+  ldesc 'Homebrewをインストールする'
+  ltask 'homebrew' do
+    next if which 'brew'
+    url = 'https://raw.githubusercontent.com/Homebrew/install/master/install'
+    sh "echo \"\n\" | ruby -e \"$(curl -fsSL #{url})\""
+    fail 'assert' unless which 'brew'
+  end
+
+  ldesc 'Homebrewをアンインストールする'
+  ltask 'remove:homebrew' do
+    next unless which 'brew'
+    url = 'https://raw.githubusercontent.com/Homebrew/install/master/uninstall'
+    sh "echo y | ruby -e \"$(curl -fsSL #{url})\""
+    fail 'assert' if which 'brew'
+  end
+
+  ldesc 'ビルドに必要なライブラリを一通りインストールする'
+  ltask 'build-lib' => ['homebrew'] do
+    shq 'brew install openssl readline'
   end
 end
