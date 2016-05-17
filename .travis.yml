@@ -1,6 +1,8 @@
 # TravisCIの設定ファイル.
 language:
   - objective-c
+install:
+  - brew update
 script:
   - 'rake all'
   - 'rake remove:all'

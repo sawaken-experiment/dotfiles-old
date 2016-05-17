@@ -4,7 +4,7 @@ layer :osx => :common do
 
   ldesc '全てをアンインストール'
   ltask 'remove:all' => [
-    'remove:homebrew', 'remove:anyenv', 'remove'
+    'remove:homebrew', 'remove:anyenv', 'remove:dotfiles'
   ]
 
   # ----------------------------------------------------------------------
@@ -32,8 +32,8 @@ layer :osx => :common do
 
   ldesc 'haskell-stackを用いてHaskell開発環境をインストール'
   ltask 'haskell' => 'homebrew' do
-    sh 'brew install haskell-stack'
-    sh 'stack setup'
+    shq 'brew install haskell-stack'
+    shq 'stack setup'
   end
 
   # ----------------------------------------------------------------------
