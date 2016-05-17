@@ -89,24 +89,21 @@ class Layer
     @desc = desc
   end
 
+  def get_desc
+    ret = @desc
+    @desc = nil
+    return ret
+  end
+
   def define_task(name, body, prereqs)
     raise 'task name duplicate' if @tasks.has_key?(name)
-    @tasks[name] = LayerTask.new(name, body, @desc, prereqs)
+    @tasks[name] = LayerTask.new(name, body, get_desc, prereqs)
   end
 
   def override_task(name, body, prereqs)
     raise 'override target unexists' unless @tasks.has_key?(name)
-    desc = @desc || @tasks[name].desc
+    desc = get_desc || @tasks[name].desc
     @tasks[name] = LayerTask.new(name, body, desc, prereqs)
-  end
-
-  def activate
-    namespace @name do
-      @tasks.vals.each do |t|
-        desc(t.desc) if t.desc
-        task(t.name => t.prereqs, &t.body)
-      end
-    end
   end
 end
 
@@ -197,6 +194,11 @@ end
 def activate(layer_name)
   layer = @layer_manager.layers[layer_name.to_s]
   layer.tasks.values.each do |t|
+    t.prereqs.all? do |pt|
+      unless layer.tasks.has_key?(pt)
+        raise "undefined prerequision for #{t.name}: #{pt}"
+      end
+    end
     desc(t.desc) if t.desc
     task(t.name => t.prereqs, &t.body)
   end

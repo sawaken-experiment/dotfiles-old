@@ -14,12 +14,15 @@ $LOAD_PATH.unshift File.expand_path('../lib', __FILE__)
 require 'setup/util'
 require 'setup/task/common'
 require 'setup/task/osx'
+require 'setup/task/debian'
 
-case RbConfig::CONFIG["target_os"].downcase
-when /darwin/
+case `uname -a`
+when /Darwin/
   activate(:osx)
-when /linux/
-  activate(:linux)
+when /debian/, /ubuntu/
+  activate(:debian)
+when /centos/
+  activate(:centos)
 else
-  raise 'unsupported system'
+  raise 'unsupported OS'
 end

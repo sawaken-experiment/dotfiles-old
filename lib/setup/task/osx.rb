@@ -2,8 +2,7 @@ require 'setup/util'
 
 layer :osx => :common do
 
-  ldesc '全てをアンインストール'
-  ltask 'remove:all' => [
+  override_task 'remove:all' => [
     'remove:homebrew', 'remove:anyenv', 'remove:dotfiles'
   ]
 
@@ -11,8 +10,8 @@ layer :osx => :common do
   # Java
   # ----------------------------------------------------------------------
 
-  ldesc 'jenvとbrewを用いてJava6,7,8をインストールする'
-  ltask 'java' => ['jenv', 'homebrew'] do
+  ldesc 'jenvとhomebrewを用いてJava6,7,8をインストールする'
+  override_task 'java' => ['jenv', 'homebrew'] do
     shq 'brew tap caskroom/cask'
     shq 'brew tap caskroom/versions'
     shq 'brew cask install java6'
@@ -30,8 +29,7 @@ layer :osx => :common do
   # Haskell
   # ----------------------------------------------------------------------
 
-  ldesc 'haskell-stackを用いてHaskell開発環境をインストール'
-  ltask 'haskell' => 'homebrew' do
+  override_task 'haskell' => 'homebrew' do
     shq 'brew install haskell-stack'
     shq 'stack setup'
   end
@@ -40,8 +38,7 @@ layer :osx => :common do
   # アプリケーション
   # ----------------------------------------------------------------------
 
-  ldesc 'アプリケーションを全てインストールする'
-  ltask 'applications' => [
+  override_task 'applications' => [
     'cui-tools', 'gui-tools', 'atom', 'atom-packages',
     'keynote-theme', 'terminal-theme'
   ]
@@ -122,8 +119,7 @@ layer :osx => :common do
     fail 'assert' if which 'brew'
   end
 
-  ldesc 'ビルドに必要なライブラリを一通りインストールする'
-  ltask 'build-lib' => ['homebrew'] do
+  override_task 'build-lib' => ['homebrew'] do
     shq 'brew install openssl readline'
   end
 end

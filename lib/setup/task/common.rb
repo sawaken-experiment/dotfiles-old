@@ -2,7 +2,7 @@ require 'setup/util'
 
 layer :common do
 
-  ldesc '全てをインストールする'
+  ldesc '全てインストールする'
   ltask 'all' => [
     'languages', 'applications', 'dotfiles'
   ]
@@ -12,6 +12,9 @@ layer :common do
     'ruby', 'python', 'nodejs', 'go', 'perl', 'scala', 'sbt', 'java',
     'haskell'
   ]
+
+  ldesc '全てアンインストールする'
+  ltask 'remove:all' => :fail
 
   # ----------------------------------------------------------------------
   # Ruby
@@ -119,8 +122,24 @@ layer :common do
   end
 
   # ----------------------------------------------------------------------
+  # Java
+  # ----------------------------------------------------------------------
+
+  ltask 'java' => :fail
+
+  # ----------------------------------------------------------------------
+  # Haskell
+  # ----------------------------------------------------------------------
+
+  ldesc 'haskell-stackを用いてHaskell開発環境をインストール'
+  ltask 'haskell' => :fail
+
+  # ----------------------------------------------------------------------
   # アプリケーション
   # ----------------------------------------------------------------------
+
+  ldesc 'アプリケーションを全てインストールする'
+  ltask 'applications' => :fail
 
   ldesc 'Atomのパッケージをインストールする'
   ltask 'atom-packages' => ['dotfiles', 'atom'] do
@@ -213,4 +232,7 @@ layer :common do
       fail 'assert' unless asho("which #{xxenv_name}") == ''
     end
   end
+
+  ldesc 'ビルドに必要なライブラリを一通りインストールする'
+  ltask 'build-lib' => :fail
 end
