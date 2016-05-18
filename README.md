@@ -1,33 +1,53 @@
 [![Build Status](https://travis-ci.com/sawaken/dotfiles.svg?token=46Mp6xrHukCWQqyh951J&branch=master)](https://travis-ci.com/sawaken/dotfiles)
 # dotfiles
-クライアント環境のレシピ.
 
-## Target
-OSX, Linux(apt-getかyumが利用出来る環境).
+## 事前準備(OSX)
+1. App Storeからxcodeをインストール
+2. Command Line Toolsをインストール. gitも含まれているはず
+```
+$ xcode-select --install
+```
+3. rubyは最初からインストールされているので, rakeをインストール
+```
+$ sudo gem install rake
+```
 
-## Setup
-まず, `init.sh`を実行して{ビルドツール,git,rake}をインストールする.
-その後, dotfileのリンクおよび環境構築を`Rakefile`に従って行う.
+## 事前準備(Debian)
+1. ユーザを作成
+```
+# adduser username
+```
 
-実行例:
-```sh
-$ curl -sf https://raw.githubusercontent.com/sawaken/dotfiles/master/.script/initialize | sh -s
+2. `sudo`をインストールし, `username`をsudoユーザに登録
+```
+# apt-get install sudo
+# visudo
+```
+
+3. 以下のように編集
+```
+#Allow members of group sudo to execute any command
+%sudo   ALL=(ALL:ALL)ALL
+username ALL=(ALL:ALL)ALL
+```
+
+4. `username`で再ログインし, rakeに必要なものをインストール
+```
+$ sudo apt-get update
+$ sudo apt-get install -y build-essential git ruby
+$ sudo gem install rake
+```
+
+### 環境構築(OSX, Debian共通)
+
+1. 本リポジトリをクローンし, rakeタスクの一覧を表示
+```
+$ git clone https://github.com/sawaken/dotfiles.git ~/dotfiles
 $ cd ~/dotfiles
-$ rake osx:setting # rake -Tで項目の一覧を表示
+$ rake -T
 ```
 
-## Memo
-`.memorandum/`以下にMarkdown形式のメモファイルを置く.
-`.script`以下の`m`, `mo`, `mc`コマンドを用いて全文検索ができる.
-
-実行例:
-```sh
-$ m com tar # ['com', 'tar']でメモを検索
-$ mo com tar # ['com', 'tar']でメモを検索し、該当ファイルを編集
-$ mc Hoge Fuga # .memorandum/Hoge/Fuga.mdを編集
+2. 適宜必要なものをインストール
 ```
-
-## Test
-以下については正常に動作することを確認する自動テストを用意する.
-* `.script/`以下のユーティリティ・スクリプト
-* 環境構築スクリプト`init.sh`, `Rakefile`
+$ rake dotfiles
+```

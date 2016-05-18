@@ -16,3 +16,23 @@
 # This file uses CoffeeScript Object Notation (CSON).
 # If you are unfamiliar with CSON, you can read more about it here:
 # https://github.com/bevry/cson#what-is-cson
+
+# コメントを旗みたいに囲うやつ(ハイフン70個)
+'.source':
+  'HashCommentBlock70':
+    'prefix': 'hcb7'
+    'body': """
+      # ----------------------------------------------------------------------
+      # ${1: title}
+      # ----------------------------------------------------------------------
+    """
+
+# コメントを旗みたいに囲うやつ(ハイフン50個)
+'.source':
+  'HashCommentBlock50':
+    'prefix': 'hcb5'
+    'body': """
+      # --------------------------------------------------
+      # ${1: title}
+      # --------------------------------------------------
+    """

@@ -18,8 +18,10 @@ require 'setup/task/debian'
 
 case `uname -a`
 when /Darwin/
+  puts 'Rakefile for OSX El Capitan'
   activate(:osx)
-when /debian/, /ubuntu/
+when /debian/
+  puts 'Rakefile for Debian 8.3'
   activate(:debian)
 when /centos/
   activate(:centos)

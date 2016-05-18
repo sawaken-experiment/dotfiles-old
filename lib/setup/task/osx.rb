@@ -10,11 +10,10 @@ layer :osx => :common do
   # Java
   # ----------------------------------------------------------------------
 
-  ldesc 'jenvとhomebrewを用いてJava6,7,8をインストールする'
+  ldesc 'Oracle Java7, 8をインストールし, jenvの監視下に置く'
   override_task 'java' => ['jenv', 'homebrew'] do
     shq 'brew tap caskroom/cask'
     shq 'brew tap caskroom/versions'
-    shq 'brew cask install java6'
     shq 'brew cask install java7'
     shq 'brew cask install java'
     Dir.glob('/Library/Java/JavaVirtualMachines/jdk*') do |d|
