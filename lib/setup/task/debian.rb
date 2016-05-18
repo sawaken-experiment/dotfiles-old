@@ -13,7 +13,7 @@ layer :debian => :common do
   ldesc 'Oracle Java7, 8をインストールし、jenvの監視下に置く'
   override_task 'java' => 'jenv' do
     url = 'http://ppa.launchpad.net/webupd8team/java/ubuntu'
-    txt = "deb #{url} trusty main\nline2 = 'deb-src #{url} trusty main\n"
+    txt = "deb #{url} trusty main\ndeb-src #{url} trusty main\n"
     tmpfile = '.dotfiles-target/java-8-debian.list'
     sh "echo \"#{txt}\" | cat > #{tmpfile}"
     sh "sudo mv -f #{tmpfile} /etc/apt/sources.list.d/"
