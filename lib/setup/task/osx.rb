@@ -69,8 +69,9 @@ layer :osx => :common do
   end
 
   ldesc 'Atomをインストールする'
-  ltask 'atom' => 'homebrew' do
+  ltask 'atom' => ['homebrew', 'dotfiles'] do
     shq 'brew cask install atom'
+    task('atom-packages').invoke
   end
 
   ldesc 'KeynoteのテーマAzusa-Colorsをインストールする'

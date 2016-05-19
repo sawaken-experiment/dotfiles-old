@@ -142,7 +142,7 @@ layer :common do
   ltask 'applications' => :fail
 
   ldesc 'Atomのパッケージをインストールする'
-  ltask 'atom-packages' => ['dotfiles', 'atom'] do
+  ltask 'atom-packages' do
     require 'yaml'
     YAML.load(File.open('./.atom/atom-pkg-list.yml').read).each do |pkg|
       sh "apm install #{pkg}"
