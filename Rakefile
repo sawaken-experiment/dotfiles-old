@@ -15,6 +15,7 @@ require 'setup/util'
 require 'setup/task/common'
 require 'setup/task/osx'
 require 'setup/task/debian'
+require 'setup/task/centos'
 
 case `uname -a`
 when /Darwin/

@@ -171,7 +171,6 @@ def layer(param, &block)
   @layer_manager.begin_layer(layer)
   block.call if block
   @layer_manager.end_layer
-  return layer
 end
 
 def ldesc(desc)
@@ -194,7 +193,7 @@ end
 def activate(layer_name)
   layer = @layer_manager.layers[layer_name.to_s]
   layer.tasks.values.each do |t|
-    t.prereqs.all? do |pt|
+    t.prereqs.each do |pt|
       unless layer.tasks.has_key?(pt)
         raise "undefined prerequision for #{t.name}: #{pt}"
       end

@@ -36,7 +36,8 @@ layer :debian => :common do
     next if which 'stack'
     a = 'http://download.fpcomplete.com/debian'
     sh "echo 'deb #{a} jessie main'|sudo tee /etc/apt/sources.list.d/fpco.list"
-    sh 'sudo apt-get update && sudo apt-get install stack -y'
+    sh 'sudo apt-get update && sudo apt-get install stack -y --force-yes'
+    sh 'stack setup; stack setup'
   end
 
   # ----------------------------------------------------------------------
@@ -52,6 +53,8 @@ layer :debian => :common do
   # ----------------------------------------------------------------------
 
   override_task 'build-lib' do
+    sh 'sudo apt-get install -y build-essential curl'
     sh 'sudo apt-get install -y libssl-dev libreadline-dev zlib1g-dev'
+    sh 'sudo apt-get install -y libbzip2-dev libsqlite3-dev'
   end
 end
