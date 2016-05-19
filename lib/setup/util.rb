@@ -1,3 +1,5 @@
+DOTFILES = Dir.glob('.*[^~#.]') - ['.git', '.DS_Store', '.travis.yml']
+
 def home(path)
   ENV['HOME'] + '/' + path
 end

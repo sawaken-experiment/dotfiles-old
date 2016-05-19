@@ -153,8 +153,6 @@ layer :common do
   # ドットファイル
   # ----------------------------------------------------------------------
 
-  DOTFILES = Dir.glob('.*[^~#.]') - ['.git', '.DS_Store', '.travis.yml']
-
   ldesc 'dotfilesが管理する全dotfileのリンクを張る'
   ltask 'dotfiles' do
     DOTFILES.each do |dotfile|

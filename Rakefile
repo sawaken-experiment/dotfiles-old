@@ -16,16 +16,21 @@ require 'setup/task/common'
 require 'setup/task/osx'
 require 'setup/task/debian'
 require 'setup/task/centos'
+require 'setup/task/windows'
 
-case `uname -a`
-when /Darwin/
+case ENV['system'] || `uname -a`
+when /[Dd]arwin/
   puts 'Rakefile for OSX El Capitan'
   activate(:osx)
-when /debian/
+when /[Dd]ebian/
   puts 'Rakefile for Debian 8.3'
   activate(:debian)
-when /centos/
+when /[Cc]ent[Oo][Ss]/
+  puts 'Rakefile for CentOS'
   activate(:centos)
+when /[Ww]indows/
+  puts 'Rakefile for Windows'
+  activate(:windows)
 else
   raise 'unsupported OS'
 end
