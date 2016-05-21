@@ -18,7 +18,7 @@ require 'setup/task/debian'
 require 'setup/task/centos'
 require 'setup/task/windows'
 
-case ENV['system'] || `uname -a`
+case ENV['system'] || ENV['OS'] || `uname -a`
 when /[Dd]arwin/
   puts 'Rakefile for OSX El Capitan'
   activate(:osx)

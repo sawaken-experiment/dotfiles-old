@@ -1,4 +1,10 @@
+# -*- coding: utf-8 -*-
 DOTFILES = Dir.glob('.*[^~#.]') - ['.git', '.DS_Store', '.travis.yml']
+
+def atom_packages
+  require 'yaml'
+  YAML.load(File.open('./.atom/atom-pkg-list.yml').read)
+end
 
 def home(path)
   ENV['HOME'] + '/' + path
@@ -73,6 +79,11 @@ end
 
 def shq(command)
   sh command + ' | cat'
+end
+
+def wsh(command)
+  puts command
+  puts `#{command}`
 end
 
 class Layer

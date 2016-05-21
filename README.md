@@ -1,10 +1,12 @@
 # dotfiles
 
-基本的にOSX用. Linux(Debian系とCentOS)も部分的に対応.
+OSX, Debian系, CentOS, Windows(コマンドプロンプト)に対応.
 
-## 環境構築(OSX, Debian, CentOS共通)
+Windowsは管理者権限でコマンドプロンプトを起動すること.
 
-* 本リポジトリをクローンし, rakeタスクの一覧を表示. Rubyは2.0以上必須.
+## 環境構築(OSX, Debian, CentOS, Windows共通)
+
+* 本リポジトリをクローンし, rakeタスクの一覧を表示する. Rubyは2.0以上必須.
 ```
 $ git clone https://github.com/sawaken/dotfiles.git ~/dotfiles
 $ cd ~/dotfiles
