@@ -1,11 +1,6 @@
 /*
- * Your Stylesheet
- *
- * This stylesheet is loaded when Atom starts up and is reloaded automatically
- * when it is changed.
- *
- * If you are unfamiliar with LESS, you can read more about it here:
- * http://www.lesscss.org
+ * DOM要素のClass名を調べるためには, Toggle Dev Toolsを開く.
+ * このファイルは, 再起動せずとも再読込される.
  */
 
 .tree-view {
@@ -20,6 +15,18 @@ atom-text-editor {
 
 // To style other content in the text editor's shadow DOM, use the ::shadow
 // expression
-atom-text-editor::shadow .cursor {
+atom-text-editor::shadow {
+
+  // 例) カーソルを赤くする
+  /*
+  .cursor {
+    border-left-color: red;
+  }
+  */
+
+  // Invisiblesの色を濃くする
+  .invisible-character {
+    color: rgba(255, 255, 255, 0.2);
+  }
 
 }

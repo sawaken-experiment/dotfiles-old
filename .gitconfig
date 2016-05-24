@@ -2,5 +2,6 @@
     email = sasasawada@gmail.com
 [core]
     excludesfile = ~/.gitignore
+    autoCRLF = false
 [color]
     ui = auto

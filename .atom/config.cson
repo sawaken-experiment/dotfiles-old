@@ -16,12 +16,14 @@
       "one-dark-syntax"
     ]
   editor:
+    fontSize: 16
     invisibles: {}
     softWrap: true
   "exception-reporting":
     userId: "9437e86a-0252-ab2d-dbf9-ca15cf8a20e4"
   "haskell-ghc-mod": {}
-  linter: {}
+  linter:
+    errorPanelHeight: 22
   "linter-rubocop": {}
   minimap:
     plugins:
@@ -44,3 +46,6 @@
     hideVcsIgnoredFiles: true
   welcome:
     showOnStartup: false
+  whitespace:
+    ignoreWhitespaceOnCurrentLine: false
+    removeTrailingWhitespace: true

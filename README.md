@@ -6,10 +6,12 @@ Windowsは管理者権限でコマンドプロンプトを起動すること.
 
 ## 環境構築(OSX, Debian, CentOS, Windows共通)
 
-* 本リポジトリをクローンし, rakeタスクの一覧を表示する. Rubyは2.0以上必須.
+* 本リポジトリをクローンし, rakeタスクの一覧を表示する.
+Rubyは2.0以上必須.
 ```
-$ git clone https://github.com/sawaken/dotfiles.git ~/dotfiles
-$ cd ~/dotfiles
+$ cd [home-dir]
+$ git clone --config autoCRLF=false https://github.com/sawaken/dotfiles.git dotfiles
+$ cd dotfiles
 $ rake -T
 ```
 
@@ -25,7 +27,7 @@ $ rake dotfiles
 * rakeの環境変数渡し機能を用いて:
 ```
 $ rake system=debian -T
-$ rake system=debian dotfiles
+$ rake system=debian dotfiles    
 ```
 
 * あるいは単純に:

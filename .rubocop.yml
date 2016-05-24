@@ -1,11 +1,12 @@
-# http://blog-ja.sideci.com/entry/2015/03/26/103000
+# My global rubocop that checks only Lint.
+# Tested on rubocop version 0.40.0.
 
 AllCops:
-  Exclude:
-    - 'vendor/**/*'
-  Rails:
-    Enabled: true
-  DisplayCopNames: true
+  DisplayStyleGuide: true
+
+# --------------------------------------------------
+# Style
+# --------------------------------------------------
 
 Style/AccessModifierIndentation:
   Enabled: false
@@ -26,7 +27,7 @@ Style/AlignParameters:
   Enabled: false
 
 Style/AndOr:
-  Enabled: true
+  Enabled: false
 
 Style/ArrayJoin:
   Enabled: false
@@ -52,14 +53,14 @@ Style/BlockComments:
 Style/BlockEndNewline:
   Enabled: false
 
-Style/Blocks:
+Style/BlockDelimiters:
   Enabled: false
 
 Style/BracesAroundHashParameters:
   Enabled: false
 
 Style/CaseEquality:
-  Enabled: true
+  Enabled: false
 
 Style/CaseIndentation:
   Enabled: false
@@ -82,13 +83,22 @@ Style/ClassMethods:
 Style/ClassVars:
   Enabled: false
 
+Style/ClosingParenthesisIndentation:
+  Enabled: false
+
 Style/ColonMethodCall:
+  Enabled: false
+
+Style/CommandLiteral:
   Enabled: false
 
 Style/CommentAnnotation:
   Enabled: false
 
 Style/CommentIndentation:
+  Enabled: false
+
+Style/ConditionalAssignment:
   Enabled: false
 
 Style/ConstantName:
@@ -116,6 +126,9 @@ Style/ElseAlignment:
   Enabled: false
 
 Style/EmptyElse:
+  Enabled: false
+
+Style/EmptyCaseCondition:
   Enabled: false
 
 Style/EmptyLineBetweenDefs:
@@ -151,7 +164,16 @@ Style/EndOfLine:
 Style/EvenOdd:
   Enabled: false
 
+Style/ExtraSpacing:
+  Enabled: false
+
 Style/FileName:
+  Enabled: false
+
+Style/FrozenStringLiteralComment:
+  Enabled: false
+
+Style/InitialIndentation:
   Enabled: false
 
 Style/FirstParameterIndentation:
@@ -167,7 +189,7 @@ Style/FormatString:
   Enabled: false
 
 Style/GlobalVars:
-  Enabled: true
+  Enabled: false
 
 Style/GuardClause:
   Enabled: false
@@ -175,7 +197,13 @@ Style/GuardClause:
 Style/HashSyntax:
   Enabled: false
 
+Style/IfInsideElse:
+  Enabled: false
+
 Style/IfUnlessModifier:
+  Enabled: false
+
+Style/IfUnlessModifierOfIfUnless:
   Enabled: false
 
 Style/IfWithSemicolon:
@@ -187,7 +215,13 @@ Style/IndentationConsistency:
 Style/IndentationWidth:
   Enabled: false
 
+Style/IdenticalConditionalBranches:
+  Enabled: false
+
 Style/IndentArray:
+  Enabled: false
+
+Style/IndentAssignment:
   Enabled: false
 
 Style/IndentHash:
@@ -220,13 +254,28 @@ Style/MethodName:
 Style/ModuleFunction:
   Enabled: false
 
+Style/MultilineArrayBraceLayout:
+  Enabled: false
+
 Style/MultilineBlockChain:
   Enabled: false
 
 Style/MultilineBlockLayout:
   Enabled: false
 
+Style/MultilineHashBraceLayout:
+  Enabled: false
+
 Style/MultilineIfThen:
+  Enabled: false
+
+Style/MultilineMethodCallBraceLayout:
+  Enabled: false
+
+Style/MultilineMethodCallIndentation:
+  Enabled: false
+
+Style/MultilineMethodDefinitionBraceLayout:
   Enabled: false
 
 Style/MultilineOperationIndentation:
@@ -235,10 +284,19 @@ Style/MultilineOperationIndentation:
 Style/MultilineTernaryOperator:
   Enabled: false
 
+Style/MutableConstant:
+  Enabled: false
+
 Style/NegatedIf:
   Enabled: false
 
 Style/NegatedWhile:
+  Enabled: false
+
+Style/NestedModifier:
+  Enabled: false
+
+Style/NestedParenthesizedCalls:
   Enabled: false
 
 Style/NestedTernaryOperator:
@@ -263,6 +321,12 @@ Style/OneLineConditional:
   Enabled: false
 
 Style/OpMethod:
+  Enabled: false
+
+Style/OptionalArguments:
+  Enabled: false
+
+Style/ParallelAssignment:
   Enabled: false
 
 Style/ParenthesesAroundCondition:
@@ -292,6 +356,12 @@ Style/RedundantBegin:
 Style/RedundantException:
   Enabled: false
 
+Style/RedundantFreeze:
+  Enabled: false
+
+Style/RedundantParentheses:
+  Enabled: false
+
 Style/RedundantReturn:
   Enabled: false
 
@@ -299,6 +369,9 @@ Style/RedundantSelf:
   Enabled: false
 
 Style/RegexpLiteral:
+  Enabled: false
+
+Style/RescueEnsureAlignment:
   Enabled: false
 
 Style/RescueModifier:
@@ -326,9 +399,6 @@ Style/SpaceAfterColon:
   Enabled: false
 
 Style/SpaceAfterComma:
-  Enabled: false
-
-Style/SpaceAroundKeyword:
   Enabled: false
 
 Style/SpaceAfterMethodName:
@@ -361,10 +431,10 @@ Style/SpaceAroundBlockParameters:
 Style/SpaceAroundEqualsInParameterDefault:
   Enabled: false
 
-Style/SpaceAroundOperators:
+Style/SpaceAroundKeyword:
   Enabled: false
 
-Style/SpaceAroundKeyword:
+Style/SpaceAroundOperators:
   Enabled: false
 
 Style/SpaceInsideBrackets:
@@ -379,7 +449,13 @@ Style/SpaceInsideParens:
 Style/SpaceInsideRangeLiteral:
   Enabled: false
 
+Style/SpaceInsideStringInterpolation:
+  Enabled: false
+
 Style/SpecialGlobalVars:
+  Enabled: false
+
+Style/StabbyLambdaParentheses:
   Enabled: false
 
 Style/StringLiterals:
@@ -391,6 +467,9 @@ Style/StringLiteralsInInterpolation:
 Style/StructInheritance:
   Enabled: false
 
+Style/SymbolLiteral:
+  Enabled: false
+
 Style/SymbolProc:
   Enabled: false
 
@@ -400,15 +479,10 @@ Style/Tab:
 Style/TrailingBlankLines:
   Enabled: false
 
-#Style/TrailingComma:
-#  Enabled: false
-
-# alt
-Style/TrailingCommaInLiteral:
+Style/TrailingCommaInArguments:
   Enabled: false
 
-# alt
-Style/TrailingCommaInArguments:
+Style/TrailingCommaInLiteral:
   Enabled: false
 
 Style/TrailingWhitespace:
@@ -423,10 +497,13 @@ Style/UnlessElse:
 Style/UnneededCapitalW:
   Enabled: false
 
+Style/UnneededInterpolation:
+  Enabled: false
+
 Style/UnneededPercentQ:
   Enabled: false
 
-Style/UnneededPercentX:
+Style/TrailingUnderscoreVariable:
   Enabled: false
 
 Style/VariableInterpolation:
@@ -447,10 +524,7 @@ Style/WhileUntilModifier:
 Style/WordArray:
   Enabled: false
 
-Lint/DeprecatedClassMethods:
-  Enabled: false
-
-Lint/StringConversionInInterpolation:
+Style/ZeroLengthPredicate:
   Enabled: false
 
 Metrics/AbcSize:
@@ -460,6 +534,9 @@ Metrics/BlockNesting:
   Enabled: false
 
 Metrics/ClassLength:
+  Enabled: false
+
+Metrics/ModuleLength:
   Enabled: false
 
 Metrics/CyclomaticComplexity:
@@ -475,4 +552,78 @@ Metrics/ParameterLists:
   Enabled: false
 
 Metrics/PerceivedComplexity:
+  Enabled: false
+
+# --------------------------------------------------
+# Lint
+# --------------------------------------------------
+
+Lint/LiteralInCondition:
+  Enabled: false
+
+# --------------------------------------------------
+# Performance
+# --------------------------------------------------
+
+Performance/Casecmp:
+  Enabled: false
+
+Performance/CaseWhenSplat:
+  Enabled: false
+
+Performance/Count:
+  Enabled: false
+
+Performance/Detect:
+  Enabled: false
+
+Performance/DoubleStartEndWith:
+  Enabled: false
+
+Performance/EndWith:
+  Enabled: false
+
+Performance/FixedSize:
+  Enabled: false
+
+Performance/FlatMap:
+  Enabled: false
+
+Performance/HashEachMethods:
+  Enabled: false
+
+Performance/LstripRstrip:
+  Enabled: false
+
+Performance/RangeInclude:
+  Enabled: false
+
+Performance/RedundantBlockCall:
+  Enabled: false
+
+Performance/RedundantMatch:
+  Enabled: false
+
+Performance/RedundantMerge:
+  Enabled: false
+
+Performance/RedundantSortBy:
+  Enabled: false
+
+Performance/ReverseEach:
+  Enabled: false
+
+Performance/Sample:
+  Enabled: false
+
+Performance/Size:
+  Enabled: false
+
+Performance/StartWith:
+  Enabled: false
+
+Performance/StringReplacement:
+  Enabled: false
+
+Performance/TimesMap:
   Enabled: false

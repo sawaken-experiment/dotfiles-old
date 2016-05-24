@@ -1,17 +1,13 @@
 require 'setup/util'
 
 layer :common do
-
   ldesc '全てインストールする'
-  ltask 'all' => [
-    'languages', 'applications', 'dotfiles'
-  ]
+  ltask 'all' => %w(languages applications dotfiles)
 
   ldesc 'プログラミング言語処理系を全てインストールする'
-  ltask 'languages' => [
-    'ruby', 'python', 'nodejs', 'go', 'perl', 'scala', 'sbt', 'java',
-    'haskell'
-  ]
+  ltask 'languages' => %w(
+    ruby python nodejs go perl scala sbt java haskell
+  )
 
   ldesc '全てアンインストールする'
   ltask 'remove:all' => :fail
@@ -35,7 +31,7 @@ layer :common do
     ash 'rbenv rehash'
     ash 'bundle -v; pry -v'
     ash 'echo y | travis -v'
-    fail 'assert' unless asho('ruby -v').index(v)
+    raise 'assert' unless asho('ruby -v').index(v)
   end
 
   # ----------------------------------------------------------------------
@@ -48,7 +44,7 @@ layer :common do
     ash "goenv install #{v} 2>/dev/null" unless asho('goenv versions').index(v)
     ash "goenv global #{v}"
     ash 'goenv rehash'
-    fail 'assert' unless asho('go version').index(v)
+    raise 'assert' unless asho('go version').index(v)
   end
 
   # ----------------------------------------------------------------------
@@ -63,8 +59,8 @@ layer :common do
     ash "pyenv install #{v3}" unless asho('pyenv versions').index(v3)
     ash "pyenv global #{v3} #{v2}"
     ash 'pyenv rehash'
-    fail 'assert' unless asho('python2 -V 2>&1').index(v2)
-    fail 'assert' unless asho('python -V 2>&1').index(v3)
+    raise 'assert' unless asho('python2 -V 2>&1').index(v2)
+    raise 'assert' unless asho('python -V 2>&1').index(v3)
   end
 
   # ----------------------------------------------------------------------
@@ -77,7 +73,7 @@ layer :common do
     ash "ndenv install v#{v}" unless asho('ndenv versions').index(v)
     ash "ndenv global v#{v}"
     ash 'ndenv rehash'
-    fail 'assert' unless asho('node -v').index(v)
+    raise 'assert' unless asho('node -v').index(v)
   end
 
   # ----------------------------------------------------------------------
@@ -92,7 +88,7 @@ layer :common do
     end
     ash "plenv global #{v}"
     ash 'plenv install-cpanm 2>/dev/null 1>/dev/null'
-    fail 'assert' unless asho('perl -v').index(v)
+    raise 'assert' unless asho('perl -v').index(v)
   end
 
   # ----------------------------------------------------------------------
@@ -102,23 +98,19 @@ layer :common do
   ldesc 'scalaenvを用いてScalaをインストールする'
   ltask 'scala' => ['scalaenv', 'build-lib'] do
     v = '2.11.8'
-    unless asho('scalaenv versions').index(v)
-      ash "scalaenv install scala-#{v}"
-    end
+    ash "scalaenv install scala-#{v}" unless asho('scalaenv versions').index(v)
     ash "scalaenv global scala-#{v}"
     ash 'scalaenv rehash'
-    fail 'assert' unless asho('scala -version 2>&1').index(v)
+    raise 'assert' unless asho('scala -version 2>&1').index(v)
   end
 
   ldesc 'sbtenvを用いてSBTをインストールする'
   ltask 'sbt' => ['sbtenv', 'build-lib'] do
     v = '0.13.11'
-    unless asho('sbtenv versions').index(v)
-      ash "sbtenv install sbt-#{v}"
-    end
+    ash "sbtenv install sbt-#{v}" unless asho('sbtenv versions').index(v)
     ash "sbtenv global sbt-#{v}"
     ash 'sbtenv rehash'
-    fail 'assert' unless asho('sbt sbt-version').index(v)
+    raise 'assert' unless asho('sbt sbt-version').index(v)
   end
 
   # ----------------------------------------------------------------------
@@ -143,7 +135,7 @@ layer :common do
 
   ldesc 'Atomのパッケージをインストールする'
   ltask 'atom-packages' do
-    atom_packages().each do |pkg|
+    atom_packages.each do |pkg|
       sh "apm install #{pkg}"
     end
   end
@@ -160,7 +152,7 @@ layer :common do
       unless File.exist?(dotfile_path_home)
         symlink(dotfile_path_here, dotfile_path_home)
       end
-      fail 'assert' unless File.exist?(dotfile_path_home)
+      raise 'assert' unless File.exist?(dotfile_path_home)
     end
   end
 
@@ -169,7 +161,7 @@ layer :common do
     width = DOTFILES.map(&:size).max
     DOTFILES.each do |dotfile|
       status = dotfile_status_colorized(dotfile)
-      puts "~/%-#{width + 2}s # %s" % [dotfile, status]
+      puts format("~/%-#{width + 2}s # %s", dotfile, status)
     end
   end
 
@@ -183,7 +175,7 @@ layer :common do
         rm dotfile_path_home if link_dest == dotfile_path_here
       end
       if `readlink #{dotfile_path_home}`.chomp == dotfile_path_here
-        fail 'assert'
+        raise 'assert'
       end
     end
   end
@@ -198,19 +190,19 @@ layer :common do
   ltask 'anyenv' do
     next if File.exist?(ANY_ENV)
     sh 'git clone https://github.com/riywo/anyenv $HOME/.anyenv'
-    fail 'assert' unless File.exist?(ANY_ENV)
+    raise 'assert' unless File.exist?(ANY_ENV)
   end
 
   ldesc 'anyenvを削除する'
   ltask 'remove:anyenv' do
     next unless File.exist?(ANY_ENV)
     sh "rm -fr #{ANY_ENV}"
-    fail 'assert' if File.exist?(ANY_ENV)
+    raise 'assert' if File.exist?(ANY_ENV)
   end
 
-  XX_ENV_NAMES = [
-    'rbenv', 'goenv', 'pyenv', 'plenv', 'ndenv', 'scalaenv', 'sbtenv', 'jenv',
-  ].freeze
+  XX_ENV_NAMES = %w(
+    rbenv goenv pyenv plenv ndenv scalaenv sbtenv jenv
+  ).freeze
 
   XX_ENV_NAMES.each do |xxenv_name|
     xxenv = home('.anyenv/envs/' + xxenv_name)
@@ -219,14 +211,14 @@ layer :common do
     ltask xxenv_name => 'anyenv' do
       next if File.exist?(xxenv)
       ash "anyenv install #{xxenv_name}"
-      fail 'assert' if asho("which #{xxenv_name}") == ''
+      raise 'assert' if asho("which #{xxenv_name}") == ''
     end
 
     ldesc "anyenvから#{xxenv_name}を削除する"
     ltask "remove:#{xxenv_name}" do
       next unless File.exist?(xxenv)
       ash "echo y | anyenv uninstall #{xxenv_name}" if File.exist?(xxenv)
-      fail 'assert' unless asho("which #{xxenv_name}") == ''
+      raise 'assert' unless asho("which #{xxenv_name}") == ''
     end
   end
 

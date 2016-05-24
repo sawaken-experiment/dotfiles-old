@@ -13,7 +13,7 @@
 # ファイル名表示にクールなアイコンをつける
 - 'file-icons'
 
-# Atomからgitを使う
+# git/github関連
 - 'git-plus'
 
 # shift-enterで画面内を飛ぶ

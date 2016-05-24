@@ -1,0 +1,65 @@
+# For rubocop version 0.40.0
+
+AllCops:
+  TargetRubyVersion: 2.3
+  DisplayCopNames: true
+  DisplayStyleGuide: true
+  Rails:
+    Enabled: false
+
+# --------------------------------------------------
+# Style
+# --------------------------------------------------
+
+Style/AsciiComments:
+  Enabled: false
+
+Style/ConditionalAssignment:
+  Enabled: false
+
+Style/HashSyntax:
+  Enabled: false
+
+Style/Encoding:
+  Enabled: true
+
+Style/MethodCalledOnDoEndBlock:
+  Enabled: true
+
+# --------------------------------------------------
+# Metrics
+# --------------------------------------------------
+
+Metrics/AbcSize:
+  Enabled: false
+
+Metrics/BlockNesting:
+  Enabled: false
+
+Metrics/ClassLength:
+  Enabled: false
+
+Metrics/ModuleLength:
+  Enabled: false
+
+Metrics/CyclomaticComplexity:
+  Enabled: false
+
+Metrics/LineLength:
+  Enabled: false
+
+Metrics/MethodLength:
+  Enabled: false
+
+Metrics/ParameterLists:
+  Enabled: false
+
+Metrics/PerceivedComplexity:
+  Enabled: false
+
+# --------------------------------------------------
+# Lint
+# --------------------------------------------------
+
+Lint/LiteralInCondition:
+  Enabled: false

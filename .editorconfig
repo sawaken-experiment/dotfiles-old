@@ -1,13 +1,16 @@
-# これより継承関係を辿りたくない場合はtrueにする
-root = true
+root = true　# これより継承関係を辿らない
 
 [*]
 end_of_line = lf
 charset = utf-8
 indent_style = space
 indent_size = 2
+
+# 以下の二つはAtomのeditorconfigプラグインでは2016年05月21日現在サポートされていない.
+# https://github.com/sindresorhus/atom-editorconfig
+# whitespaceパッケージでネイティブに設定できる.
 trim_trailing_whitespace = true # 行末のwhitespaceを削除する
-insert_final_newline = true
+insert_final_newline = true # 行末に空行を挿入する
 
 [Makefile]
 indent_style = tab
