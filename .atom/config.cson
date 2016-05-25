@@ -16,7 +16,7 @@
       "one-dark-syntax"
     ]
   editor:
-    fontSize: 16
+    fontSize: 15
     invisibles: {}
     softWrap: true
   "exception-reporting":

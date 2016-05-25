@@ -1,23 +1,23 @@
-require 'setup/util'
+# frozen_string_literal: true
 
-layer :common do
-  ldesc '全てインストールする'
-  ltask 'all' => %w(languages applications dotfiles)
+CommonLayer = Layer.new do |l|
+  l.desc '全てインストールする'
+  l.task 'all' => %w(languages applications dotfiles)
 
-  ldesc 'プログラミング言語処理系を全てインストールする'
-  ltask 'languages' => %w(
+  l.desc 'プログラミング言語処理系を全てインストールする'
+  l.task 'languages' => %w(
     ruby python nodejs go perl scala sbt java haskell
   )
 
-  ldesc '全てアンインストールする'
-  ltask 'remove:all' => :fail
+  l.desc '全てアンインストールする'
+  l.task 'remove:all' => :fail
 
   # ----------------------------------------------------------------------
   # Ruby
   # ----------------------------------------------------------------------
 
-  ldesc 'rbenvを用いてRubyをインストール'
-  ltask 'ruby' => ['rbenv', 'build-lib'] do
+  l.desc 'rbenvを用いてRubyをインストール'
+  l.task 'ruby' => ['rbenv', 'build-lib'] do
     # rbenvのプラグインをインストール
     path = ENV['HOME'] + '/.anyenv/envs/rbenv/plugins/rbenv-binstubs'
     unless File.exist?(path)
@@ -38,8 +38,8 @@ layer :common do
   # Golang
   # ----------------------------------------------------------------------
 
-  ldesc 'goenvを用いてGoをインストールする'
-  ltask 'go' => ['goenv', 'build-lib'] do
+  l.desc 'goenvを用いてGoをインストールする'
+  l.task 'go' => ['goenv', 'build-lib'] do
     v = '1.6'
     ash "goenv install #{v} 2>/dev/null" unless asho('goenv versions').index(v)
     ash "goenv global #{v}"
@@ -51,8 +51,8 @@ layer :common do
   # Python
   # ----------------------------------------------------------------------
 
-  ldesc 'pyenvを用いてPython2/Python3をインストールする'
-  ltask 'python' => ['pyenv', 'build-lib'] do
+  l.desc 'pyenvを用いてPython2/Python3をインストールする'
+  l.task 'python' => ['pyenv', 'build-lib'] do
     v2 = '2.7.11'
     v3 = '3.5.1'
     ash "pyenv install #{v2}" unless asho('pyenv versions').index(v2)
@@ -67,8 +67,8 @@ layer :common do
   # Node.js
   # ----------------------------------------------------------------------
 
-  ldesc 'ndenvを用いてNode.jsをインストールする'
-  ltask 'nodejs' => ['ndenv', 'build-lib'] do
+  l.desc 'ndenvを用いてNode.jsをインストールする'
+  l.task 'nodejs' => ['ndenv', 'build-lib'] do
     v = '4.4.3'
     ash "ndenv install v#{v}" unless asho('ndenv versions').index(v)
     ash "ndenv global v#{v}"
@@ -80,8 +80,8 @@ layer :common do
   # Perl
   # ----------------------------------------------------------------------
 
-  ldesc 'plenvを用いてPerl5とCPANをインストールする'
-  ltask 'perl' => ['plenv', 'build-lib'] do
+  l.desc 'plenvを用いてPerl5とCPANをインストールする'
+  l.task 'perl' => ['plenv', 'build-lib'] do
     v = '5.22.2'
     unless asho('plenv versions').index(v)
       ash "plenv install #{v} 2>/dev/null 1>/dev/null"
@@ -95,8 +95,8 @@ layer :common do
   # Scala
   # ----------------------------------------------------------------------
 
-  ldesc 'scalaenvを用いてScalaをインストールする'
-  ltask 'scala' => ['scalaenv', 'build-lib'] do
+  l.desc 'scalaenvを用いてScalaをインストールする'
+  l.task 'scala' => ['scalaenv', 'build-lib'] do
     v = '2.11.8'
     ash "scalaenv install scala-#{v}" unless asho('scalaenv versions').index(v)
     ash "scalaenv global scala-#{v}"
@@ -104,8 +104,8 @@ layer :common do
     raise 'assert' unless asho('scala -version 2>&1').index(v)
   end
 
-  ldesc 'sbtenvを用いてSBTをインストールする'
-  ltask 'sbt' => ['sbtenv', 'build-lib'] do
+  l.desc 'sbtenvを用いてSBTをインストールする'
+  l.task 'sbt' => ['sbtenv', 'build-lib'] do
     v = '0.13.11'
     ash "sbtenv install sbt-#{v}" unless asho('sbtenv versions').index(v)
     ash "sbtenv global sbt-#{v}"
@@ -117,24 +117,24 @@ layer :common do
   # Java
   # ----------------------------------------------------------------------
 
-  ltask 'java' => :fail
+  l.task 'java' => :fail
 
   # ----------------------------------------------------------------------
   # Haskell
   # ----------------------------------------------------------------------
 
-  ldesc 'haskell-stackを用いてHaskell開発環境をインストール'
-  ltask 'haskell' => :fail
+  l.desc 'haskell-stackを用いてHaskell開発環境をインストール'
+  l.task 'haskell' => :fail
 
   # ----------------------------------------------------------------------
   # アプリケーション
   # ----------------------------------------------------------------------
 
-  ldesc 'アプリケーションを全てインストールする'
-  ltask 'applications' => :fail
+  l.desc 'アプリケーションを全てインストールする'
+  l.task 'applications' => :fail
 
-  ldesc 'Atomのパッケージをインストールする'
-  ltask 'atom-packages' do
+  l.desc 'Atomのパッケージをインストールする'
+  l.task 'atom-packages' do
     atom_packages.each do |pkg|
       sh "apm install #{pkg}"
     end
@@ -144,8 +144,8 @@ layer :common do
   # ドットファイル
   # ----------------------------------------------------------------------
 
-  ldesc 'dotfilesが管理する全dotfileのリンクを張る'
-  ltask 'dotfiles' do
+  l.desc 'dotfilesが管理する全dotfileのリンクを張る'
+  l.task 'dotfiles' do
     DOTFILES.each do |dotfile|
       dotfile_path_home = home(dotfile)
       dotfile_path_here = File.expand_path(dotfile)
@@ -156,8 +156,8 @@ layer :common do
     end
   end
 
-  ldesc 'dotfilesが管理する全dotfileのリンク状態を表示する'
-  ltask 'show:dotfiles' do
+  l.desc 'dotfilesが管理する全dotfileのリンク状態を表示する'
+  l.task 'show:dotfiles' do
     width = DOTFILES.map(&:size).max
     DOTFILES.each do |dotfile|
       status = dotfile_status_colorized(dotfile)
@@ -165,8 +165,8 @@ layer :common do
     end
   end
 
-  ldesc 'dotfilesが管理する全dotfileのリンクを外す'
-  ltask 'remove:dotfiles' do
+  l.desc 'dotfilesが管理する全dotfileのリンクを外す'
+  l.task 'remove:dotfiles' do
     DOTFILES.each do |dotfile|
       dotfile_path_home = home(dotfile)
       dotfile_path_here = File.expand_path(dotfile)
@@ -186,15 +186,15 @@ layer :common do
 
   ANY_ENV = home('.anyenv')
 
-  ldesc 'anyenvをインストールする'
-  ltask 'anyenv' do
+  l.desc 'anyenvをインストールする'
+  l.task 'anyenv' do
     next if File.exist?(ANY_ENV)
     sh 'git clone https://github.com/riywo/anyenv $HOME/.anyenv'
     raise 'assert' unless File.exist?(ANY_ENV)
   end
 
-  ldesc 'anyenvを削除する'
-  ltask 'remove:anyenv' do
+  l.desc 'anyenvを削除する'
+  l.task 'remove:anyenv' do
     next unless File.exist?(ANY_ENV)
     sh "rm -fr #{ANY_ENV}"
     raise 'assert' if File.exist?(ANY_ENV)
@@ -207,21 +207,21 @@ layer :common do
   XX_ENV_NAMES.each do |xxenv_name|
     xxenv = home('.anyenv/envs/' + xxenv_name)
 
-    ldesc "anyenvを用いて#{xxenv_name}をインストールする"
-    ltask xxenv_name => 'anyenv' do
+    l.desc "anyenvを用いて#{xxenv_name}をインストールする"
+    l.task xxenv_name => 'anyenv' do
       next if File.exist?(xxenv)
       ash "anyenv install #{xxenv_name}"
       raise 'assert' if asho("which #{xxenv_name}") == ''
     end
 
-    ldesc "anyenvから#{xxenv_name}を削除する"
-    ltask "remove:#{xxenv_name}" do
+    l.desc "anyenvから#{xxenv_name}を削除する"
+    l.task "remove:#{xxenv_name}" do
       next unless File.exist?(xxenv)
       ash "echo y | anyenv uninstall #{xxenv_name}" if File.exist?(xxenv)
       raise 'assert' unless asho("which #{xxenv_name}") == ''
     end
   end
 
-  ldesc 'ビルドに必要なライブラリを一通りインストールする'
-  ltask 'build-lib' => :fail
+  l.desc 'ビルドに必要なライブラリを一通りインストールする'
+  l.task 'build-lib' => :fail
 end

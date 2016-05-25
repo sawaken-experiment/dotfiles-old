@@ -1,12 +1,11 @@
-require 'setup/util'
+# frozen_string_literal: true
 
-layer :centos => :common do
-
+CentOSLayer = Layer.new do |l|
   # ----------------------------------------------------------------------
   # ビルドツール
   # ----------------------------------------------------------------------
-  
-  override_task 'build-lib' do
+
+  l.task 'build-lib' do
     sh 'sudo yum groupinstall -y "Development Tools"'
     sh 'sudo yum install -y kernel-devel kernel-headers'
   end

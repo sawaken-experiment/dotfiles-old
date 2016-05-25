@@ -12,6 +12,7 @@
 $LOAD_PATH.unshift File.expand_path('../lib', __FILE__)
 
 require 'setup/util'
+require 'setup/layer'
 require 'setup/task/common'
 require 'setup/task/osx'
 require 'setup/task/debian'
@@ -21,16 +22,16 @@ require 'setup/task/windows'
 case ENV['system'] || ENV['OS'] || `uname -a`
 when /[Dd]arwin/
   puts 'Rakefile for OSX El Capitan'
-  activate(:osx)
+  activate(CommonLayer, OSXLayer)
 when /[Dd]ebian/
   puts 'Rakefile for Debian 8.3'
-  activate(:debian)
+  activate(CommonLayer, DebianLayer)
 when /[Cc]ent[Oo][Ss]/
   puts 'Rakefile for CentOS'
-  activate(:centos)
+  activate(CommonLayer, CentOSLayer)
 when /[Ww]indows/
   puts 'Rakefile for Windows'
-  activate(:windows)
+  activate(WindowsLayer)
 else
   raise 'unsupported OS'
 end

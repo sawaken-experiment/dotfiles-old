@@ -63,3 +63,10 @@ Metrics/PerceivedComplexity:
 
 Lint/LiteralInCondition:
   Enabled: false
+
+# --------------------------------------------------
+# Performance
+# --------------------------------------------------
+
+Performance/RedundantBlockCall:
+  Enabled: false

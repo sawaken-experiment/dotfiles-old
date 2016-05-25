@@ -1,17 +1,16 @@
-require 'setup/util'
+# frozen_string_literal: true
 
-layer :debian => :common do
-
-  override_task 'remove:all' do
-
+DebianLayer = Layer.new do |l|
+  l.task 'remove:all' do
+    nil
   end
 
   # ----------------------------------------------------------------------
   # Java
   # ----------------------------------------------------------------------
 
-  ldesc 'Oracle Java7, 8をインストールし、jenvの監視下に置く'
-  override_task 'java' => 'jenv' do
+  l.desc 'Oracle Java7, 8をインストールし、jenvの監視下に置く'
+  l.task 'java' => 'jenv' do
     url = 'http://ppa.launchpad.net/webupd8team/java/ubuntu'
     txt = "deb #{url} trusty main\ndeb-src #{url} trusty main\n"
     tmpfile = '.dotfiles-target/java-8-debian.list'
@@ -25,14 +24,14 @@ layer :debian => :common do
     ash "echo \"y\ny\ny\n\" | jenv add /usr/lib/jvm/java-8-oracle"
     ash 'jenv global 1.8'
     ash 'jenv rehash'
-    fail 'assert' unless asho("java -version 2>&1").index('1.8')
+    raise 'assert' unless asho('java -version 2>&1').index('1.8')
   end
 
   # ----------------------------------------------------------------------
   # Haskell
   # ----------------------------------------------------------------------
 
-  override_task 'haskell' do
+  l.task 'haskell' do
     next if which 'stack'
     a = 'http://download.fpcomplete.com/debian'
     sh "echo 'deb #{a} jessie main'|sudo tee /etc/apt/sources.list.d/fpco.list"
@@ -44,15 +43,15 @@ layer :debian => :common do
   # アプリケーション
   # ----------------------------------------------------------------------
 
-  override_task 'applications' do
-
+  l.task 'applications' do
+    nil
   end
 
   # ----------------------------------------------------------------------
   # ビルドツール
   # ----------------------------------------------------------------------
 
-  override_task 'build-lib' do
+  l.task 'build-lib' do
     sh 'sudo apt-get install -y build-essential curl'
     sh 'sudo apt-get install -y libssl-dev libreadline-dev zlib1g-dev'
     sh 'sudo apt-get install -y libbzip2-dev libsqlite3-dev'

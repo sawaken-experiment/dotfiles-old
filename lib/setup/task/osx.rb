@@ -1,8 +1,7 @@
-require 'setup/util'
+# frozen_string_literal: true
 
-layer :osx => :common do
-
-  override_task 'remove:all' => [
+OSXLayer = Layer.new do |l|
+  l.task 'remove:all' => [
     'remove:homebrew', 'remove:anyenv', 'remove:dotfiles'
   ]
 
@@ -10,8 +9,8 @@ layer :osx => :common do
   # Java
   # ----------------------------------------------------------------------
 
-  ldesc 'Oracle Java7, 8をインストールし, jenvの監視下に置く'
-  override_task 'java' => ['jenv', 'homebrew'] do
+  l.desc 'Oracle Java7, 8をインストールし, jenvの監視下に置く'
+  l.task 'java' => %w(jenv homebrew) do
     shq 'brew tap caskroom/cask'
     shq 'brew tap caskroom/versions'
     shq 'brew cask install java7'
@@ -21,14 +20,14 @@ layer :osx => :common do
     end
     ash 'jenv global 1.8'
     ash 'jenv rehash'
-    fail 'assert' unless asho("java -version 2>&1").index('1.8')
+    raise 'assert' unless asho('java -version 2>&1').index('1.8')
   end
 
   # ----------------------------------------------------------------------
   # Haskell
   # ----------------------------------------------------------------------
 
-  override_task 'haskell' => 'homebrew' do
+  l.task 'haskell' => 'homebrew' do
     shq 'brew install haskell-stack'
     shq 'stack setup'
   end
@@ -37,21 +36,21 @@ layer :osx => :common do
   # アプリケーション
   # ----------------------------------------------------------------------
 
-  override_task 'applications' => [
+  l.task 'applications' => [
     'cui-tools', 'gui-tools', 'atom', 'atom-packages',
     'keynote-theme', 'terminal-theme'
   ]
 
-  ldesc '各種コマンドラインツールをインストールする'
-  ltask 'cui-tools' => 'homebrew' do
+  l.desc '各種コマンドラインツールをインストールする'
+  l.task 'cui-tools' => 'homebrew' do
     # tmux
     shq 'brew install tmux reattach-to-user-namespace'
     # Emacs
     shq 'brew install emacs --with-cocoa --with-gnutls'
   end
 
-  ldesc 'homebrew-caskを用いて各種APPをインストールする'
-  ltask 'gui-tools' => 'homebrew' do
+  l.desc 'homebrew-caskを用いて各種APPをインストールする'
+  l.task 'gui-tools' => 'homebrew' do
     shq 'brew tap caskroom/cask'
     # IntelliJ
     shq 'brew cask install intellij-idea'
@@ -68,32 +67,32 @@ layer :osx => :common do
     shq 'brew cask install dropbox'
   end
 
-  ldesc 'Atomをインストールする'
-  ltask 'atom' => ['homebrew', 'dotfiles'] do
+  l.desc 'Atomをインストールする'
+  l.task 'atom' => %w(homebrew dotfiles) do
     shq 'brew cask install atom'
     task('atom-packages').invoke
   end
 
-  ldesc 'KeynoteのテーマAzusa-Colorsをインストールする'
-  ltask 'keynote-theme' => 'dotfiles' do
+  l.desc 'KeynoteのテーマAzusa-Colorsをインストールする'
+  l.task 'keynote-theme' => 'dotfiles' do
     begin
-      sh "git clone https://github.com/sanographix/azusa-colors/ ./azusa-colors"
+      sh 'git clone https://github.com/sanographix/azusa-colors/ ./azusa-colors'
       cd './azusa-colors' do
         sh 'unzip theme-azusa-colors.kth.zip'
         sh 'mv -f theme-azusa-colors.kth $HOME/.dotfiles-target/'
       end
       sh 'open $HOME/.dotfiles-target/theme-azusa-colors.kth'
     ensure
-      sh "rm -rf ./azusa-colors"
+      sh 'rm -rf ./azusa-colors'
     end
   end
 
-  ldesc 'Terminal.appのテーマSolarized-Darkをインストールする'
-  ltask 'terminal-theme' do
+  l.desc 'Terminal.appのテーマSolarized-Darkをインストールする'
+  l.task 'terminal-theme' do
     url = 'https://github.com/tomislav/osx-terminal.app-colors-solarized'
     begin
       sh "git clone #{url} ./solarized"
-      sh "open -a Terminal.app \"./solarized/Solarized Dark.terminal\""
+      sh 'open -a Terminal.app "./solarized/Solarized Dark.terminal"'
     ensure
       sh 'rm -fr ./solarized'
     end
@@ -103,23 +102,23 @@ layer :osx => :common do
   # ビルドツール
   # ----------------------------------------------------------------------
 
-  ldesc 'Homebrewをインストールする'
-  ltask 'homebrew' do
+  l.desc 'Homebrewをインストールする'
+  l.task 'homebrew' do
     next if which 'brew'
     url = 'https://raw.githubusercontent.com/Homebrew/install/master/install'
     sh "echo \"\n\" | ruby -e \"$(curl -fsSL #{url})\""
-    fail 'assert' unless which 'brew'
+    raise 'assert' unless which 'brew'
   end
 
-  ldesc 'Homebrewをアンインストールする'
-  ltask 'remove:homebrew' do
+  l.desc 'Homebrewをアンインストールする'
+  l.task 'remove:homebrew' do
     next unless which 'brew'
     url = 'https://raw.githubusercontent.com/Homebrew/install/master/uninstall'
     sh "echo y | ruby -e \"$(curl -fsSL #{url})\""
-    fail 'assert' if which 'brew'
+    raise 'assert' if which 'brew'
   end
 
-  override_task 'build-lib' => ['homebrew'] do
+  l.task 'build-lib' => ['homebrew'] do
     shq 'brew install openssl readline'
   end
 end
