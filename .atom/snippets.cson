@@ -34,3 +34,8 @@
       ; ${1: title}
       ; --------------------------------------------------
     """
+
+'.source.ruby':
+  'FrozenStringLiteral':
+    'prefix': 'frozen'
+    'body': '# frozen_string_literal: true'

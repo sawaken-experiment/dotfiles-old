@@ -14,9 +14,6 @@ AllCops:
 Style/AsciiComments:
   Enabled: false
 
-Style/ConditionalAssignment:
-  Enabled: false
-
 Style/HashSyntax:
   Enabled: false
 
