@@ -2,22 +2,23 @@
 
 OSX, Debian系, CentOS, Windows(コマンドプロンプト)に対応.
 
-Windowsは管理者権限でコマンドプロンプトを起動すること.
-
-## 環境構築(OSX, Debian, CentOS, Windows共通)
-
-* 本リポジトリをクローンし, rakeタスクの一覧を表示する.
+## インストール(OSX, Debian, CentOS, Windows共通)
+本リポジトリをクローンし, ドットファイルのリンクを張る.
 Rubyは2.0以上必須.
+管理者権限では実行しないこと.
 ```
 $ cd [home-dir]
-$ git clone --config autoCRLF=false https://github.com/sawaken/dotfiles.git dotfiles
+$ git clone --config core.autoCRLF=false https://github.com/sawaken/dotfiles.git dotfiles
+  or $ git clone --config core.autoCRLF=false git@github.com:sawaken/dotfiles.git dotfiles
 $ cd dotfiles
-$ rake -T
+$ rake　dotfiles
 ```
 
-* 必要なものをインストール
+## 環境構築
+適宜必要なものをインストール.
 ```
-$ rake dotfiles
+$ rake -T
+$ rake atom-packages
 ```
 
 ## システム種別を指定する

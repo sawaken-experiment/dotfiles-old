@@ -206,13 +206,24 @@ class IndentOut
   end
 end
 
-class
-
-fp = FilePath.new('/home/owner/hoge.md')
-mf = Parsing.new(fp, "#hoge\naaa\n##fuga\n##piyo").process
-
-c = Condition.new(%w(hoge piyo))
-
-p c.mark('lahogepa', '[', ']')
+cond = Condition.new(%w(hoge piyo))
 stf = SearchTargetFlag.new
-p mf.search(c, stf)
+
+MemorandumDirPath = File.expand_path(ENV['HOME'] + '/.memorandum')
+markdown_files = Dir.glob(MemorandumDirPath + '/**/*.md').map do |file|
+  file_path = FilePath.new(file)
+  begin
+    Parsing.new(file_path, open(file, 'r').read).process
+  rescue => err
+    puts 'parsing: ' + file
+    raise err
+  end
+end
+
+p markdown_files.size
+hit = markdown_files.map { |mfile| mfile.search(cond, stf) }.flatten
+
+hit.group_by(&:file_path).each do |file_path, sections|
+  p file_path
+  p sections.size
+end
