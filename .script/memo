@@ -1,6 +1,24 @@
 #!/usr/bin/env ruby
 # frozen_string_literal: true
 
-$LOAD_PATH.unshift File.expand_path('../lib', __FILE__)
+$LOAD_PATH.unshift File.expand_path('../../lib', __FILE__)
 
-require 'memosearch/lib/memosearch'
+require 'memo/lib/element'
+require 'memo/lib/parsing'
+require 'memo/lib/command'
+
+MEMORANDUM_DIR_PATH = File.expand_path(ENV['HOME'] + '/.memorandum')
+
+mfiles = Dir.glob(MEMORANDUM_DIR_PATH + '/**/*.md').map do |file|
+  begin
+    fp = FilePath.new(file)
+    Parsing.new(fp, File.open(file, 'r:utf-8') { |f| f.read }).process
+  rescue => err
+    STDERR.puts 'parsing error: ' + file
+    raise err
+  end
+end
+
+mfile_list = MarkdownFileList.new(mfiles)
+query = Query.new(ARGV)
+ShellPrinting.new(mfile_list.search(query.cond), query).show

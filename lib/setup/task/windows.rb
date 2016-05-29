@@ -3,22 +3,20 @@
 WindowsLayer = Layer.new do |l|
   l.desc 'ドットファイルのリンクを張る'
   l.task 'dotfiles' do
+    commands = []
+    DOTFILES.each do |dotfile|
+      home_path = File.expand_path("../#{dotfile}")
+      here_path = File.expand_path(dotfile)
+      if File.exist?(home_path)
+        puts "#{home_path}は既に存在するため, スキップします."
+        next
+      end
+      dir_opt = File.directory?(dotfile) ? ' /D' : ''
+      commands << "cmd /c mklink#{dir_opt} \"#{home_path}\" \"#{here_path}\""
+    end
     require 'tempfile'
     Tempfile.open(['link', '.cmd']) do |f|
-      commands = []
-      DOTFILES.each do |dotfile|
-        home_path = File.expand_path("../#{dotfile}")
-        here_path = File.expand_path(dotfile)
-        if File.exist?(home_path)
-          puts "#{home_path}は既に存在するため, スキップします."
-          next
-        end
-        dir_opt = File.directory?(dotfile) ? ' /D' : ''
-        commands << "cmd /c mklink#{dir_opt} \"#{home_path}\" \"#{here_path}\""
-      end
-      commands.each do |command|
-        f.puts command
-      end
+      commands.each { |command| f.puts command }
       f.flush
       wsh %(powershell -command "Start-Process -Verb runas \\"#{f.path}\\"")
       sleep(2) # リンク処理が終わる前にtempfileが削除されてしまうのを防ぐため

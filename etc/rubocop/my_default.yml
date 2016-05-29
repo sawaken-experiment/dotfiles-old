@@ -23,6 +23,9 @@ Style/Encoding:
 Style/MethodCalledOnDoEndBlock:
   Enabled: true
 
+Style/Documentation:
+  Enabled: false
+
 # --------------------------------------------------
 # Metrics
 # --------------------------------------------------
