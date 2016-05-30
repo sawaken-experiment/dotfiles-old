@@ -1,6 +1,5 @@
 # frozen_string_literal: true
 
-# Define top-level method for layer
 module Kernel
   def activate(*layers)
     layers.inject { |a, e| e.onto(a) }.perfect_tasks.each do |t|
@@ -10,7 +9,6 @@ module Kernel
   end
 end
 
-# Layer of rake-tasks.
 class Layer
   LayerTask = Struct.new(:name, :prerequisions, :body, :desc)
 

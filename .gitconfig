@@ -1,7 +1,7 @@
 [user]
     email = sasasawada@gmail.com
 [core]
-    excludesfile = ~/.gitignore
+    excludesfile = ~/.gitignore_global
     autoCRLF = false
 [color]
     ui = auto

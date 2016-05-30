@@ -79,9 +79,9 @@ OSXLayer = Layer.new do |l|
       sh 'git clone https://github.com/sanographix/azusa-colors/ ./azusa-colors'
       cd './azusa-colors' do
         sh 'unzip theme-azusa-colors.kth.zip'
-        sh 'mv -f theme-azusa-colors.kth $HOME/.dotfiles-target/'
+        sh 'mv -f theme-azusa-colors.kth $HOME/.target/'
       end
-      sh 'open $HOME/.dotfiles-target/theme-azusa-colors.kth'
+      sh 'open $HOME/.target/theme-azusa-colors.kth'
     ensure
       sh 'rm -rf ./azusa-colors'
     end

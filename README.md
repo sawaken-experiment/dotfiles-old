@@ -11,7 +11,7 @@ $ cd [home-dir]
 $ git clone --config core.autoCRLF=false https://github.com/sawaken/dotfiles.git dotfiles
   or $ git clone --config core.autoCRLF=false git@github.com:sawaken/dotfiles.git dotfiles
 $ cd dotfiles
-$ rake　dotfiles
+$ rake dotfiles
 ```
 
 ## 環境構築
@@ -43,5 +43,8 @@ $ unset system
 * build(OSX)
 
     [![Build Status](https://travis-ci.com/sawaken/dotfiles.svg?token=46Mp6xrHukCWQqyh951J&branch=master)](https://travis-ci.com/sawaken/dotfiles)
+
+* build(Windows)
+
 
 * code(Ruby)

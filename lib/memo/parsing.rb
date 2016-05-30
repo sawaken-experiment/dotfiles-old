@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require 'memo/lib/element'
+require 'memo/element'
 
 class Parsing
   def initialize(file_path, file_content)

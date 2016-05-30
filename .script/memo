@@ -3,9 +3,12 @@
 
 $LOAD_PATH.unshift File.expand_path('../../lib', __FILE__)
 
-require 'memo/lib/element'
-require 'memo/lib/parsing'
-require 'memo/lib/command'
+require 'tempfile'
+
+require 'memo/element'
+require 'memo/parsing'
+require 'memo/query'
+require 'memo/shell_printing'
 
 MEMORANDUM_DIR_PATH = File.expand_path(ENV['HOME'] + '/.memorandum')
 
@@ -21,4 +24,16 @@ end
 
 mfile_list = MarkdownFileList.new(mfiles)
 query = Query.new(ARGV)
-ShellPrinting.new(mfile_list.search(query.cond), query).show
+shell_printing = ShellPrinting.new(mfile_list.search(query.cond), query)
+
+if query.view_setting.editor
+  system("#{query.view_setting.editor} #{shell_printing.file_names.join(' ')}")
+elsif query.view_setting.stdout
+  shell_printing.show(STDOUT)
+else
+  Tempfile.open(['result', '.md']) do |f|
+    shell_printing.show(f)
+    f.flush
+    system("less -fr #{f.path}")
+  end
+end

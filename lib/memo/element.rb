@@ -38,7 +38,8 @@ class MarkdownFile
   end
 
   def shell_header(out, pos, num, cond)
-    out.puts "\e[36m[#{pos}/#{num}] #{@file_path.path_str}\e[m"
+    path = cond.mark(@file_path.path_str, "\e[36;4m", "\e[m\e[36m")
+    out.puts "\e[36m[#{pos}/#{num}] #{path}\e[m"
   end
 
   def shell_description(out, cond)
@@ -65,7 +66,8 @@ class Section
   end
 
   def shell_header(out, pos, num, cond)
-    out.puts "\e[33m#{'#' * @title.depth}[#{pos}/#{num}] #{@title.title_str}\e[m"
+    title = cond.mark(@title.title_str, "\e[33;4m", "\e[m\e[33m")
+    out.puts "\e[33m#{'#' * @title.depth}[#{pos}/#{num}] #{title}\e[m"
   end
 
   def shell_description(out, cond)
@@ -117,9 +119,11 @@ class Description
         next
       end
       if count.odd?
-        out.puts "    \e[32m#{line.chomp}\e[m"
+        line = cond.mark(line.chomp, "\e[32;4m", "\e[m\e[32m")
+        out.puts "    \e[32m#{line}\e[m"
       else
-        out.puts "#{line.chomp}"
+        line = cond.mark(line.chomp, "\e[4m", "\e[m")
+        out.puts line
       end
     end
   end

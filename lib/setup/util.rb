@@ -2,7 +2,6 @@
 
 DOTFILES = Dir.glob('.*[^~#.]') - ['.git', '.DS_Store', '.travis.yml']
 
-# TopLevelに定義するutil関数群
 module TopUtilFunction
   module_function
 
