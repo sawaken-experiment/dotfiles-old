@@ -56,9 +56,11 @@
 ; ----------------------------------------------------------------------
 
 (global-linum-mode t)
-(set-face-attribute 'linum nil
-                    :foreground "#800"
-                    :height 160)
+
+;テーマ側で設定されるので不要
+;(set-face-attribute 'linum nil
+;                    :foreground "#800"
+;                    :height 160)
 
 ; 行番号フォーマット
 (setq linum-format "%4d")
