@@ -11,7 +11,7 @@
   'ctrl-,': 'settings-view:open'
 
 # My Emacs-like cursor-key-binds
-'.platform-win32 atom-text-editor, .platform-linux atom-text-editor, platform-darwin atom-text-editor':
+'.platform-win32 atom-text-editor, .platform-linux atom-text-editor, .platform-darwin atom-text-editor':
 
   # ctrl-kから始まるキーバインドを全て殺す
   'ctrl-k ctrl-0': 'unset!'
