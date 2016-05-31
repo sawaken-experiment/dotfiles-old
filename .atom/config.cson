@@ -10,17 +10,21 @@
     excludeVcsIgnoredPaths: false
     packagesWithKeymapsDisabled: [
       "term3"
+      "color-picker"
+      "git-plus"
     ]
     themes: [
       "atom-dark-ui"
       "one-dark-syntax"
     ]
   editor:
-    fontSize: 15
+    fontSize: 16
     invisibles: {}
+    showInvisibles: true
     softWrap: true
   "exception-reporting":
     userId: "9437e86a-0252-ab2d-dbf9-ca15cf8a20e4"
+  "git-plus": {}
   "haskell-ghc-mod": {}
   linter:
     errorPanelHeight: 22
