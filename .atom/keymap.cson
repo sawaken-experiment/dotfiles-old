@@ -1,18 +1,27 @@
-# イベント名を調べるためには, Key Binding Resolverを開く.
-# このファイルは, 再起動せずとも再読込される.
+# ----------------------------------------------------------------------
+# キーバインド設定:
+# - 方針:
+#   - 一通りのことは全プラットフォーム共通でCtrl修飾を用いて出来るようにする
+#   - 基本的にEmacsっぽい感じにする
+#   - ややこしくなるので, Ctrl修飾以外はいじらない
+#   - 頻繁に使うもの以外はキーバインドに頼らず, コマンドパレットから起動するようにする
+# - メモ:
+#   - イベント名を調べるためには, Key Binding Resolverを開く
+#   - このファイルは, 再起動せずとも再読込される
+# ----------------------------------------------------------------------
 
 '*':
+  # TreeViewでカーソル移動できるようにする(windows)
   'ctrl-n': 'core:move-down'
   'ctrl-p': 'core:move-up'
   'ctrl-f': 'core:move-right'
   'ctrl-b': 'core:move-left'
 
+  # mac
   'ctrl-.': 'key-binding-resolver:toggle'
   'ctrl-,': 'settings-view:open'
 
-# My Emacs-like cursor-key-binds
 '.platform-win32 atom-text-editor, .platform-linux atom-text-editor, .platform-darwin atom-text-editor':
-
   # ctrl-kから始まるキーバインドを全て殺す
   'ctrl-k ctrl-0': 'unset!'
   'ctrl-k ctrl-1': 'unset!'
@@ -47,7 +56,7 @@
   'ctrl-k right': 'unset!'
   'ctrl-k up': 'unset!'
 
-  # OSX風のカーソル移動
+  # OSX風のカーソル移動(windows)
   'ctrl-k': 'editor:cut-to-end-of-line'
   'ctrl-e': 'editor:move-to-end-of-line'
   'ctrl-a': 'editor:move-to-first-character-of-line'
@@ -65,7 +74,8 @@
   'ctrl-s': 'core:save'
   'ctrl-u': 'core:undo'
   'ctrl-i': 'core:redo'
+  'ctrl-w': 'core:close'
 
-# Escape by ctrl-w on autocomplete-plus
+# 補完候補をctrl-gで閉じれるようにする
 'atom-text-editor.autocomplete-active':
   'ctrl-g': 'autocomplete-plus:cancel'
