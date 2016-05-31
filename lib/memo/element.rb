@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 class MarkdownFileList
+  attr_reader :children
+
   def initialize(children)
     @children = children
   end
@@ -9,7 +11,7 @@ class MarkdownFileList
     SearchResult.new(self, @children.map { |c| c.search(cond) })
   end
 
-  def shell_header(_out, _pos, _num, _cond)
+  def shell_header(_out, _number, _cond)
     nil
   end
 
@@ -19,7 +21,7 @@ class MarkdownFileList
 end
 
 class MarkdownFile
-  attr_reader :file_path
+  attr_reader :file_path, :description, :children
 
   def initialize(file_path, description, children)
     @file_path = file_path
@@ -37,9 +39,9 @@ class MarkdownFile
     end
   end
 
-  def shell_header(out, pos, num, cond)
+  def shell_header(out, number, cond)
     path = cond.mark(@file_path.path_str, "\e[36;4m", "\e[m\e[36m")
-    out.puts "\e[36m[#{pos}/#{num}] #{path}\e[m"
+    out.puts "\e[36m#{number} #{path}\e[m"
   end
 
   def shell_description(out, cond)
@@ -48,7 +50,7 @@ class MarkdownFile
 end
 
 class Section
-  attr_reader :title
+  attr_reader :title, :description, :children
   def initialize(title, description, children)
     @title = title
     @description = description
@@ -65,9 +67,9 @@ class Section
     end
   end
 
-  def shell_header(out, pos, num, cond)
+  def shell_header(out, number, cond)
     title = cond.mark(@title.title_str, "\e[33;4m", "\e[m\e[33m")
-    out.puts "\e[33m#{'#' * @title.depth}[#{pos}/#{num}] #{title}\e[m"
+    out.puts "\e[33m#{'#' * @title.depth}#{number} #{title}\e[m"
   end
 
   def shell_description(out, cond)
@@ -143,9 +145,5 @@ class SearchResult
 
   def empty?
     !hit? && @delegations.all?(&:empty?)
-  end
-
-  def shell_render(out, query)
-    @element.shell_render(out, query)
   end
 end

@@ -1,8 +1,53 @@
 # イベント名を調べるためには, Key Binding Resolverを開く.
 # このファイルは, 再起動せずとも再読込される.
 
+'*':
+  'ctrl-n': 'core:move-down'
+  'ctrl-p': 'core:move-up'
+  'ctrl-f': 'core:move-right'
+  'ctrl-b': 'core:move-left'
+
+  'ctrl-.': 'key-binding-resolver:toggle'
+  'ctrl-,': 'settings-view:open'
+
 # My Emacs-like cursor-key-binds
-'.platform-win32 atom-text-editor, .platform-linux atom-text-editor':
+'.platform-win32 atom-text-editor, .platform-linux atom-text-editor, platform-darwin atom-text-editor':
+
+  # ctrl-kから始まるキーバインドを全て殺す
+  'ctrl-k ctrl-0': 'unset!'
+  'ctrl-k ctrl-1': 'unset!'
+  'ctrl-k ctrl-2': 'unset!'
+  'ctrl-k ctrl-3': 'unset!'
+  'ctrl-k ctrl-4': 'unset!'
+  'ctrl-k ctrl-5': 'unset!'
+  'ctrl-k ctrl-6': 'unset!'
+  'ctrl-k ctrl-7': 'unset!'
+  'ctrl-k ctrl-8': 'unset!'
+  'ctrl-k ctrl-9': 'unset!'
+  'ctrl-k ctrl-0': 'unset!'
+  'ctrl-k ctrl-alt-w': 'unset!'
+  'ctrl-k ctrl-b': 'unset!'
+  'ctrl-k ctrl-d': 'unset!'
+  'ctrl-k ctrl-down': 'unset!'
+  'ctrl-k ctrl-l': 'unset!'
+  'ctrl-k ctrl-left': 'unset!'
+  'ctrl-k ctrl-n': 'unset!'
+  'ctrl-k ctrl-p': 'unset!'
+  'ctrl-k ctrl-right': 'unset!'
+  'ctrl-k ctrl-u': 'unset!'
+  'ctrl-k ctrl-up': 'unset!'
+  'ctrl-k ctrl-w': 'unset!'
+  'ctrl-k down': 'unset!'
+  'ctrl-k down': 'unset!'
+  'ctrl-k h': 'unset!'
+  'ctrl-k j': 'unset!'
+  'ctrl-k k': 'unset!'
+  'ctrl-k l': 'unset!'
+  'ctrl-k left': 'unset!'
+  'ctrl-k right': 'unset!'
+  'ctrl-k up': 'unset!'
+
+  # OSX風のカーソル移動
   'ctrl-k': 'editor:cut-to-end-of-line'
   'ctrl-e': 'editor:move-to-end-of-line'
   'ctrl-a': 'editor:move-to-first-character-of-line'
@@ -12,8 +57,15 @@
   'ctrl-b': 'core:move-left'
   'ctrl-d': 'core:delete'
 
+  # よく使うコマンドをバインド
+  'ctrl-g': 'core:cancel'
   'ctrl-o': 'command-palette:toggle'
+  'ctrl-r': 'find-and-replace:toggle'
+  'ctrl-y': 'core:paste'
+  'ctrl-s': 'core:save'
+  'ctrl-u': 'core:undo'
+  'ctrl-i': 'core:redo'
 
 # Escape by ctrl-w on autocomplete-plus
 'atom-text-editor.autocomplete-active':
-  'ctrl-w': 'autocomplete-plus:cancel'
+  'ctrl-g': 'autocomplete-plus:cancel'

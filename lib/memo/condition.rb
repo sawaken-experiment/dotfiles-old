@@ -2,6 +2,7 @@
 
 class Condition
   attr_reader :patterns, :stf
+
   def initialize(patterns, stf)
     @patterns = patterns
     @stf = stf
