@@ -1,81 +1,146 @@
 # ----------------------------------------------------------------------
 # キーバインド設定:
 # - 方針:
-#   - 一通りのことは全プラットフォーム共通でCtrl修飾を用いて出来るようにする
-#   - 基本的にEmacsっぽい感じにする
-#   - ややこしくなるので, Ctrl修飾以外はいじらない
+#   - バンドルおよび各種パッケージのキーバインドはinit.coffeeにて全て無効化する
+#   - 全プラットフォーム共通のキーバインドをフルスクラッチで定義する
+#   - CtrlとShiftしか使わない
 #   - 頻繁に使うもの以外はキーバインドに頼らず, コマンドパレットから起動するようにする
 # - メモ:
 #   - イベント名を調べるためには, Key Binding Resolverを開く
 #   - このファイルは, 再起動せずとも再読込される
 # ----------------------------------------------------------------------
 
-'*':
-  # TreeViewでカーソル移動できるようにする(windows)
-  'ctrl-n': 'core:move-down'
+'body':
+  # カーソル移動
   'ctrl-p': 'core:move-up'
-  'ctrl-f': 'core:move-right'
+  'ctrl-n': 'core:move-down'
   'ctrl-b': 'core:move-left'
-
-  # mac
-  'ctrl-.': 'key-binding-resolver:toggle'
-  'ctrl-,': 'settings-view:open'
-
-'.platform-win32 atom-text-editor, .platform-linux atom-text-editor, .platform-darwin atom-text-editor':
-  # ctrl-kから始まるキーバインドを全て殺す
-  'ctrl-k ctrl-0': 'unset!'
-  'ctrl-k ctrl-1': 'unset!'
-  'ctrl-k ctrl-2': 'unset!'
-  'ctrl-k ctrl-3': 'unset!'
-  'ctrl-k ctrl-4': 'unset!'
-  'ctrl-k ctrl-5': 'unset!'
-  'ctrl-k ctrl-6': 'unset!'
-  'ctrl-k ctrl-7': 'unset!'
-  'ctrl-k ctrl-8': 'unset!'
-  'ctrl-k ctrl-9': 'unset!'
-  'ctrl-k ctrl-0': 'unset!'
-  'ctrl-k ctrl-alt-w': 'unset!'
-  'ctrl-k ctrl-b': 'unset!'
-  'ctrl-k ctrl-d': 'unset!'
-  'ctrl-k ctrl-down': 'unset!'
-  'ctrl-k ctrl-l': 'unset!'
-  'ctrl-k ctrl-left': 'unset!'
-  'ctrl-k ctrl-n': 'unset!'
-  'ctrl-k ctrl-p': 'unset!'
-  'ctrl-k ctrl-right': 'unset!'
-  'ctrl-k ctrl-u': 'unset!'
-  'ctrl-k ctrl-up': 'unset!'
-  'ctrl-k ctrl-w': 'unset!'
-  'ctrl-k down': 'unset!'
-  'ctrl-k down': 'unset!'
-  'ctrl-k h': 'unset!'
-  'ctrl-k j': 'unset!'
-  'ctrl-k k': 'unset!'
-  'ctrl-k l': 'unset!'
-  'ctrl-k left': 'unset!'
-  'ctrl-k right': 'unset!'
-  'ctrl-k up': 'unset!'
-
-  # OSX風のカーソル移動(windows)
-  'ctrl-k': 'editor:cut-to-end-of-line'
+  'ctrl-f': 'core:move-right'
+  'up': 'core:move-up'
+  'down': 'core:move-down'
+  'left': 'core:move-left'
+  'right': 'core:move-right'
   'ctrl-e': 'editor:move-to-end-of-line'
   'ctrl-a': 'editor:move-to-first-character-of-line'
-  'ctrl-n': 'core:move-down'
-  'ctrl-p': 'core:move-up'
-  'ctrl-f': 'core:move-right'
-  'ctrl-b': 'core:move-left'
-  'ctrl-d': 'core:delete'
+  'home': 'editor:move-to-first-character-of-line'
+  'end': 'editor:move-to-end-of-screen-line'
 
-  # よく使うコマンドをバインド
-  'ctrl-g': 'core:cancel'
-  'ctrl-o': 'command-palette:toggle'
-  'ctrl-r': 'find-and-replace:toggle'
+  # カーソル移動(選択)
+  'ctrl-P': 'core:select-up'
+  'ctrl-N': 'core:select-down'
+  'ctrl-F': 'core:select-right'
+  'ctrl-B': 'core:select-left'
+  'shift-up': 'core:select-up'
+  'shift-down': 'core:select-down'
+  'shift-left': 'core:select-left'
+  'shift-right': 'core:select-right'
+  'ctrl-A': 'editor:select-to-first-character-of-line'
+  'ctrl-E': 'editor:select-to-end-of-line'
+  'shift-home': 'editor:select-to-first-character-of-line'
+  'shift-end': 'editor:select-to-end-of-line'
+
+  # 削除
+  'ctrl-h': 'core:backspace'
+  'ctrl-d': 'core:delete'
+  'backspace': 'core:backspace'
+  'delete': 'core:delete'
+  'ctrl-delete': 'core:delete'
+  'ctrl-backspace': 'core:backspace'
+
+  # カット＆ペースト
+  'ctrl-k': 'editor:cut-to-end-of-line'
+  'ctrl-c': 'core:copy'
   'ctrl-y': 'core:paste'
-  'ctrl-s': 'core:save'
+
+  # Undo/Redo
   'ctrl-u': 'core:undo'
   'ctrl-i': 'core:redo'
-  'ctrl-w': 'core:close'
 
-# 補完候補をctrl-gで閉じれるようにする
+  # Enter
+  'enter': 'core:confirm'
+
+  # キャンセル
+  'ctrl-g': 'core:cancel'
+  'escape': 'core:cancel'
+
+  # フォーカス移動
+  'ctrl-tab': 'pane:show-next-recently-used-item'
+
+  # 開く/切り替え
+  'ctrl-.': 'key-binding-resolver:toggle'
+  'ctrl-,': 'settings-view:open'
+  'ctrl-o': 'command-palette:toggle'
+  'ctrl-r': 'find-and-replace:toggle'
+  'ctrl-s': 'core:save'
+  'ctrl-q': 'core:close'
+
+  # 拡大/縮小
+  'ctrl-+': 'window:increase-font-size'
+  'ctrl--': 'window:decrease-font-size'
+
+'atom-text-editor':
+  # 列ジャンプ
+  'ctrl-0': 'user:move-column'
+  'ctrl-1': 'user:move-column'
+  'ctrl-2': 'user:move-column'
+  'ctrl-3': 'user:move-column'
+  'ctrl-4': 'user:move-column'
+  'ctrl-5': 'user:move-column'
+  'ctrl-6': 'user:move-column'
+  'ctrl-7': 'user:move-column'
+  'ctrl-8': 'user:move-column'
+  'ctrl-9': 'user:move-column'
+
+  # 行ジャンプ
+  'ctrl-v': 'user:move-row'
+  'ctrl-j': 'user:move-row'
+
+  # マーク
+  'ctrl-m': 'user:mark'
+  'ctrl-M': 'user:unmark'
+  'ctrl-K': 'user:unmark'
+  'ctrl-C': 'user:unmark'
+
+  # 拡張コピー
+  'ctrl-c': 'user:extended-copy'
+
+'atom-text-editor:not([mini])':
+  # インデント
+  'tab': 'editor:indent'
+  'shift-tab': 'editor:outdent-selected-rows'
+
+  # 改行
+  'enter': 'editor:newline'
+  'ctrl-enter': 'editor:newline'
+
+'.select-list':
+  'enter': 'core:confirm'
+
+'.tool-panel.panel-left, .tool-panel.panel-right':
+  'escape': 'tool-panel:unfocus'
+
+
+'atom-workspace atom-pane': {}
+
+
+# ----------------------------------------------------------------------
+# autocomplete-plus
+# ----------------------------------------------------------------------
 'atom-text-editor.autocomplete-active':
   'ctrl-g': 'autocomplete-plus:cancel'
+  'tab': 'autocomplete-plus:confirm'
+
+# ----------------------------------------------------------------------
+# find-and-replace
+# ----------------------------------------------------------------------
+'.find-and-replace, .project-find, .project-find .result-view':
+  'tab': 'find-and-replace:focus-next'
+
+'.find-and-replace .replace-container':
+  'shift-enter': 'find-and-replace:replace-all'
+
+# ----------------------------------------------------------------------
+# tree-view
+# ----------------------------------------------------------------------
+'.tree-view':
+  'enter': 'tree-view:open-selected-entry'
