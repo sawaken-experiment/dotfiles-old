@@ -8,3 +8,5 @@
 !/styles.less
 !/README.md
 !/atom-pkg-list.yml
+!/commands/
+!/commands/*
