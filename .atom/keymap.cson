@@ -64,15 +64,19 @@
   'escape': 'core:cancel'
 
   # フォーカス移動
-  'ctrl-tab': 'pane:show-next-recently-used-item'
+  #'ctrl-tab': 'pane:show-next-recently-used-item'
+  'ctrl-\\': 'tree-view:toggle-focus'
 
   # 開く/切り替え
   'ctrl-.': 'key-binding-resolver:toggle'
   'ctrl-,': 'settings-view:open'
-  'ctrl-o': 'command-palette:toggle'
   'ctrl-r': 'find-and-replace:toggle'
   'ctrl-s': 'core:save'
   'ctrl-q': 'core:close'
+
+  # コマンド実行
+  'ctrl-o': 'command-palette:toggle'
+  'ctrl-O': 'user:repeat-command'
 
   # 拡大/縮小
   'ctrl-+': 'window:increase-font-size'
@@ -100,14 +104,20 @@
   'ctrl-M': 'user:unmark'
   'ctrl-K': 'user:unmark'
   'ctrl-C': 'user:unmark'
+  'ctrl-L': 'user:unmark'
 
   # 拡張コピー
   'ctrl-c': 'user:extended-copy'
+
+  # 行選択
+  'ctrl-l': 'editor:select-line'
 
 'atom-text-editor:not([mini])':
   # インデント
   'tab': 'editor:indent'
   'shift-tab': 'editor:outdent-selected-rows'
+  'ctrl-tab': 'editor:indent'
+  'ctrl-shift-tab': 'editor:outdent-selected-rows'
 
   # 改行
   'enter': 'editor:newline'

@@ -22,14 +22,15 @@ atom.commands.add 'atom-text-editor', 'user:move-column': (event) ->
 # ----------------------------------------------------------------------
 
 atom.commands.add 'atom-text-editor', 'user:move-row': (envent) ->
-  switch event.originalEvent.keyCode
-    when 86 # v
-      diff = +5
-    when 74 # j
-      diff = -5
-  editor = @getModel()
-  currentPoint = editor.getCursorBufferPosition()
-  editor.setCursorBufferPosition([currentPoint.row + diff, currentPoint.column])
+  if event
+    switch event.originalEvent.keyCode
+      when 86 # v
+        diff = +5
+      when 74 # j
+        diff = -5
+    editor = @getModel()
+    currentPoint = editor.getCursorBufferPosition()
+    editor.setCursorBufferPosition([currentPoint.row + diff, currentPoint.column])
 
 # ----------------------------------------------------------------------
 # copy-to-end-of-line
@@ -64,11 +65,31 @@ atom.commands.add 'atom-text-editor', 'user:unmark': (event) ->
     lastMarkedPoint = marker.getStartBufferPosition()
     editor.setCursorBufferPosition(lastMarkedPoint)
     range = [lastMarkedPoint, currentPoint]
-    if event.originalEvent.keyCode == 75 # K
-      text = editor.getTextInBufferRange(range)
-      editor.setSelectedBufferRange(range)
-      editor.delete()
-      atom.clipboard.write(text)
-    else if event.originalEvent.keyCode == 67 # C
-      text = editor.getTextInBufferRange(range)
-      atom.clipboard.write(text)
+    switch event.originalEvent.keyCode
+      when 75 # K
+        text = editor.getTextInBufferRange(range)
+        editor.setSelectedBufferRange(range)
+        editor.delete()
+        atom.clipboard.write(text)
+      when 67 # C
+        text = editor.getTextInBufferRange(range)
+        atom.clipboard.write(text)
+      when 76 # L
+        editor.setSelectedBufferRange(range)
+
+# ----------------------------------------------------------------------
+# 最後にコマンドパレットから実行したコマンドを実行
+# ----------------------------------------------------------------------
+
+# lastCommand = null
+#
+# atom.commands.onDidDispatch (event) ->
+#   console.log event
+#   return if event.type == 'core:confirm'
+#   return if event.type == 'user:repeat-command'
+#   return unless event.target.localName == 'atom-text-editor'
+#   lastCommand = event.type
+#
+# atom.commands.add 'atom-text-editor', 'user:repeat-command', (event) ->
+#   target = atom.views.getView(@getModel())
+#   atom.commands.dispatch(target, lastCommand) if lastCommand

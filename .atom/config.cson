@@ -1,6 +1,8 @@
 "*":
   "autocomplete-plus":
     confirmCompletion: "tab"
+  autosave:
+    enabled: true
   core:
     disabledPackages: [
       "symbols-view"
@@ -21,7 +23,7 @@
     allBundledPackages: true
     allCommunityPackages: true
   editor:
-    fontSize: 15
+    fontSize: 16
     invisibles: {}
     showInvisibles: true
     softWrap: true
@@ -30,7 +32,7 @@
   "git-plus": {}
   "haskell-ghc-mod": {}
   linter:
-    errorPanelHeight: 22
+    errorPanelHeight: 26
   "linter-rubocop": {}
   minimap:
     plugins:

@@ -8,7 +8,7 @@ indent_size = 2
 
 # 以下の二つはAtomのeditorconfigプラグインでは2016年05月21日現在サポートされていない.
 # https://github.com/sindresorhus/atom-editorconfig
-# whitespaceパッケージでネイティブに設定できる.
+# whitespaceパッケージで独自に設定できる.
 trim_trailing_whitespace = true # 行末のwhitespaceを削除する
 insert_final_newline = true # 行末に空行を挿入する
 
