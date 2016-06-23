@@ -1,5 +1,6 @@
 
 require './commands/editor.coffee'
+require './commands/rspec.coffee'
 
 atom.keymaps.clear()
 atom.keymaps.loadKeymap(atom.getConfigDirPath() + '/keymap.cson', {

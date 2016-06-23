@@ -189,7 +189,7 @@ CommonLayer = Layer.new do |l|
   l.desc 'anyenvをインストールする'
   l.task 'anyenv' do
     next if File.exist?(ANY_ENV)
-    sh 'git clone https://github.com/riywo/anyenv $HOME/.anyenv'
+    sh "git clone https://github.com/riywo/anyenv #{ANY_ENV}"
     raise 'assert' unless File.exist?(ANY_ENV)
   end
 

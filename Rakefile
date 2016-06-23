@@ -17,21 +17,38 @@ require 'setup/task/common'
 require 'setup/task/osx'
 require 'setup/task/debian'
 require 'setup/task/centos'
-require 'setup/task/windows'
+require 'setup/task/cygwin'
+require 'setup/task/command_prompt'
 
-case ENV['system'] || ENV['OS'] || `uname -a`
-when /[Dd]arwin/
-  puts 'Rakefile for OSX El Capitan'
-  activate(CommonLayer, OSXLayer)
-when /[Dd]ebian/
+systems = {
+  'darwin' => [CommonLayer, OSXLayer],
+  'debian' => [CommonLayer, DebianLayer],
+  'centos' => [CommonLayer, CentOSLayer],
+  'cygwin' => [CommonLayer, CygwinLayer],
+  'command_prompt' => [CommandPromptLayer],
+}
+
+if ENV['system']
+  name = ENV['system']
+  raise "unknown system '#{name}'" unless systems.key?(name)
+  activate(*systems[name])
+elsif ENV['OS'] =~ /[Ww]indows/
+  if (`uname` =~ /CYGWIN/ rescue false)
+    puts 'Rakefile for Cygwin'
+    activate(*systems['cygwin'])
+  else
+    puts 'Rakefile for Command Prompt'
+    activate(*systems['command_prompt'])
+  end
+elsif `uname -a` =~ /[Dd]arwin/
+  puts 'Rakefile for OSX'
+  activate(*systems['darwin'])
+elsif `uname -a` =~ /[Dd]ebian/
   puts 'Rakefile for Debian 8.3'
-  activate(CommonLayer, DebianLayer)
-when /[Cc]ent[Oo][Ss]/
+  activate(*systems['debian'])
+elsif `uname -a` =~ /[Cc]ent[Oo][Ss]/
   puts 'Rakefile for CentOS'
-  activate(CommonLayer, CentOSLayer)
-when /[Ww]indows/
-  puts 'Rakefile for Windows'
-  activate(WindowsLayer)
+  activate(*systems['centos'])
 else
-  raise 'unsupported OS'
+  raise 'unsupported system'
 end

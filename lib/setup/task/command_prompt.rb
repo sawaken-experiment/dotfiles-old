@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
-WindowsLayer = Layer.new do |l|
-  l.desc 'ドットファイルのリンクを張る'
+CommandPromptLayer = Layer.new do |l|
+  l.desc 'ドットファイルのリンクを張る(ユーザ権限)'
   l.task 'dotfiles' do
     commands = []
     DOTFILES.each do |dotfile|
@@ -42,10 +42,10 @@ WindowsLayer = Layer.new do |l|
     end
   end
 
-  l.desc 'Atomのパッケージをインストールする'
-  l.task 'atom-packages' do
-    atom_packages.each do |pkg|
-      wsh "apm install #{pkg}"
-    end
+  l.desc 'Chocolateyインストールスクリプトを表示する'
+  l.task 'show:chocolatey' do
+    file = File.expand_path('./etc/install_chocolatey.ps1')
+    raise unless File.exist?(file)
+    wsh "notepad.exe \"#{file}\""
   end
 end

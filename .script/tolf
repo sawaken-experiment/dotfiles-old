@@ -1,6 +1,9 @@
 #!/usr/bin/env ruby
 # frozen_string_literal: true
 
+# Convert newline code of files into LF
+# usage: tolf <file>+
+
 ARGV.each do |filename|
   content = File.open(filename, 'rt:utf-8', &:read)
   File.open(filename, 'wb:utf-8') { |f| f.write(content) }

@@ -9,3 +9,8 @@
     * snake case (変数名)
     * snake case following @ (インスタンス変数)
     * snake case following $ (グローバル変数)
+
+* ctagのスコープはどうなっている？開いているタブ内のトークンだけ？
+* atomの検索、範囲選択どうなってんの？
+* ペースト時の挙動
+* double-quote, single-quote, back-quoteで囲う/外す/取り替える

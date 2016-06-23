@@ -1,4 +1,5 @@
 [user]
+    name = "Kensuke Sawada"
     email = sasasawada@gmail.com
 [core]
     excludesfile = ~/.gitignore_global

@@ -17,6 +17,7 @@ Thumbs.db
 # バイナリ/オブジェクトファイル
 *.out
 *.o
+*.stackdump
 
 # LaTeX関連
 *.dvi
