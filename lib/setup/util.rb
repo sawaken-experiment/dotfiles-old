@@ -7,7 +7,7 @@ module TopUtilFunction
 
   def atom_packages
     require 'yaml'
-    YAML.load(File.open('./.atom/atom-pkg-list.yml').read)
+    YAML.load(File.open(ENV['HOME'] + '/.atom/atom-pkg-list.yml').read)
   end
 
   def home(path)
