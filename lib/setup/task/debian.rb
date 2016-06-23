@@ -9,11 +9,11 @@ DebianLayer = Layer.new do |l|
   # Java
   # ----------------------------------------------------------------------
 
-  l.desc 'Oracle Java7, 8をインストールし、jenvの監視下に置く'
+  l.desc 'Oracle Java7, 8をインストールし、jenvの監視下に置く(ダイアログ有り)'
   l.task 'java' => 'jenv' do
     url = 'http://ppa.launchpad.net/webupd8team/java/ubuntu'
     txt = "deb #{url} trusty main\ndeb-src #{url} trusty main\n"
-    tmpfile = '.dotfiles-target/java-8-debian.list'
+    tmpfile = ENV['HOME'] + '/.target/java-8-debian.list'
     sh "echo \"#{txt}\" | cat > #{tmpfile}"
     sh "sudo mv -f #{tmpfile} /etc/apt/sources.list.d/"
     sh 'sudo apt-key adv --keyserver keyserver.ubuntu.com --recv-keys EEA14886'

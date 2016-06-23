@@ -1,0 +1,7 @@
+build: off
+deploy: off
+test_script:
+  - 'rake dotfiles'
+  - 'rake remove:dotfiles'
+  - 'rake dotfiles'
+  - 'rake remove:dotfiles'

@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-DOTFILES = Dir.glob('.*[^~#.]') - ['.git', '.DS_Store', '.travis.yml']
+DOTFILES = Dir.glob('./deployed/.*[^~#.]').map { |f| File.basename(f) }
 
 module TopUtilFunction
   module_function
@@ -21,7 +21,7 @@ module TopUtilFunction
 
   def dotfile_status(dotfile_name)
     dotfile_path_home = home(dotfile_name)
-    dotfile_path_here = File.expand_path(dotfile_name)
+    dotfile_path_here = File.expand_path("./deployed/#{dotfile_name}")
     raise unless dotfile_path_here
     if File.exist?(dotfile_path_home)
       link_dest = `readlink #{dotfile_path_home}`.chomp

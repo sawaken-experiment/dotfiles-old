@@ -148,7 +148,7 @@ CommonLayer = Layer.new do |l|
   l.task 'dotfiles' do
     DOTFILES.each do |dotfile|
       dotfile_path_home = home(dotfile)
-      dotfile_path_here = File.expand_path(dotfile)
+      dotfile_path_here = File.expand_path("./deployed/#{dotfile}")
       unless File.exist?(dotfile_path_home)
         symlink(dotfile_path_here, dotfile_path_home)
       end
@@ -169,7 +169,7 @@ CommonLayer = Layer.new do |l|
   l.task 'remove:dotfiles' do
     DOTFILES.each do |dotfile|
       dotfile_path_home = home(dotfile)
-      dotfile_path_here = File.expand_path(dotfile)
+      dotfile_path_here = File.expand_path("./deployed/#{dotfile}")
       if File.exist?(dotfile_path_home)
         link_dest = `readlink #{dotfile_path_home}`.chomp
         rm dotfile_path_home if link_dest == dotfile_path_here

@@ -1,10 +1,9 @@
-# TravisCIの設定ファイル.
 language:
   - objective-c
 install:
   - brew update
-  - gem install rspec
+  - bundle install
 script:
-  - 'rspec lib'
+  - 'bundle exec rspec'
   - 'rake all'
   - 'rake remove:all'

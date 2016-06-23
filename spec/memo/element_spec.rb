@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require_relative '../element.rb'
+require 'memo/element'
 
 describe 'element.rb' do
   describe MarkdownFileList do

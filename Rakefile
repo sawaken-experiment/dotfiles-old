@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 # ----------------------------------------------------------------------
 # 環境構築スクリプト集
 # 利用者へ:
@@ -23,9 +24,10 @@ require 'setup/task/command_prompt'
 systems = {
   'darwin' => [CommonLayer, OSXLayer],
   'debian' => [CommonLayer, DebianLayer],
+  'ubuntu' => [CommonLayer, DebianLayer],
   'centos' => [CommonLayer, CentOSLayer],
   'cygwin' => [CommonLayer, CygwinLayer],
-  'command_prompt' => [CommandPromptLayer],
+  'command_prompt' => [CommandPromptLayer]
 }
 
 if ENV['system']
@@ -43,8 +45,8 @@ elsif ENV['OS'] =~ /[Ww]indows/
 elsif `uname -a` =~ /[Dd]arwin/
   puts 'Rakefile for OSX'
   activate(*systems['darwin'])
-elsif `uname -a` =~ /[Dd]ebian/
-  puts 'Rakefile for Debian 8.3'
+elsif `uname -a` =~ /[Dd]ebian|[Uu]buntu/
+  puts 'Rakefile for Debian 8.3 (or Ubuntu)'
   activate(*systems['debian'])
 elsif `uname -a` =~ /[Cc]ent[Oo][Ss]/
   puts 'Rakefile for CentOS'

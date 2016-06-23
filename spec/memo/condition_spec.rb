@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require_relative '../condition.rb'
+require 'memo/condition'
 
 describe Condition do
   before do

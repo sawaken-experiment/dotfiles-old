@@ -1,2 +1,0 @@
-inherit_from:
-  - ../etc/rubocop/my_strict.yml

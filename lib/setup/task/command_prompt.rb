@@ -1,18 +1,19 @@
 # frozen_string_literal: true
 
 CommandPromptLayer = Layer.new do |l|
-  l.desc 'ドットファイルのリンクを張る(ユーザ権限)'
+  l.desc 'ドットファイルのリンクを張る'
   l.task 'dotfiles' do
     commands = []
     DOTFILES.each do |dotfile|
       home_path = File.expand_path("../#{dotfile}")
-      here_path = File.expand_path(dotfile)
+      entity_path = File.expand_path("./deployed/#{dotfile}")
       if File.exist?(home_path)
         puts "#{home_path}は既に存在するため, スキップします."
         next
       end
-      dir_opt = File.directory?(dotfile) ? ' /D' : ''
-      commands << "cmd /c mklink#{dir_opt} \"#{home_path}\" \"#{here_path}\""
+      puts "#{home_path} -> #{entity_path}"
+      dir_opt = File.directory?(entity_path) ? ' /D' : ''
+      commands << "cmd /c mklink#{dir_opt} \"#{home_path}\" \"#{entity_path}\""
     end
     require 'tempfile'
     Tempfile.open(['link', '.cmd']) do |f|
@@ -30,14 +31,14 @@ CommandPromptLayer = Layer.new do |l|
       line = line_str.split(/[\s\t]+/)
       if line[2] == '<SYMLINKD>'
         home_path = File.expand_path('../' + line[3])
-        here_path = File.expand_path(line[3])
+        entity_path = File.expand_path(line[3])
         target = line[4][1..-2]
-        wsh "rmdir \"#{home_path}\"" if target == here_path
+        wsh "rmdir \"#{home_path}\"" if target == entity_path
       elsif line[2] == '<SYMLINK>'
         home_path = File.expand_path('../' + line[3])
-        here_path = File.expand_path(line[3])
+        entity_path = File.expand_path(line[3])
         target = line[4][1..-2]
-        wsh "del \"#{home_path.tr('/', '\\')}\"" if target == here_path
+        wsh "del \"#{home_path.tr('/', '\\')}\"" if target == entity_path
       end
     end
   end

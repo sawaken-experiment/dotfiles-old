@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require_relative '../indent_out.rb'
+require 'memo/indent_out'
 
 describe IndentOut do
   it 'inc' do

@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require_relative '../parsing.rb'
+require 'memo/parsing'
 
 describe Parsing do
   file1 = <<-MARKDOWN

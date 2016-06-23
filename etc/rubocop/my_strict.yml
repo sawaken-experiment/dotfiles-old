@@ -4,8 +4,6 @@ AllCops:
   TargetRubyVersion: 2.3
   DisplayCopNames: true
   DisplayStyleGuide: true
-  Rails:
-    Enabled: false
 
 # --------------------------------------------------
 # Style
@@ -24,6 +22,9 @@ Style/MethodCalledOnDoEndBlock:
   Enabled: true
 
 Style/Documentation:
+  Enabled: false
+
+Style/RescueModifier:
   Enabled: false
 
 # --------------------------------------------------

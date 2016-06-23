@@ -26,3 +26,6 @@ Thumbs.db
 *.fls
 *.fdb_latexmk
 *.synctex.gz
+
+# ruby関連
+/Gemfile.lock

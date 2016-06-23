@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require_relative '../layer.rb'
+require 'setup/layer'
 
 describe Layer do
   X = Layer.new do |l|

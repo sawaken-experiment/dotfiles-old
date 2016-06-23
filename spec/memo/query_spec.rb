@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require_relative '../query.rb'
+require 'memo/query'
 
 describe Query do
   it 'initialize with no argument' do
