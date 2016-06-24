@@ -1,3 +1,4 @@
+# coding: utf-8
 # frozen_string_literal: true
 
 CommonLayer = Layer.new do |l|
@@ -149,10 +150,17 @@ CommonLayer = Layer.new do |l|
     DOTFILES.each do |dotfile|
       dotfile_path_home = home(dotfile)
       dotfile_path_here = File.expand_path("./deployed/#{dotfile}")
-      unless File.exist?(dotfile_path_home)
-        symlink(dotfile_path_here, dotfile_path_home)
+      if File.symlink?(dotfile_path_home)
+        if File.exist?(dotfile_path_home)
+          next
+        else
+          puts "#{dotfile_path_home}はリンク切れなので削除します."
+          rm(dotfile_path_home)
+        end
       end
-      raise 'assert' unless File.exist?(dotfile_path_home)
+      next if File.exist?(dotfile_path_home)
+      symlink(dotfile_path_here, dotfile_path_home)
+      raise 'assert (link failed)' unless File.exist?(dotfile_path_home)
     end
   end
 
