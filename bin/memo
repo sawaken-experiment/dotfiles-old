@@ -1,7 +1,7 @@
 #!/usr/bin/env ruby
 # frozen_string_literal: true
 
-$LOAD_PATH.unshift ENV['HOME'] + '/dotfiles/lib'
+$LOAD_PATH.unshift ENV['HOME'] + '/dotfiles/src/lib'
 
 require 'tempfile'
 
@@ -10,7 +10,7 @@ require 'memo/parsing'
 require 'memo/query'
 require 'memo/shell_printing'
 
-MEMORANDUM_DIR_PATH = File.expand_path(ENV['HOME'] + '/.memorandum')
+MEMORANDUM_DIR_PATH = File.expand_path(ENV['HOME'] + '/dotfiles/memo')
 
 mfiles = Dir.glob(MEMORANDUM_DIR_PATH + '/**/*.md').map do |file|
   begin

@@ -4,7 +4,7 @@ if [[ "$OSTYPE" == "cygwin" ]];then
 fi
 
 # 雑用スクリプトのパスを通す
-export PATH="$HOME/.script:$PATH"
+export PATH="$HOME/dotfiles/bin:$PATH"
 
 # anyenvのパスを通す
 if [ -d $HOME/.anyenv ]; then
