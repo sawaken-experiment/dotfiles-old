@@ -39,12 +39,19 @@ $ rake dotfiles
 $ unset system
 ```
 
-## Status
-* build(OSX)
+## 現在の状態
+* OSXの環境構築
 
     [![Build Status](https://travis-ci.com/sawaken/dotfiles.svg?token=46Mp6xrHukCWQqyh951J&branch=master)](https://travis-ci.com/sawaken/dotfiles)
 
-* build(Windows)
+* Windowsの環境構築
 
+* Ubuntuの環境構築
 
-* code(Ruby)
+* src以下のRubyコード
+
+##　コミットメッセージの絵文字
+* :heavy_check_mark: modify mistake
+* :arrow_right: move something
+* :bug: fix bug
+* :seedling: start something
