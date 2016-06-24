@@ -4,6 +4,6 @@ install:
   - brew update
   - bundle install
 script:
-  - 'bundle exec rspec'
+  - 'cd src; bundle exec rspec'
   - 'rake all'
   - 'rake remove:all'

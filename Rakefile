@@ -10,7 +10,7 @@
 #       path2: taskAを実行 -> 異常終了 -> 原因を除去 -> taskAを実行 -> 正常終了
 # ----------------------------------------------------------------------
 
-$LOAD_PATH.unshift File.expand_path('../lib', __FILE__)
+$LOAD_PATH.unshift File.expand_path('../src/lib', __FILE__)
 
 require 'setup/util'
 require 'setup/layer'
