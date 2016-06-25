@@ -147,7 +147,7 @@ CommonLayer = Layer.new do |l|
 
   l.desc 'dotfilesが管理する全dotfileのリンクを張る'
   l.task 'dotfiles' do
-    DOTFILES.each do |dotfile|
+    DOTFILE_NAMES.each do |dotfile|
       dotfile_path_home = home(dotfile)
       dotfile_path_here = File.expand_path("./deployed/#{dotfile}")
       if File.symlink?(dotfile_path_home)
@@ -166,8 +166,8 @@ CommonLayer = Layer.new do |l|
 
   l.desc 'dotfilesが管理する全dotfileのリンク状態を表示する'
   l.task 'show:dotfiles' do
-    width = DOTFILES.map(&:size).max
-    DOTFILES.each do |dotfile|
+    width = DOTFILE_NAMES.map(&:size).max
+    DOTFILE_NAMES.each do |dotfile|
       status = dotfile_status_colorized(dotfile)
       puts format("~/%-#{width + 2}s # %s", dotfile, status)
     end
@@ -175,7 +175,7 @@ CommonLayer = Layer.new do |l|
 
   l.desc 'dotfilesが管理する全dotfileのリンクを外す'
   l.task 'remove:dotfiles' do
-    DOTFILES.each do |dotfile|
+    DOTFILE_NAMES.each do |dotfile|
       dotfile_path_home = home(dotfile)
       dotfile_path_here = File.expand_path("./deployed/#{dotfile}")
       if File.exist?(dotfile_path_home)

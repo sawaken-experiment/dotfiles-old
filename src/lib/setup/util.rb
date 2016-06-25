@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
-DOTFILES = Dir.glob('./deployed/.*[^~#.]').map { |f| File.basename(f) }
+DOTFILE_NAMES = Dir.glob('./deployed/.*[^~#.]').map { |f| File.basename(f) }
+TARGET_DIR_PATH = home('dotfiles/target')
 
 module TopUtilFunction
   module_function

@@ -4,7 +4,7 @@ CommandPromptLayer = Layer.new do |l|
   l.desc 'ドットファイルのリンクを張る'
   l.task 'dotfiles' do
     commands = []
-    DOTFILES.each do |dotfile|
+    DOTFILE_NAMES.each do |dotfile|
       home_path = File.expand_path("../#{dotfile}")
       entity_path = File.expand_path("./deployed/#{dotfile}")
       if File.exist?(home_path)
@@ -40,6 +40,13 @@ CommandPromptLayer = Layer.new do |l|
         target = line[4][1..-2]
         wsh "del \"#{home_path.tr('/', '\\')}\"" if target == entity_path
       end
+    end
+  end
+
+  l.desc 'Atomのパッケージをインストールする'
+  l.task 'atom-packages' do
+    atom_packages.each do |pkg|
+      wsh "apm install #{pkg}"
     end
   end
 

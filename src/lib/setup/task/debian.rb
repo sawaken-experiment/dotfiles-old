@@ -13,7 +13,7 @@ DebianLayer = Layer.new do |l|
   l.task 'java' => 'jenv' do
     url = 'http://ppa.launchpad.net/webupd8team/java/ubuntu'
     txt = "deb #{url} trusty main\ndeb-src #{url} trusty main\n"
-    tmpfile = ENV['HOME'] + '/dotfiles/target/java-8-debian.list'
+    tmpfile = "#{TARGET_DIR_PATH}/java-8-debian.list"
     sh "echo \"#{txt}\" | cat > #{tmpfile}"
     sh "sudo mv -f #{tmpfile} /etc/apt/sources.list.d/"
     sh 'sudo apt-key adv --keyserver keyserver.ubuntu.com --recv-keys EEA14886'
