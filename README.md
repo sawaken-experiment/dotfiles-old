@@ -53,7 +53,13 @@ $ unset system
 
 ##　コミットメッセージの絵文字
 
+### アクション
 * :heavy_check_mark: modify mistake
 * :arrow_right: move something
 * :bug: fix bug
 * :seedling: start something
+* :fire: remove something
+
+### モチベーション
+* :anger: commit with anger
+* :shit: fucking commit

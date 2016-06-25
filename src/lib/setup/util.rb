@@ -91,9 +91,15 @@ module TopUtilFunction
     puts command
     puts `#{command}`
   end
+
+  def check_path(path)
+    raise "#{path} does not exist" unless File.exist?(path)
+    path
+  end
 end
 
 extend TopUtilFunction
 
+DOTFILES_DIR_PATH = check_path(File.expand_path('../../../../', __FILE__))
 DOTFILE_NAMES = Dir.glob('./deployed/.*[^~#.]').map { |f| File.basename(f) }
-TARGET_DIR_PATH = home('dotfiles/target')
+TARGET_DIR_PATH = check_path(DOTFILES_DIR_PATH + '/target')

@@ -79,7 +79,6 @@ OSXLayer = Layer.new do |l|
       sh 'git clone https://github.com/sanographix/azusa-colors/ ./azusa-colors'
       cd './azusa-colors' do
         sh 'unzip theme-azusa-colors.kth.zip'
-        sh "mkdir #{TARGET_DIR_PATH}" unless File.exist?(TARGET_DIR_PATH)
         sh "mv -f theme-azusa-colors.kth #{TARGET_DIR_PATH}"
       end
       sh "open #{TARGET_DIR_PATH}/theme-azusa-colors.kth"
