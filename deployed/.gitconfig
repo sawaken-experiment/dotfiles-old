@@ -4,5 +4,11 @@
 [core]
     excludesfile = ~/.gitignore_global
     autoCRLF = false
+    pager = 'less -iMR'
 [color]
     ui = auto
+[diff]
+    compactionHeuristic = true
+[alias]
+    lg = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit --date=relative
+    lga = log --graph --all --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit --date=relative

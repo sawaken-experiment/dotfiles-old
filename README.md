@@ -2,7 +2,7 @@
 
 OSX, Debian系, CentOS, Windows(コマンドプロンプト)に対応.
 
-## インストール(OSX, Debian, CentOS, Windows共通)
+## Install (OSX, Debian, CentOS, Windows共通)
 本リポジトリをクローンし, ドットファイルのリンクを張る.
 Rubyは2.0以上必須.
 管理者権限では実行しないこと.
@@ -11,14 +11,7 @@ $ cd [home-dir]
 $ git clone --config core.autoCRLF=false https://github.com/sawaken/dotfiles.git dotfiles
   or $ git clone --config core.autoCRLF=false git@github.com:sawaken/dotfiles.git dotfiles
 $ cd dotfiles
-$ rake dotfiles
-```
-
-## 環境構築
-適宜必要なものをインストール.
-```
 $ rake -T
-$ rake atom-packages
 ```
 
 ## システム種別を指定する
@@ -39,27 +32,26 @@ $ rake dotfiles
 $ unset system
 ```
 
-## 現在の状態
-* OSXの環境構築
+## Current Status
+* OSX
 
     [![Build Status](https://travis-ci.com/sawaken/dotfiles.svg?token=46Mp6xrHukCWQqyh951J&branch=master)](https://travis-ci.com/sawaken/dotfiles)
 
-* Windowsの環境構築
+* Windows
 
-* Ubuntuの環境構築
-
-* src以下のRubyコード
+* Ubuntu
 
 
-##　コミットメッセージの絵文字
-
-### アクション
+##　Emoji
+### Action
 * :heavy_check_mark: modify mistake
 * :arrow_right: move something
 * :bug: fix bug
 * :seedling: start something
 * :fire: remove something
+* :pencil: wirte something
 
-### モチベーション
-* :anger: commit with anger
+### Modifier
+* :anger: angry commit
 * :shit: fucking commit
+* :bulb: hirameki
