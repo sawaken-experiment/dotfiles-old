@@ -51,3 +51,6 @@
 # minimap関連
 - 'minimap'
 - 'minimap-autohide'
+
+# Ctags
+- 'atom-ctags'

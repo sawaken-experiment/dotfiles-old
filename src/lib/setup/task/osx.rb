@@ -47,6 +47,8 @@ OSXLayer = Layer.new do |l|
     shq 'brew install tmux reattach-to-user-namespace'
     # Emacs
     shq 'brew install emacs --with-cocoa --with-gnutls'
+    # Ctags
+    shq 'brew install ctags'
   end
 
   l.desc 'homebrew-caskを用いて各種APPをインストールする'

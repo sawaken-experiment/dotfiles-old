@@ -28,9 +28,12 @@ CommonLayer = Layer.new do |l|
     ash "rbenv install #{v}" unless asho('rbenv versions').index(v)
     ash "rbenv global #{v}"
     # GemのGlobalインストール
-    ash 'rbenv exec gem install bundle pry travis --no-document'
+    ash 'rbenv exec gem install bundle pry-byebug travis rubocop --no-document'
+    ash 'rbenv exec gem install awesome_print tapp --no-document'
     ash 'rbenv rehash'
-    ash 'bundle -v; pry -v'
+    ash 'bundle -v'
+    ash 'pry -v'
+    ash 'rubocop -v'
     ash 'echo y | travis -v'
     raise 'assert' unless asho('ruby -v').index(v)
   end

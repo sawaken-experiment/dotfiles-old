@@ -44,7 +44,8 @@ DebianLayer = Layer.new do |l|
   # ----------------------------------------------------------------------
 
   l.task 'applications' do
-    nil
+    # Ctags
+    sh 'sudo apt-get install exuberant-ctags'
   end
 
   # ----------------------------------------------------------------------

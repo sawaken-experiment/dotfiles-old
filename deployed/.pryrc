@@ -42,3 +42,15 @@ end
 Pry::Commands.command /^$/, "repeat last command" do
   _pry_.run_command Pry.history.to_a.last
 end
+
+# ----------------------------------------------------------------------
+# awesome_printがインストールされていたら、オブジェクト表示にawesome_printを使う
+# ----------------------------------------------------------------------
+
+begin
+  require 'awesome_print'
+rescue LoadError
+  nil
+else
+  AwesomePrint.pry!
+end

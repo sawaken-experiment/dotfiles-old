@@ -1,4 +1,5 @@
 "*":
+  "atom-ctags": {}
   "autocomplete-plus":
     confirmCompletion: "tab"
   autosave:
@@ -23,7 +24,7 @@
     allBundledPackages: true
     allCommunityPackages: true
   editor:
-    fontSize: 16
+    fontSize: 17
     invisibles: {}
     showInvisibles: true
     softWrap: true
