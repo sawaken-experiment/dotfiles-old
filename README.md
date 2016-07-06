@@ -33,25 +33,19 @@ $ unset system
 ```
 
 ## Current Status
-* OSX
-
-    [![Build Status](https://travis-ci.com/sawaken/dotfiles.svg?token=46Mp6xrHukCWQqyh951J&branch=master)](https://travis-ci.com/sawaken/dotfiles)
-
-* Windows
-
-* Ubuntu
+| OSX     | [![Build Status](https://travis-ci.com/sawaken/dotfiles.svg?token=46Mp6xrHukCWQqyh951J&branch=master)](https://travis-ci.com/sawaken/dotfiles) |
+|---------|------------------------------------------------------------------------------------------------------------------------------------------------|
+| Ubuntu  |                                                                                                                                                |
+| Windows |                                                                                                                                                |
 
 
 ##　Emoji
 ### Action
 * :heavy_check_mark: modify mistake
+* :cyclone: rearrange something
 * :arrow_right: move something
-* :bug: fix bug
-* :seedling: start something
 * :fire: remove something
-* :pencil: wirte something
-
-### Modifier
-* :anger: angry commit
-* :shit: fucking commit
-* :bulb: hirameki
+* :seedling: start something
+* :bug: fix bug
+* :pencil: wirte document
+* :moneybag: valuable update

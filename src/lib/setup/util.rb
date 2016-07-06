@@ -119,5 +119,3 @@ extend TopUtilFunction
 DOTFILES_DIR_PATH = check_path(File.expand_path('../../../../', __FILE__))
 DOTFILE_NAMES = Dir.glob('./deployed/.*[^~#.]').map { |f| File.basename(f) }
 TARGET_DIR_PATH = check_path(DOTFILES_DIR_PATH + '/target')
-
-p atom_packages
