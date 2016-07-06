@@ -9,9 +9,17 @@ module TopUtilFunction
     flatten_hash(hash)
   end
 
-  def flatten_hash(hash_or_string)
-    return [hash_or_string] if hash_or_string.is_a?(String)
-    hash_or_string.values.flat_map { |e| flatten_hash(e) }
+  def flatten_hash(obj)
+    case obj
+    when String
+      [obj]
+    when Array
+      obj.flat_map { |e| flatten_hash(e) }
+    when Hash
+      flatten_hash(obj.values)
+    else
+      raise
+    end
   end
 
   def home(path)
@@ -111,3 +119,5 @@ extend TopUtilFunction
 DOTFILES_DIR_PATH = check_path(File.expand_path('../../../../', __FILE__))
 DOTFILE_NAMES = Dir.glob('./deployed/.*[^~#.]').map { |f| File.basename(f) }
 TARGET_DIR_PATH = check_path(DOTFILES_DIR_PATH + '/target')
+
+p atom_packages

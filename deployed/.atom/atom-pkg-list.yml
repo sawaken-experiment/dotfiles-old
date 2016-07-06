@@ -9,9 +9,9 @@
   - 'pigments' # ソースコード中のカラーコードを色付け表示
   - 'regex-railroad-diagram' # 正規表現を視覚化
   - 'symbols-tree-view'
-  'minimap':
-    - 'minimap'
-    - 'minimap-autohide'
+'minimap':
+  - 'minimap'
+  - 'minimap-autohide'
 '補完':
   - 'autocomplete-paths' # パス補完
   - 'atom-ctags' # Ctags対応
