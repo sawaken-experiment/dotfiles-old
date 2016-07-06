@@ -1,56 +1,53 @@
-# Alt押しながらドラッグで矩形選択
-- 'Sublime-Style-Column-Selection'
-
-# パスの補完
-- 'autocomplete-paths'
-
-# 色選択パレットの表示
-- 'color-picker'
-
-# editorconfigのサポート
-- 'editorconfig'
-
-# ファイル名表示にクールなアイコンをつける
-- 'file-icons'
-
-# git/github関連
-- 'git-plus'
-
-# shift-enterで画面内を飛ぶ
-- 'jumpy'
-
-# Atom内でターミナルを開く
-- 'term3'
-
-# PDF観覧
-- 'pdf-view'
-
-# ソースコード中のカラーコードを色付け表示
-- 'pigments'
-
-# ディレクトリ
-- 'project-manager'
-
-# スクリプトファイルをAtom内で実行する
-- 'script'
-
-# shift-cmd-returnでpane最大化
-# バグるので使用中止
-#- 'maximize-panes'
-
-# 言語サポート
-- 'language-latex'
-- 'language-lisp'
-- 'latex'
-
-# 文法チェッカ
-- 'linter'
-- 'linter-rubocop'
-- 'rubocop-auto-correct'
-
-# minimap関連
-- 'minimap'
-- 'minimap-autohide'
-
-# Ctags
-- 'atom-ctags'
+'操作':
+  - 'Sublime-Style-Column-Selection' # 矩形選択
+  - 'jumpy' # shift-enterで画面内を飛ぶ
+  - 'project-manager' # プロジェクト切り替え
+'入力':
+  - 'color-picker' # 色選択パレット
+'視覚':
+  - 'file-icons' # ファイル名表示にクールなアイコンをつける
+  - 'pigments' # ソースコード中のカラーコードを色付け表示
+  - 'regex-railroad-diagram' # 正規表現を視覚化
+  - 'symbols-tree-view'
+  'minimap':
+    - 'minimap'
+    - 'minimap-autohide'
+'補完':
+  - 'autocomplete-paths' # パス補完
+  - 'atom-ctags' # Ctags対応
+'拡張':
+  - 'linter' # 文法チェッカ
+  - 'editorconfig' # editorconfig
+  - 'imdone-atom' # TODO管理
+'実行':
+  - 'script' # スクリプトファイルをAtom内で実行する
+  - 'term3' # Atom内でターミナルを開く
+'git':
+  - 'git-plus' # Atom内からgit操作
+  - 'merge-conflicts'
+  - 'git-control'
+  - 'git-time-machine'
+'言語/ファイル種別':
+  'Ruby':
+    - 'linter-rubocop'
+    - 'rubocop-auto-correct'
+    - 'language-rspec'
+    - 'rspec'
+  'CoffeeScript':
+    - 'linter-coffeelint'
+  'TypeScript':
+    - 'atom-typescript'
+    - 'linter-tslint'
+  'ShellScript':
+    - 'linter-shellcheck'
+  'Lisp':
+    - 'language-lisp'
+  'LaTex':
+    - 'language-latex'
+    - 'latex'
+  'PDF':
+    - 'pdf-view'
+  'CSV':
+    - 'tablr'
+  'SCSS':
+    - 'linter-scss-lint'

@@ -1,5 +1,7 @@
 "*":
-  "atom-ctags": {}
+  "atom-ctags":
+    autoBuildTagsWhenActive: true
+    cmd: "ctags"
   "autocomplete-plus":
     confirmCompletion: "tab"
   autosave:
@@ -39,6 +41,7 @@
     plugins:
       "minimap-autohide": true
       "minimap-autohideDecorationsZIndex": 0
+  "rubocop-auto-correct": {}
   "ruby-test": {}
   "spell-check":
     grammars: [
