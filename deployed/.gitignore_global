@@ -7,14 +7,11 @@
 /.idea/tasks.xml
 /.idea/libraries
 
-# _で始まるファイルは管理しないことにする
-# _*
-
 # OS固有のキャッシュ情報
 .DS_Store
 Thumbs.db
 
-# バイナリ/オブジェクトファイル
+# バイナリ/オブジェクトファイル関連
 *.out
 *.o
 *.stackdump
@@ -30,6 +27,6 @@ Thumbs.db
 # ruby関連
 /Gemfile.lock
 
-# Ctags
+# Ctags関連
 /tags
 /.tags*

@@ -9,6 +9,7 @@
   - 'pigments' # ソースコード中のカラーコードを色付け表示
   - 'regex-railroad-diagram' # 正規表現を視覚化
   - 'symbols-tree-view'
+  - 'todo-show' # TODO一覧表示
 'minimap':
   - 'minimap'
   - 'minimap-autohide'
@@ -18,7 +19,6 @@
 '拡張':
   - 'linter' # 文法チェッカ
   - 'editorconfig' # editorconfig
-  - 'imdone-atom' # TODO管理
 '実行':
   - 'script' # スクリプトファイルをAtom内で実行する
   - 'term3' # Atom内でターミナルを開く
@@ -49,5 +49,6 @@
     - 'pdf-view'
   'CSV':
     - 'tablr'
-  'SCSS':
+  'StyleSheet':
+    - 'linter-csslint'
     - 'linter-scss-lint'
