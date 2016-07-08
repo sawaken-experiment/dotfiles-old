@@ -16,6 +16,7 @@
 '補完':
   - 'autocomplete-paths' # パス補完
   - 'atom-ctags' # Ctags対応
+  - 'autocomplete-emojis' # 絵文字
 '拡張':
   - 'linter' # 文法チェッカ
   - 'editorconfig' # editorconfig

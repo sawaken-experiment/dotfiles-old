@@ -44,8 +44,10 @@ DebianLayer = Layer.new do |l|
   # ----------------------------------------------------------------------
 
   l.task 'applications' do
-    # Ctags
+    # ctags
     sh 'sudo apt-get install exuberant-ctags'
+    # shellcheck
+    sh 'sudo apt-get install shellcheck'
   end
 
   # ----------------------------------------------------------------------

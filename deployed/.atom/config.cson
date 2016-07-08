@@ -1,6 +1,6 @@
 "*":
   "atom-ctags":
-    autoBuildTagsWhenActive: true
+    autoBuildTagsWhenActive: false
     cmd: "ctags"
   "autocomplete-plus":
     confirmCompletion: "tab"
@@ -49,6 +49,12 @@
       "source.asciidoc"
       "text.git-commit"
     ]
+  "split-diff":
+    diffWords: true
+    ignoreWhitespace: true
+    leftEditorColor: "red"
+    rightEditorColor: "green"
+    syncHorizontalScroll: true
   term3:
     colors:
       background:

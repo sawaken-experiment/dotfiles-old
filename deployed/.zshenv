@@ -1,7 +1,4 @@
-if [[ "$OSTYPE" == "cygwin" ]];then
-  export CYGWIN="winsymlinks:nativestrict" # ln -s をmklinkに置き換える
-  export LANG=C # forkが失敗するエラーを回避
-fi
+#!/usr/bin/
 
 # 雑用スクリプトのパスを通す
 export PATH="$HOME/dotfiles/bin:$PATH"
@@ -12,17 +9,7 @@ if [ -d $HOME/.anyenv ]; then
   eval "$(anyenv init - zsh)"
 fi
 
-# cygwinでchocolatey
-if [[ "$OSTYPE" == "cygwin" ]];then
-  unset tmp temp
-  alias choco='cmd /c choco'
-  alias cinst='cmd /c cinst'
-  alias cup='cmd /c cup'
-  alias cuninst='cmd /c cuninst'
+# brewからインストールしたctagsを使う
+if [[ "$(uname)" == 'Darwin' ]]; then
+  alias ctags='`brew --prefix`/bin/ctags'
 fi
-
-if [ "$(uname)" == 'Darwin' ]; then
-  alias ctags="`brew --prefix`/bin/ctags"
-fi
-
-alias less="less -iMR"

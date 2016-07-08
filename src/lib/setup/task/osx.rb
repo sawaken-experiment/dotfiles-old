@@ -45,10 +45,12 @@ OSXLayer = Layer.new do |l|
   l.task 'cui-tools' => 'homebrew' do
     # tmux
     shq 'brew install tmux reattach-to-user-namespace'
-    # Emacs
+    # emacs
     shq 'brew install emacs --with-cocoa --with-gnutls'
-    # Ctags
+    # ctags
     shq 'brew install ctags'
+    # shellcheck
+    shq 'brew install shellcheck'
   end
 
   l.desc 'homebrew-caskを用いて各種APPをインストールする'

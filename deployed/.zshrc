@@ -163,5 +163,7 @@ case ${OSTYPE} in
         ;;
 esac
 
+alias less="less -iMR"
+
 # added by travis gem
 [ -f /Users/sawada/.travis/travis.sh ] && source /Users/sawada/.travis/travis.sh
