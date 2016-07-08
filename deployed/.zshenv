@@ -20,3 +20,9 @@ if [[ "$OSTYPE" == "cygwin" ]];then
   alias cup='cmd /c cup'
   alias cuninst='cmd /c cuninst'
 fi
+
+if [ "$(uname)" == 'Darwin' ]; then
+  alias ctags="`brew --prefix`/bin/ctags"
+fi
+
+alias less="less -iMR"
