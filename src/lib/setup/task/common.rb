@@ -1,4 +1,3 @@
-# coding: utf-8
 # frozen_string_literal: true
 
 CommonLayer = Layer.new do |l|
@@ -28,13 +27,11 @@ CommonLayer = Layer.new do |l|
     ash "rbenv install #{v}" unless asho('rbenv versions').index(v)
     ash "rbenv global #{v}"
     # GemのGlobalインストール
-    ash 'rbenv exec gem install bundle pry-byebug travis rubocop --no-document'
+    ash 'rbenv exec gem install bundle pry-byebug travis --no-document'
     ash 'rbenv exec gem install awesome_print tapp --no-document'
+    ash 'rbenv exec gem install rubocop scss_lint --no-document'
     ash 'rbenv rehash'
-    ash 'bundle -v'
-    ash 'pry -v'
-    ash 'rubocop -v'
-    ash 'echo y | travis -v'
+    ash 'bundle -v' # 代表して確認
     raise 'assert' unless asho('ruby -v').index(v)
   end
 
@@ -77,6 +74,7 @@ CommonLayer = Layer.new do |l|
     ash "ndenv install v#{v}" unless asho('ndenv versions').index(v)
     ash "ndenv global v#{v}"
     ash 'ndenv rehash'
+    ash 'npm install -g coffeelint tslint'
     raise 'assert' unless asho('node -v').index(v)
   end
 
@@ -153,17 +151,12 @@ CommonLayer = Layer.new do |l|
     DOTFILE_NAMES.each do |dotfile|
       dotfile_path_home = home(dotfile)
       dotfile_path_here = File.expand_path("./deployed/#{dotfile}")
-      if File.symlink?(dotfile_path_home)
-        if File.exist?(dotfile_path_home)
-          next
-        else
-          puts "#{dotfile_path_home}はリンク切れなので削除します."
-          rm(dotfile_path_home)
-        end
-      end
       next if File.exist?(dotfile_path_home)
+      if File.symlink?(dotfile_path_home)
+        puts "#{dotfile_path_home}はリンク切れなので削除します."
+        rm(dotfile_path_home)
+      end
       symlink(dotfile_path_here, dotfile_path_home)
-      raise 'assert (link failed)' unless File.exist?(dotfile_path_home)
     end
   end
 

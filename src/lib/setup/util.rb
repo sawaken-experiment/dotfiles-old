@@ -5,7 +5,21 @@ module TopUtilFunction
 
   def atom_packages
     require 'yaml'
-    YAML.load(File.open(ENV['HOME'] + '/.atom/atom-pkg-list.yml').read)
+    hash = YAML.load(File.open(ENV['HOME'] + '/.atom/atom-pkg-list.yml').read)
+    flatten_hash(hash)
+  end
+
+  def flatten_hash(obj)
+    case obj
+    when String
+      [obj]
+    when Array
+      obj.flat_map { |e| flatten_hash(e) }
+    when Hash
+      flatten_hash(obj.values)
+    else
+      raise
+    end
   end
 
   def home(path)
