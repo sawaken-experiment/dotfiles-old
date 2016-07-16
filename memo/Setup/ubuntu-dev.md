@@ -13,7 +13,7 @@ sudo apt-get install -y nfs-common
 mkdir /home/owner/Data
 mkdir /home/owner/Video
 echo '192.168.1.2:/main-storage/data /home/owner/Data nfs rw' | sudo cat >> /etc/fstab
-echo '192.168.1.2:/main-storage/video /home/owner/Video nfs rw' | sudo cat >> /etc/fstab
+echo '192.168.1.2:/main-storage/video /home/owner/Videos nfs rw' | sudo cat >> /etc/fstab
 sudo mount -a
 ```
 * 【自宅】google-chromeにログインする

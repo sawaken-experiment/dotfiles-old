@@ -27,10 +27,8 @@
     allBundledPackages: true
     allCommunityPackages: true
   editor:
-    fontSize: 17
     invisibles: {}
     showInvisibles: true
-    softWrap: true
   "exception-reporting":
     userId: "9437e86a-0252-ab2d-dbf9-ca15cf8a20e4"
   "git-plus": {}
@@ -42,6 +40,8 @@
     plugins:
       "minimap-autohide": true
       "minimap-autohideDecorationsZIndex": 0
+  rspec:
+    command: "bundle exec rspec"
   "rubocop-auto-correct": {}
   "ruby-test": {}
   "spell-check":
@@ -58,10 +58,10 @@
   term3:
     colors:
       background:
-        red: 41
-        green: 41
-        blue: 41
         alpha: 1
+        blue: 41
+        green: 41
+        red: 41
   "todo-show":
     ignoreThesePaths: [
       "**/node_modules/*"

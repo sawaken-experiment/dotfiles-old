@@ -1,6 +1,6 @@
 '操作':
+  - 'vim-mode-plus'
   - 'Sublime-Style-Column-Selection' # 矩形選択
-  - 'jumpy' # shift-enterで画面内を飛ぶ
   - 'project-manager' # プロジェクト切り替え
 '入力':
   - 'color-picker' # 色選択パレット
@@ -53,3 +53,5 @@
   'StyleSheet':
     - 'linter-csslint'
     - 'linter-scss-lint'
+
+     hoge fuga

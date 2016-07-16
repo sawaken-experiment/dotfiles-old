@@ -26,7 +26,7 @@ git@github.com:username/repositoryname.git
 git@bitbucket.org:username/repositoryname.git
 ```
 
-# ssh-serverの公開鍵を確認
+### ssh-serverの公開鍵を確認
 RSA暗号の原理上、クライアントはサーバ(IP)の公開鍵を事前に正しく知っておく必要が有る。
 たとえばHTTPSではroot鍵をあらかじめブラウザ等に組み込んでおくことで、
 世界中のサーバ(IP)の正しい公開鍵をクライアントに伝達する。
