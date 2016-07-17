@@ -129,5 +129,6 @@ DebianLayer = Layer.new do |l|
     sh 'sudo apt-get install -y libssl-dev libreadline-dev zlib1g-dev'
     sh 'sudo apt-get install -y libbz2-dev libsqlite3-dev'
     sh 'sudo apt-get install -y default-jre'
+    sh 'sudo apt-get install -y rlwrap m4'
   end
 end

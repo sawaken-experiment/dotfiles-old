@@ -131,6 +131,6 @@ OSXLayer = Layer.new do |l|
   end
 
   l.task 'build-lib' => ['homebrew'] do
-    shq 'brew install openssl readline wget'
+    shq 'brew install openssl readline wget rlwrap'
   end
 end
