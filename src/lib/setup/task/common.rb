@@ -136,7 +136,7 @@ CommonLayer = Layer.new do |l|
     sh 'wget https://raw.github.com/ocaml/opam/master/shell/opam_installer.sh -O - | sh -s /usr/local/bin'
     sh 'eval `opam config env` && opam update'
     sh 'eval `opam config env` && opam upgrade'
-    sh 'eval `opam config env` && echo "y" | opam install omake'
+    sh 'eval `opam config env` && echo "y" | opam install omake caml2html'
   end
 
   # ----------------------------------------------------------------------
