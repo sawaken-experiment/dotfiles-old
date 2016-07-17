@@ -76,20 +76,3 @@ atom.commands.add 'atom-text-editor', 'user:unmark': (event) ->
         atom.clipboard.write(text)
       when 76 # L
         editor.setSelectedBufferRange(range)
-
-# ----------------------------------------------------------------------
-# 最後にコマンドパレットから実行したコマンドを実行
-# ----------------------------------------------------------------------
-
-# lastCommand = null
-#
-# atom.commands.onDidDispatch (event) ->
-#   console.log event
-#   return if event.type == 'core:confirm'
-#   return if event.type == 'user:repeat-command'
-#   return unless event.target.localName == 'atom-text-editor'
-#   lastCommand = event.type
-#
-# atom.commands.add 'atom-text-editor', 'user:repeat-command', (event) ->
-#   target = atom.views.getView(@getModel())
-#   atom.commands.dispatch(target, lastCommand) if lastCommand

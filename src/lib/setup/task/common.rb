@@ -134,9 +134,9 @@ CommonLayer = Layer.new do |l|
 
   l.task 'ocaml' do
     sh 'wget https://raw.github.com/ocaml/opam/master/shell/opam_installer.sh -O - | sh -s /usr/local/bin'
-    sh 'opam update'
-    sh 'opam upgrade'
-    sh 'echo "y" | opam install omake'
+    sh 'eval `opam config env` && opam update'
+    sh 'eval `opam config env` && opam upgrade'
+    sh 'eval `opam config env` && echo "y" | opam install omake'
   end
 
   # ----------------------------------------------------------------------
