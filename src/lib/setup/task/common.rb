@@ -2,11 +2,11 @@
 
 CommonLayer = Layer.new do |l|
   l.desc '全てインストールする'
-  l.task 'all' => %w(languages applications dotfiles)
+  l.task 'all' => %w(languages applications environment dotfiles)
 
   l.desc 'プログラミング言語処理系を全てインストールする'
   l.task 'languages' => %w(
-    ruby python nodejs go perl scala sbt java haskell
+    ruby python nodejs go perl scala sbt java haskell ocaml
   )
 
   l.desc '全てアンインストールする'

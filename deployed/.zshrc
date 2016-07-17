@@ -164,6 +164,14 @@ case ${OSTYPE} in
 esac
 
 alias less="less -iMR"
+alias ocaml="rlwrap ocaml"
 
-# added by travis gem
-[ -f /Users/sawada/.travis/travis.sh ] && source /Users/sawada/.travis/travis.sh
+# travis gem
+if [ -f $HOME/.travis/travis.sh ]; then
+  source $HOME/.travis/travis.sh
+fi
+
+# OPAM configuration
+if [ -d $HOME/.opam ]; then
+  . $HOME/.opam/opam-init/init.zsh > /dev/null 2> /dev/null || true
+fi

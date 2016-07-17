@@ -6,6 +6,9 @@
     confirmCompletion: "tab"
   autosave:
     enabled: true
+  "bracket-matcher":
+    autocompleteBrackets: false
+    autocompleteSmartQuotes: false
   core:
     allowPendingPaneItems: false
     disabledPackages: [

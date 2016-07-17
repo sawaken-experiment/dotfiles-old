@@ -103,6 +103,14 @@ OSXLayer = Layer.new do |l|
   end
 
   # ----------------------------------------------------------------------
+  # 環境
+  # ----------------------------------------------------------------------
+
+  l.task 'environment' do
+    nil
+  end
+
+  # ----------------------------------------------------------------------
   # ビルドツール
   # ----------------------------------------------------------------------
 
@@ -123,6 +131,6 @@ OSXLayer = Layer.new do |l|
   end
 
   l.task 'build-lib' => ['homebrew'] do
-    shq 'brew install openssl readline'
+    shq 'brew install openssl readline wget'
   end
 end

@@ -82,13 +82,37 @@ DebianLayer = Layer.new do |l|
     sh 'sudo apt-get install -y vlc'
   end
 
+  l.task 'clion' do
+    begin
+      version = '2016.1.3'
+      arch_file = "CLion-#{version}.tar.gz"
+      deployed_dir = TARGET_DIR_PATH + "/clion-#{version}"
+      next if File.exist?(deployed_dir)
+      sh "wget https://download.jetbrains.com/cpp/#{arch_file} -O #{arch_file}"
+      sh "tar xzf #{arch_file} -C #{TARGET_DIR_PATH}"
+      cd(deployed_dir) do
+        sh 'sudo ln -s "$(pwd)/bin/clion.sh" "/usr/local/bin/clion"'
+      end
+    ensure
+      sh "rm -rf #{arch_file}" if File.exist?(arch_file)
+    end
+  end
+
   # ----------------------------------------------------------------------
   # 環境設定
   # ----------------------------------------------------------------------
 
-  l.task 'swap-ctrl-caps' do
+  l.task 'environment' => [
+    'swap-ctrl-caps', 'large-cursor', 'ssh-keygen'
+  ]
+
+  l.task 'change-caps-to-ctrl' do
     sh 'dconf reset /org/gnome/settings-daemon/plugins/keyboard/active'
     sh "dconf write /org/gnome/desktop/input-sources/xkb-options \"['ctrl:nocaps']\""
+  end
+
+  l.task 'large-cursor' do
+    sh 'gsettings set com.canonical.Unity.Interface cursor-scale-factor 2'
   end
 
   l.task 'ssh-keygen' do
