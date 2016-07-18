@@ -33,10 +33,9 @@ DebianLayer = Layer.new do |l|
 
   l.task 'haskell' do
     next if which 'stack'
-    a = 'http://download.fpcomplete.com/debian'
-    sh "echo 'deb #{a} jessie main'|sudo tee /etc/apt/sources.list.d/fpco.list"
-    sh 'sudo apt-get update && sudo apt-get install stack -y --force-yes'
-    sh 'stack setup; stack setup'
+    sh 'sudo apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys 575159689BEFB442'
+    sh "echo 'deb http://download.fpcomplete.com/ubuntu xenial main'|sudo tee /etc/apt/sources.list.d/fpco.list"
+    sh 'sudo apt-get update && sudo apt-get install stack -y'
   end
 
   # ----------------------------------------------------------------------
@@ -57,11 +56,25 @@ DebianLayer = Layer.new do |l|
   end
 
   l.task 'google-chrome' do
-    sh 'wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb'
-    sh 'sudo apt-get update'
-    sh 'sudo apt-get -y install libappindicator1'
-    sh 'sudo dpkg -i google-chrome-stable_current_amd64.deb'
-    sh 'rm google-chrome-stable_current_amd64.deb'
+    begin
+      sh 'wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb -O google-chrome.deb'
+      sh 'sudo apt-get update'
+      sh 'sudo apt-get -y install libappindicator1'
+      sh 'sudo dpkg -i google-chrome.deb'
+    ensure
+      sh 'rm google-chrome.deb'
+    end
+  end
+
+  l.task 'dropbox' do
+    begin
+      sh 'wget https://www.dropbox.com/download?dl=packages/ubuntu/dropbox_2015.10.28_amd64.deb -O dropbox.deb'
+      sh 'sudo apt-get update'
+      sh 'sudo apt-get install python-gtk2'
+      sh 'sudo dpkg -i dropbox.deb'
+    ensure
+      sh 'rm dropbox.deb'
+    end
   end
 
   l.task 'zsh' do
@@ -129,5 +142,6 @@ DebianLayer = Layer.new do |l|
     sh 'sudo apt-get install -y libssl-dev libreadline-dev zlib1g-dev'
     sh 'sudo apt-get install -y libbz2-dev libsqlite3-dev'
     sh 'sudo apt-get install -y default-jre'
+    sh 'sudo apt-get install -y rlwrap m4'
   end
 end

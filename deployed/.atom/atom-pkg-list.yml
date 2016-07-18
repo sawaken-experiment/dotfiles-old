@@ -4,11 +4,13 @@
   - 'project-manager' # プロジェクト切り替え
 '入力':
   - 'color-picker' # 色選択パレット
+  - 'toggle-quotes' # single-quoteとdouble-quoteの入れ替え
+  - 'change-case' # 英単語(変数名)のケースを変換
 '視覚':
   - 'file-icons' # ファイル名表示にクールなアイコンをつける
   - 'pigments' # ソースコード中のカラーコードを色付け表示
   - 'regex-railroad-diagram' # 正規表現を視覚化
-  - 'symbols-tree-view'
+  - 'symbols-tree-view' # 見出しを表示
   - 'todo-show' # TODO一覧表示
 'minimap':
   - 'minimap'
@@ -43,6 +45,8 @@
     - 'linter-shellcheck'
   'Lisp':
     - 'language-lisp'
+  'OCaml':
+    - 'language-ocaml'
   'LaTex':
     - 'language-latex'
     - 'latex'

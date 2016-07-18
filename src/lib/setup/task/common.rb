@@ -129,6 +129,19 @@ CommonLayer = Layer.new do |l|
   l.task 'haskell' => :fail
 
   # ----------------------------------------------------------------------
+  # OCaml
+  # ----------------------------------------------------------------------
+
+  l.task 'ocaml' do
+    sh 'wget https://raw.github.com/ocaml/opam/master/shell/opam_installer.sh -O - | sh -s /usr/local/bin'
+    sh 'opam update'
+    sh 'opam upgrade'
+    puts 'Installing OCaml is succeeded!'
+    puts 'You need to install packages after restarting shell.'
+    puts 'By such as: opam install omake caml2html'
+  end
+
+  # ----------------------------------------------------------------------
   # アプリケーション
   # ----------------------------------------------------------------------
 
