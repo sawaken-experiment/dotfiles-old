@@ -2,15 +2,22 @@
 # 全般
 # --------------------------------------------------
 
-# command-paletteはよく使うのでctrl-iに割り当てる
 '*':
+  # command-paletteはよく使うのでctrl-iに割り当てる
   'ctrl-i': 'command-palette:toggle'
+  # ctrl-shift-tでターミナルを開く
+  'ctrl-T': 'platformio-ide-terminal:toggle'
+
+# autocomplete-plusのカーソル移動はemacs式にする
+'body atom-text-editor.autocomplete-active':
+  'ctrl-p': 'autocomplete-plus:move-up'
+  'ctrl-n': 'autocomplete-plus:move-down'
 
 # --------------------------------------------------
 # vim-mode-plus
 # --------------------------------------------------
 
-# ESCはより押しやすいctrl-jに割り当てる
+# ESCは, より押しやすいctrl-jに割り当てる
 'atom-workspace atom-text-editor:not([mini])':
   # 誤ってnormal-modeでctrl-jするとjoin-linesされて煩わしいのでunbindする.
   # join-linesはnormal-modeにおいてJで呼び出せる.

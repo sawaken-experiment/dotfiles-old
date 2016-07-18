@@ -24,7 +24,7 @@
   - 'editorconfig' # editorconfig
 '実行':
   - 'script' # スクリプトファイルをAtom内で実行する
-  - 'term3' # Atom内でターミナルを開く
+  - 'platformio-ide-terminal' # Atom内でターミナルを開く
 'git':
   - 'git-plus' # Atom内からgit操作
   - 'merge-conflicts'

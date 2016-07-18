@@ -3,7 +3,7 @@
     autoBuildTagsWhenActive: false
     cmd: "ctags"
   "autocomplete-plus":
-    confirmCompletion: "tab"
+    useCoreMovementCommands: false
   autosave:
     enabled: true
   "bracket-matcher":
@@ -27,10 +27,8 @@
       "atom-dark-ui"
       "one-dark-syntax"
     ]
-  "disable-keybindings":
-    allBundledPackages: true
-    allCommunityPackages: true
   editor:
+    fontSize: 15
     invisibles: {}
     showInvisibles: true
   "exception-reporting":
