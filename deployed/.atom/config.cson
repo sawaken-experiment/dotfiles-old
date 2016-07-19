@@ -3,6 +3,7 @@
     autoBuildTagsWhenActive: false
     cmd: "ctags"
   "autocomplete-plus":
+    confirmCompletion: "tab"
     useCoreMovementCommands: false
   autosave:
     enabled: true
@@ -60,10 +61,10 @@
   term3:
     colors:
       background:
-        alpha: 1
-        blue: 41
-        green: 41
         red: 41
+        green: 41
+        blue: 41
+        alpha: 1
   "todo-show":
     ignoreThesePaths: [
       "**/node_modules/*"
