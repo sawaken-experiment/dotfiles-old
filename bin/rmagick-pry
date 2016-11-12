@@ -1,0 +1,7 @@
+#!/usr/bin/env ruby
+
+require 'pry'
+require 'rmagick'
+include Magick
+
+Pry.start

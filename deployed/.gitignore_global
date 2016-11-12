@@ -30,3 +30,7 @@ Thumbs.db
 # Ctags関連
 /tags
 /.tags*
+
+# stack
+.stack-work
+

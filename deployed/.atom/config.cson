@@ -2,6 +2,18 @@
   "atom-ctags":
     autoBuildTagsWhenActive: false
     cmd: "ctags"
+  "atom-shell-commands":
+    commands: [
+      {
+        name: "ime-off"
+        command: "/usr/bin/fcitx-remote"
+        arguments: [
+          "-c"
+        ]
+        options:
+          silent: true
+      }
+    ]
   "autocomplete-plus":
     confirmCompletion: "tab"
     useCoreMovementCommands: false
@@ -29,6 +41,7 @@
       "one-dark-syntax"
     ]
   editor:
+    backUpBeforeSaving: true
     fontSize: 15
     invisibles: {}
     showInvisibles: true
@@ -61,10 +74,10 @@
   term3:
     colors:
       background:
-        red: 41
-        green: 41
-        blue: 41
         alpha: 1
+        blue: 41
+        green: 41
+        red: 41
   "todo-show":
     ignoreThesePaths: [
       "**/node_modules/*"

@@ -1,28 +1,29 @@
-# --------------------------------------------------
-# 全般
-# --------------------------------------------------
-
 '*':
   # command-paletteはよく使うのでctrl-iに割り当てる
   'ctrl-i': 'command-palette:toggle'
   # ctrl-shift-tでターミナルを開く
   'ctrl-T': 'platformio-ide-terminal:toggle'
-
+  # 方向キーでtab移動
+  'right': 'pane:show-next-item'
+  'left': 'pane:show-previous-item'
+  'down': 'window:focus-next-pane'
+  'up': 'window:focus-previous-pane'
+  # 'fcitx-remote -c'が存在する環境用。存在しなければ何も起こらない。
+  # normal-modeでctrl-jするとIMEがOFFになる。
+  # 'ctrl-j': 'atom-shell-commands:ime-off'
 # autocomplete-plusのカーソル移動はemacs式にする
 'body atom-text-editor.autocomplete-active':
   'ctrl-p': 'autocomplete-plus:move-up'
   'ctrl-n': 'autocomplete-plus:move-down'
-
-# --------------------------------------------------
-# vim-mode-plus
-# --------------------------------------------------
-
-# ESCは, より押しやすいctrl-jに割り当てる
 'atom-workspace atom-text-editor:not([mini])':
   # 誤ってnormal-modeでctrl-jするとjoin-linesされて煩わしいのでunbindする.
-  # join-linesはnormal-modeにおいてJで呼び出せる.
   'ctrl-j': 'unset!'
-'atom-text-editor.vim-mode-plus':
-  'ctrl-j': 'vim-mode-plus:reset-normal-mode'
 'atom-text-editor.vim-mode-plus:not(.normal-mode)':
+  # normal-modeに戻るキーは, より押しやすいctrl-jに割り当てる
   'ctrl-j': 'vim-mode-plus:activate-normal-mode'
+'atom-text-editor.vim-mode-plus:not(.insert-mode)':
+  # 左右方向キーでtab移動
+  'right': 'pane:show-next-item'
+  'left': 'pane:show-previous-item'
+  'down': 'window:focus-next-pane'
+  'up': 'window:focus-previous-pane'

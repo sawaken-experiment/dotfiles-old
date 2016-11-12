@@ -54,3 +54,13 @@ rescue LoadError
 else
   AwesomePrint.pry!
 end
+
+# -----
+# requireの引数にシンボルを使えるようにする
+# -----
+
+def self.require(arg)
+  arg.is_a?(Symbol) ? super(arg.to_s) : super(arg)
+end
+
+  

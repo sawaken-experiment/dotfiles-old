@@ -12,6 +12,7 @@
   - 'regex-railroad-diagram' # 正規表現を視覚化
   - 'symbols-tree-view' # 見出しを表示
   - 'todo-show' # TODO一覧表示
+  - 'wordcount' # ファイルの文字数表示
 'minimap':
   - 'minimap'
   - 'minimap-autohide'
@@ -25,6 +26,7 @@
 '実行':
   - 'script' # スクリプトファイルをAtom内で実行する
   - 'platformio-ide-terminal' # Atom内でターミナルを開く
+  - 'atom-shell-commands' # 任意のシェルコマンドをAtomコマンドとして登録できる
 'git':
   - 'git-plus' # Atom内からgit操作
   - 'merge-conflicts'

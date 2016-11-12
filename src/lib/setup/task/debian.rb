@@ -53,6 +53,8 @@ DebianLayer = Layer.new do |l|
     sh 'sudo apt-get install -y shellcheck'
     # expect
     sh 'sudo apt-get install -y expect'
+    # tig (CUI git visualization)
+    sh 'sudo apt-get install -y tig'
   end
 
   l.task 'google-chrome' do
